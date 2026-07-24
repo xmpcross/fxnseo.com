@@ -1545,3 +1545,66 @@ footer.footer .footer-subheading a:hover{ text-decoration: underline; }
 footer.footer .footer-subgroup-hover > ul{ display: none !important; }
 footer.footer .footer-subgroup-hover:hover > ul{ display: flex !important; }
 footer.footer .footer-subgroup-hover .footer-subheading{ cursor: pointer; margin-bottom: 0; }
+
+/* ===== Footer sub-menu headings: capitalize + down-arrow (YouTube + Website Tools) ===== */
+footer.footer .footer-subheading{ text-transform: capitalize !important; }
+footer.footer .footer-subgroup-hover .footer-subheading::after{ content: "\25BE"; display: inline-block; font-size: .8em; margin-left: .4rem; opacity: .8; transition: transform .2s ease; }
+footer.footer .footer-subgroup-hover:hover .footer-subheading::after{ transform: rotate(180deg); }
+
+/* ===== Footer column titles: solid #111111 (override gradient) ===== */
+footer.footer h3.text-gradient,
+footer.footer h3.h6{ color: #111111 !important; background: none !important; background-image: none !important; -webkit-text-fill-color: #111111 !important; }
+
+/* ===== Footer copyright: left align + 13px ===== */
+footer.footer .text-center > p.my-4.text-sm,
+footer.footer p.my-4.text-sm{ text-align: left !important; font-size: 13px !important; }
+
+/* ===== Footer sub-menu headings: normal weight + larger arrow ===== */
+footer.footer .footer-subgroup-hover .footer-subheading,
+footer.footer .footer-subgroup-hover .footer-subheading a{ font-weight: 400 !important; }
+footer.footer .footer-subgroup-hover .footer-subheading::after{ font-size: 1.15em !important; }
+
+/* ===== Footer sub-menu headings: match fxnSEO.com nav-link font ===== */
+footer.footer .footer-subgroup-hover .footer-subheading,
+footer.footer .footer-subgroup-hover .footer-subheading a{
+  color: #344767 !important;
+  font-weight: 400 !important;
+  font-size: .875rem !important;
+  text-transform: none !important;
+  letter-spacing: normal !important;
+  opacity: 1 !important;
+}
+footer.footer .footer-subgroup-hover .footer-subheading{ margin: 0 0 .25rem !important; }
+
+/* ===== Footer YouTube/Website Tools sub-menu headings: full nav-link match ===== */
+footer.footer .footer-subgroup-hover .footer-subheading,
+footer.footer .footer-subgroup-hover .footer-subheading a{
+  color: #344767 !important;
+  font-weight: 400 !important;
+  font-size: .875rem !important;
+  padding-top: 0 !important;
+  padding-bottom: .25rem !important;
+}
+
+/* ===== Footer menu links: letter-spacing 0 ===== */
+footer.footer .nav .nav-link,
+footer.footer .flex-column.nav .nav-link{ letter-spacing: 0 !important; }
+
+/* ===== Extra sub-footer container ===== */
+.footer-extra{ background-color: #ebedf5; padding: 16px 0; }
+
+/* ===== Sub-footer container: max-width ===== */
+.footer-extra .footer-extra-container{ max-width: 1320px !important; }
+
+/* ===== Sub-footer container: text/links 12px ===== */
+.footer-extra, .footer-extra p, .footer-extra a,
+.footer-extra .footer-extra-left, .footer-extra .footer-extra-right,
+.footer-extra .footer-extra-right a{ font-size: 12px !important; }
+
+/* ===== Hide redundant in-footer copyright bar (now in sub-footer container) ===== */
+footer.footer p.my-4.text-sm{ display: none !important; }
+
+/* ===== Sub-footer container: text/links 14px ===== */
+.footer-extra, .footer-extra p, .footer-extra a,
+.footer-extra .footer-extra-left, .footer-extra .footer-extra-right,
+.footer-extra .footer-extra-right a{ font-size: 14px !important; }

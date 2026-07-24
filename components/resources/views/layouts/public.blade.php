@@ -332,6 +332,22 @@
 
             <x-public.footer :footer="$footer" :general="$general" :socials="$socials" />
 
+            <!-- Extra container under the footer -->
+            <div class="footer-extra">
+                <div class="container footer-extra-container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 footer-extra-left">
+                            Copyrights &copy; 2026. All Rights Reserved by fxnSEO.com
+                        </div>
+                        <div class="col-md-6 footer-extra-right text-md-end">
+                            <a href="{{ route('home') }}/terms-conditions">Terms &amp; Conditions</a> |
+                            <a href="{{ route('home') }}/privacy-policy">Privacy Policy</a> |
+                            <a href="{{ route('home') }}/cookie-information">Cookie Information</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Theme JS -->
             <script src="{{ asset('assets/js/main.min.js') }}" defer></script>
 
