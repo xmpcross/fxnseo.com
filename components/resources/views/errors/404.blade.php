@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-JGE2B6YCEW');
+        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ \App\Models\Admin\Header::first()->favicon }}">
@@ -17,19 +26,10 @@
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
 
         <!-- Custom CSS -->
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}" rel="stylesheet">
-        
-        @if ( !empty(\App\Models\Admin\General::first()->font_family) )
-
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ \App\Models\Admin\General::first()->font_family }}">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ \App\Models\Admin\General::first()->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
     </head>
     <body class="antialiased {{ Cookie::get('theme_mode') }}">

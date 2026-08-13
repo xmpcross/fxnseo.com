@@ -12,6 +12,7 @@ use DateTime;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Livewire\WithPagination;
+use Composer\InstalledVersions;
 
 class Index extends Component
 {
@@ -33,13 +34,58 @@ class Index extends Component
             'default_lang'         => Languages::where('default', true)->first()->code,
             'tools'                => Page::where('tool_name', 'like', '%'.$this->searchQuery.'%')->where('type', 'tool')->orderBy('id', 'DESC')->paginate(15),
             'total_lang'           => DB::table('languages')->count(),
-            'translation_progress' => PageTranslation::select( 'page_id', DB::raw('count(*) as progress') )->groupBy('page_id')->get()->toArray()
+            'translation_progress' => PageTranslation::select( 'page_id', DB::raw('count(*) as progress') )->groupBy('page_id')->get()->toArray(),
+            'seo_packages'         => $this->seoPackages(),
         ])->layout('layouts.admin', [
             'breadcrumbs' => [
                 ['title' => __( 'Admin' ), 'url' => route('admin.dashboard.index')],
                 ['title' => __( 'Tools' ), 'url' => route('admin.tools.index')]
             ]
         ]);
+    }
+
+    private function seoPackages(): array
+    {
+        $packages = [
+            [
+                'name' => 'Laravel Meta Manager',
+                'package' => 'davmixcool/laravel-meta-manager',
+                'description' => 'Active renderer for standard metadata, Open Graph, Twitter Cards and link tags.',
+                'url' => 'https://packagist.org/packages/davmixcool/laravel-meta-manager',
+                'active' => true,
+            ],
+            [
+                'name' => 'SEOTools',
+                'package' => 'artesaos/seotools',
+                'description' => 'Active WebSite JSON-LD generator and metadata source for the current application.',
+                'url' => 'https://packagist.org/packages/artesaos/seotools',
+                'active' => true,
+            ],
+            [
+                'name' => 'Laravel-SEO',
+                'package' => 'romanzipp/laravel-seo',
+                'description' => 'Active Organization and page-specific SoftwareApplication schema generator.',
+                'url' => 'https://packagist.org/packages/romanzipp/laravel-seo',
+                'active' => true,
+            ],
+            [
+                'name' => 'Laravel SEO by Ralph J. Smit',
+                'package' => 'ralphjsmit/laravel-seo',
+                'description' => 'Laravel 8-compatible model metadata package, pinned to the supported 1.2 release.',
+                'url' => 'https://github.com/ralphjsmit/laravel-seo',
+                'active' => false,
+            ],
+        ];
+
+        return array_map(function (array $package): array {
+            $package['installed'] = InstalledVersions::isInstalled($package['package']);
+            $package['compatible'] = $package['compatible'] ?? true;
+            $package['version'] = $package['installed']
+                ? InstalledVersions::getPrettyVersion($package['package'])
+                : ($package['compatibility'] ?? null);
+
+            return $package;
+        }, $packages);
     }
 
     /**

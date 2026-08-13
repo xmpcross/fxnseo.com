@@ -459,7 +459,7 @@ span#heart i{
 #content-box img:not(.img-fluid):not(.blur-shadow-image img):not(.cropper-container img):not(.avatar) {
     border-radius: .75rem;
     max-width: 100%;
-    height: auto;
+    height: 100%;
     box-shadow: 0 .25rem .375rem -.0625rem hsla(0,0%,8%,.12),0 .125rem .25rem -.0625rem hsla(0,0%,8%,.07);
     display: block;
     margin-left: auto;
@@ -1527,15 +1527,6 @@ body.page-type-tool #content-box h3{ font-size: 1.1rem !important; }
 body.page-type-tool #content-box h2{ font-size: 1.2rem !important; }
 body.page-type-tool #content-box h3{ font-size: 1rem !important; }
 
-/* ===== SEO tool pages: description moved to top; hide old below-tool content-box ===== */
-body.page-type-tool #content-box{ display: none !important; }
-body.page-type-tool .tool-description h2{ font-size: 1.2rem !important; }
-body.page-type-tool .tool-description h3{ font-size: 1rem !important; }
-
-/* ===== Tool description: View More link ===== */
-body.page-type-tool .tool-desc-more-link{ color: var(--color-unstable-link-blue) !important; cursor: pointer; font-weight: 600; display: inline-block; margin-top: .5rem; }
-body.page-type-tool .tool-desc-more-link:hover{ text-decoration: underline; }
-
 /* ===== Footer sub-group headings ===== */
 footer.footer .footer-subheading{ font-size: 13px !important; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; margin: .75rem 0 .25rem; opacity: .85; }
 footer.footer .footer-subheading a{ color: inherit !important; text-decoration: none; }
@@ -1608,3 +1599,315 @@ footer.footer p.my-4.text-sm{ display: none !important; }
 .footer-extra, .footer-extra p, .footer-extra a,
 .footer-extra .footer-extra-left, .footer-extra .footer-extra-right,
 .footer-extra .footer-extra-right a{ font-size: 14px !important; }
+
+/* ===== Hide the empty col-12 (old copyright wrapper) above the sub-footer ===== */
+footer.footer .container > .row > .col-12{ display: none !important; }
+
+/* ===== More space: About Us -> social, and footer bottom ===== */
+footer.footer .footer-socials{ margin-top: 2.75rem !important; }
+footer.footer{ padding-bottom: 2rem !important; }
+.footer-extra{ padding: 24px 0 !important; }
+
+/* ===== Sub-footer links: underline + spacing ===== */
+.footer-extra a{ text-decoration: underline !important; }
+.footer-extra .footer-extra-right a{ margin-left: .85rem; }
+.footer-extra .footer-extra-right a:first-child{ margin-left: 0; }
+
+/* ===== Contact page: remove right sidebar + clean centered form ===== */
+body.page-type-contact .sidebars{ display: none !important; }
+body.page-type-contact .col-lg-9{ flex: 0 0 100% !important; max-width: 100% !important; }
+body.page-type-contact #content-box{ max-width: 840px; margin-left: auto; margin-right: auto; }
+body.page-type-contact #content-box .card{ border: 1px solid #e0e6ef; border-radius: 8px !important; box-shadow: 0 6px 20px rgba(4,12,19,.05); }
+body.page-type-contact #content-box .card-body{ padding: 2rem !important; }
+body.page-type-contact #formContact .form-control{ border-radius: 6px; padding: .6rem .9rem; }
+body.page-type-contact #formContact .form-label{ font-weight: 600; margin-bottom: .35rem; }
+body.page-type-contact #formContact textarea.form-control{ min-height: 180px; }
+
+/* ===== Default site max-width: 1366px ===== */
+@media (min-width: 1200px){
+  .container{ max-width: 1366px !important; }
+}
+
+/* ===== Card headings: light gradient background + dark text ===== */
+.card .card-header.bg-gradient-primary,
+.card .card-header.related-tools-box.bg-gradient-primary{
+  background-image: linear-gradient(310deg, var(--color-unstable-highlight-blue), var(--color-unstable-tech-white)) !important;
+  background-color: var(--color-unstable-highlight-blue) !important;
+  color: var(--color-unstable-black-text) !important;
+  border-bottom: 1px solid var(--color-unstable-tech-white);
+}
+.card .card-header.bg-gradient-primary h1,
+.card .card-header.bg-gradient-primary h2,
+.card .card-header.bg-gradient-primary h3,
+.card .card-header.bg-gradient-primary p,
+.card .card-header.bg-gradient-primary .text-white{
+  color: var(--color-unstable-black-text) !important;
+}
+
+/* ===== Page title (parallax) section: brand gradient + white text ===== */
+#parallax .bg-light{ background: linear-gradient(310deg, var(--color-unstable-human-blue), var(--color-unstable-light-blue)) !important; }
+#parallax .mask{ display: none !important; }
+#parallax h1, #parallax h2, #parallax .lead{ color: #ffffff !important; }
+
+/* ===== Page title (parallax) section: light gradient + dark text, no image ===== */
+#parallax .bg-light{ background: linear-gradient(310deg, var(--color-unstable-highlight-blue), var(--color-unstable-tech-white)) !important; }
+#parallax .mask{ display: none !important; }
+#parallax .parallax-image, #parallax img{ display: none !important; }
+#parallax h1, #parallax h2, #parallax .lead, #parallax .text-white{ color: var(--color-unstable-black-text) !important; }
+
+/* ===== Regular pages: content heading sizes ===== */
+body.page-type-page #content-box h2{ font-size: 1.5rem !important; }
+body.page-type-page #content-box h3{ font-size: 1.1rem !important; }
+
+/* ===== View More link (generic — tools + report) ===== */
+.tool-desc-more-link{ color: var(--color-unstable-link-blue) !important; cursor: pointer; font-weight: 600; display: inline-block; margin-top: .5rem; }
+.tool-desc-more-link:hover{ text-decoration: underline; }
+
+/* ===== /report page: heading sizes ===== */
+body.page-type-report #content-box h2{ font-size: 1.5rem !important; }
+body.page-type-report #content-box h3{ font-size: 1.1rem !important; }
+
+/* ===== Page title (parallax) section: align title + subtitle left ===== */
+#parallax .text-center,
+#parallax .container,
+#parallax h1,
+#parallax h2,
+#parallax .lead{ text-align: left !important; }
+
+/* ===== Page title (parallax) section: lighter gradient background ===== */
+#parallax .bg-light{ background: linear-gradient(310deg, #ffffff, var(--color-unstable-highlight-blue)) !important; }
+
+/* ===== Page title (parallax) section: solid #f8f8f8 bg + h1 2rem ===== */
+#parallax .bg-light{ background: #f8f8f8 !important; }
+#parallax h1{ font-size: 2rem !important; }
+
+/* ===== Contact page: 2-column (form + contact methods) ===== */
+body.page-type-contact #content-box{ max-width: 1040px !important; }
+.contact-methods{ background: #f8fbff; border: 1px solid #e0e6ef; border-radius: 8px; padding: 1.5rem; height: 100%; }
+.contact-methods .contact-method-icon{ flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(310deg, #0046be, #2b5df5); color: #fff; display: inline-flex; align-items: center; justify-content: center; margin-right: .85rem; }
+.contact-methods a{ color: var(--color-unstable-link-blue); text-decoration: none; }
+.contact-methods a:hover{ text-decoration: underline; }
+
+/* ===== Logo: remove left/right letterbox space (size by height, auto width) ===== */
+.navbar-brand.logo-image .navbar-brand-image{ width: auto !important; height: 38px !important; max-width: 100%; }
+
+/* ===== Contact page: use default site max-width (full container) ===== */
+body.page-type-contact #content-box{ max-width: 100% !important; margin-left: 0 !important; margin-right: 0 !important; }
+
+/* ===== Regular pages: white background ===== */
+body.page-type-page{ background-color: #ffffff !important; }
+
+/* ===== Remove box-shadow from all cards ===== */
+.card{ box-shadow: none !important; }
+
+/* ===== About Us page: remove sidebar, full width, image placeholders ===== */
+body.page-slug-about-us .sidebars{ display: none !important; }
+body.page-slug-about-us .col-lg-9{ flex: 0 0 100% !important; max-width: 100% !important; }
+.about-hero-ph, .about-img-ph{ background: #eef1f6; border: 2px dashed #c5cbd5; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #90959e; text-align: center; }
+.about-hero-ph{ width: 100%; aspect-ratio: 16 / 5; }
+.about-img-ph{ width: 100%; aspect-ratio: 4 / 3; }
+.about-hero-ph i, .about-img-ph i{ font-size: 2rem; margin-bottom: .5rem; }
+.about-section h2{ margin-top: 0; }
+
+/* ===== Legal pages: left TOC sidebar ===== */
+.legal-toc{ position: sticky; top: 90px; background: #f8fbff; border: 1px solid #e0e6ef; border-radius: 8px; padding: 1rem 1.1rem; font-size: .875rem; }
+.legal-toc-title{ font-weight: 700; color: #040c13; margin-bottom: .6rem; font-size: .78rem; text-transform: uppercase; letter-spacing: .4px; }
+.legal-toc ul{ list-style: none; padding: 0; margin: 0; }
+.legal-toc li{ margin-bottom: .15rem; }
+.legal-toc a{ color: #344767; text-decoration: none; display: block; padding: .2rem 0 .2rem .6rem; border-left: 2px solid transparent; }
+.legal-toc a:hover{ color: var(--color-unstable-link-blue); border-left-color: var(--color-unstable-link-blue); }
+body.page-slug-terms-conditions #content-box h2[id],
+body.page-slug-privacy-policy #content-box h2[id],
+body.page-slug-cookie-information #content-box h2[id]{ scroll-margin-top: 90px; }
+
+/* ===== Legal TOC anchor offset for h3 sections ===== */
+body.page-slug-terms-conditions #content-box h3[id],
+body.page-slug-privacy-policy #content-box h3[id],
+body.page-slug-cookie-information #content-box h3[id]{ scroll-margin-top: 90px; }
+
+/* ===== Legal pages: heading sizes (h2 1.2rem, h3 1rem) ===== */
+body.page-slug-terms-conditions #content-box h2,
+body.page-slug-privacy-policy #content-box h2,
+body.page-slug-cookie-information #content-box h2{ font-size: 1.2rem !important; }
+body.page-slug-terms-conditions #content-box h3,
+body.page-slug-privacy-policy #content-box h3,
+body.page-slug-cookie-information #content-box h3{ font-size: 1rem !important; }
+
+/* ===== Sticky navbar: box-shadow only when stuck (scrolled) ===== */
+nav.navbar.position-sticky{ transition: box-shadow .2s ease; box-shadow: none; }
+nav.navbar.position-sticky.navbar-stuck{ box-shadow: 0 2px 14px rgba(4,12,19,.09) !important; }
+
+/* ===== About Us hero image ===== */
+.about-hero-img{ width: 100%; height: auto; max-height: 380px; object-fit: cover; border-radius: 12px; display: block; }
+
+/* ===== Page title (parallax) section: inner shadow for depth ===== */
+#parallax .bg-light{ box-shadow: inset 0 6px 18px -6px rgba(4,12,19,.15), inset 0 -6px 18px -6px rgba(4,12,19,.12) !important; }
+
+/* ===== About Us hero image: border radius 8px ===== */
+.about-hero-img{ border-radius: 8px !important; }
+
+/* ===== About Us section image ===== */
+.about-img{ width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 8px; display: block; }
+
+/* ===== Page title (parallax) section: inner shadow — bottom only ===== */
+#parallax .bg-light{ box-shadow: inset 0 -10px 18px -8px rgba(4,12,19,.15) !important; }
+
+/* ===== Page title (parallax) section: background #f9f9f9 ===== */
+#parallax .bg-light{ background: #f9f9f9 !important; }
+
+/* ===== Page title (parallax) section: remove inner shadow ===== */
+#parallax .bg-light{ box-shadow: none !important; }
+
+/* ===== About Us: all images/placeholders 8px radius ===== */
+body.page-slug-about-us img,
+body.page-slug-about-us .about-img,
+body.page-slug-about-us .about-img-ph,
+body.page-slug-about-us .about-hero-ph{ border-radius: 8px !important; }
+
+/* ===== About Us: extra spacing for Our Story (Who We Are) section ===== */
+body.page-slug-about-us .about-section.about-who{ margin-top: 4rem !important; margin-bottom: 4rem !important; }
+
+/* ===== About Us hero: inner shadow overlay for depth ===== */
+.about-hero-wrap{ position: relative; display: block; }
+.about-hero-wrap::after{ content: ''; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 45px rgba(4,12,19,.30); pointer-events: none; }
+body.page-slug-about-us .about-img{ box-shadow: none !important; }
+
+/* ===== Blog listing: image radius 8px ===== */
+body.page-blog-listing .card-image img,
+body.page-blog-listing .card-image.border-radius-lg{ border-radius: 8px !important; }
+
+/* ===== Top nav menu links: color #111111, hover #555555 ===== */
+nav.navbar .navbar-nav-hover .nav-link{ color: #111111 !important; }
+nav.navbar .navbar-nav-hover .nav-link:hover{ color: #555555 !important; }
+
+/* ===== Footer: remove horizontal rules ===== */
+footer.footer hr{ display: none !important; }
+
+/* ===== All headings + bold text: #111111 ===== */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{ color: #111111 !important; }
+strong, b{ color: #111111 !important; }
+
+/* ===== Top nav menu links: font-weight 500 ===== */
+nav.navbar .navbar-nav-hover .nav-link{ font-weight: 500 !important; }
+
+/* ===== Footer: equal top/bottom spacing ===== */
+footer.footer{ padding-top: 2rem !important; padding-bottom: 2rem !important; }
+
+/* ===== About Us section images: transparent bg + 8px radius ===== */
+body.page-slug-about-us .about-img{ background: transparent !important; border-radius: 8px !important; box-shadow: none !important; }
+
+/* ===== About Us "Who Is For" accordion ===== */
+.about-accordion .accordion-button{ font-weight: 600; color: #111111; }
+.about-accordion .accordion-button:not(.collapsed){ color: #0046be; background: #f1f8ff; box-shadow: none; }
+.about-accordion .accordion-button:focus{ box-shadow: none; border-color: #cfe0ff; }
+.about-accordion .accordion-item{ border-color: #e0e6ef; }
+
+/* ===== About Us accordion: visible border ===== */
+.about-accordion{ border: 1px solid #e0e6ef; border-radius: 8px; overflow: hidden; }
+.about-accordion .accordion-item{ border: 0; border-bottom: 1px solid #e0e6ef; }
+.about-accordion .accordion-item:last-child{ border-bottom: 0; }
+
+/* ===== About Us: vertically center section images in their column ===== */
+body.page-slug-about-us .about-section{ align-items: stretch !important; }
+body.page-slug-about-us .about-section > .col-lg-5{ display: flex; align-items: center; justify-content: center; }
+
+/* ===== About Us: vertically center the text column content too ===== */
+body.page-slug-about-us .about-section > .col-lg-7{ display: flex; flex-direction: column; justify-content: center; }
+
+/* ===== Undo: text column content vertical centering ===== */
+body.page-slug-about-us .about-section > .col-lg-7{ display: block !important; }
+
+/* ===== Why Choose image: 20px top space ===== */
+body.page-slug-about-us .why-choose-img{ margin-top: 20px !important; }
+
+/* ===== Why Choose image: inner shadow for depth ===== */
+body.page-slug-about-us .about-img-wrap{ position: relative; display: block; }
+body.page-slug-about-us .about-img-wrap::after{ content: ''; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 40px rgba(4,12,19,.35); pointer-events: none; }
+body.page-slug-about-us .why-choose-wrap{ margin-top: 20px; }
+body.page-slug-about-us .why-choose-img{ margin-top: 0 !important; }
+
+/* ===== Why Choose image: 30px top space ===== */
+body.page-slug-about-us .why-choose-wrap{ margin-top: 30px !important; }
+
+/* ===== Undo: Why Choose image inner shadow ===== */
+body.page-slug-about-us .about-img-wrap::after{ content: none !important; box-shadow: none !important; }
+
+/* ===== About Us accordion: custom down-arrow on the right ===== */
+.about-accordion .accordion-button::after{
+  flex-shrink: 0;
+  width: 1rem; height: 1rem; margin-left: auto;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23111111' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: center; background-size: 1rem;
+  transition: transform .2s ease;
+}
+.about-accordion .accordion-button:not(.collapsed)::after{ transform: rotate(180deg); }
+
+/* ===== Why Choose image: 40px top space ===== */
+body.page-slug-about-us .why-choose-wrap{ margin-top: 40px !important; }
+
+/* ===== Start Using section: content 70% width, 30% right offset ===== */
+body.page-slug-about-us .start-today-section > .col-12{ flex: 0 0 70% !important; max-width: 70% !important; margin-right: 30%; }
+
+/* ===== Footer YouTube/Website Tools: larger sub-menu arrow icon ===== */
+footer.footer .footer-subgroup-hover .footer-subheading::after{ font-size: 1.5em !important; }
+
+/* ===== About Us: equal spacing between all sections ===== */
+body.page-slug-about-us .about-section,
+body.page-slug-about-us .about-section.about-who{ margin-top: 0 !important; margin-bottom: 3.5rem !important; }
+
+/* ===== About Us: remove custom padding/margin between sections ===== */
+body.page-slug-about-us .about-section,
+body.page-slug-about-us .about-section.about-who{ margin-top: 0 !important; margin-bottom: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; }
+
+/* ===== Reduce space between Why Choose and Who Is For ===== */
+body.page-slug-about-us .about-section:has(.why-choose-wrap){ margin-bottom: -2.5rem !important; }
+
+/* ===== Footer YouTube/Website Tools sub-headings: no arrow + underline ===== */
+footer.footer .footer-subgroup-hover .footer-subheading::after{ content: none !important; }
+footer.footer .footer-subgroup-hover .footer-subheading,
+footer.footer .footer-subgroup-hover .footer-subheading a{ text-decoration: underline !important; }
+
+/* ===== Footer YouTube/Website Tools sub-headings: remove underline ===== */
+footer.footer .footer-subgroup-hover .footer-subheading,
+footer.footer .footer-subgroup-hover .footer-subheading a{ text-decoration: none !important; }
+
+/* ===== FAQs page: remove right sidebar, full width ===== */
+body.page-slug-faqs .sidebars{ display: none !important; }
+body.page-slug-faqs .col-lg-9{ flex: 0 0 100% !important; max-width: 100% !important; }
+
+/* ===== FAQs by category ===== */
+body.page-slug-faqs .faq-category{ margin-bottom: 2.5rem; }
+body.page-slug-faqs .faq-category > h2{ font-size: 1.4rem; margin-bottom: 1rem; }
+body.page-slug-faqs .faq-tool-link{ display: inline-block; margin-top: .35rem; color: var(--color-unstable-link-blue); font-weight: 600; text-decoration: none; }
+body.page-slug-faqs .faq-tool-link:hover{ text-decoration: underline; }
+
+/* ===== FAQs TOC anchor offset ===== */
+body.page-slug-faqs #content-box h2[id]{ scroll-margin-top: 90px; }
+
+/* ===== Global primary color ===== */
+:root{
+  --bs-primary:#275bf0;
+  --bs-primary-rgb:39,91,240;
+  --bs-link-color:#275bf0;
+  --bs-link-hover-color:#1d46c5;
+  --color-unstable-human-blue:#275bf0;
+  --color-unstable-light-blue:#5b7df5;
+  --color-unstable-link-blue:#275bf0;
+  --color-unstable-dark-blue:#1d46c5;
+}
+.text-primary,.link-primary,.page-link{color:#275bf0!important}
+.bg-primary,.badge.bg-primary,.badge-primary,.progress-bar,.dropdown-item.active,.dropdown-item:active{background-color:#275bf0!important}
+.border-primary,.form-check-input:checked,.form-selectgroup-input:checked+.form-selectgroup-label{border-color:#275bf0!important}
+.form-check-input:checked{background-color:#275bf0!important}
+.btn-primary{background-color:#275bf0!important;border-color:#275bf0!important}
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.show>.btn-primary.dropdown-toggle{background-color:#1d46c5!important;border-color:#1d46c5!important}
+.btn-outline-primary{color:#275bf0!important;border-color:#275bf0!important}
+.btn-outline-primary:hover,.btn-outline-primary:focus,.btn-outline-primary:active{background-color:#275bf0!important;border-color:#275bf0!important;color:#fff!important}
+.bg-gradient-primary{background-image:linear-gradient(310deg,#275bf0,#5b7df5)!important}
+.text-gradient.text-primary{background-image:linear-gradient(310deg,#275bf0,#5b7df5)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.nav-pills .nav-link.active,.nav-pills .show>.nav-link,.page-item.active .page-link,.list-group-item.active{background-color:#275bf0!important;border-color:#275bf0!important}
+.small,small{font-size:14px!important}
+.contact-methods .contact-method-icon{background:linear-gradient(310deg,#275bf0,#5b7df5)!important}
+.about-accordion .accordion-button:not(.collapsed){color:#275bf0!important;background:#edf2ff!important}

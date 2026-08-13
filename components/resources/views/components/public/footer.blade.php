@@ -1,4 +1,4 @@
-      <footer class="footer pt-3 mt-3 pb-0">
+      <footer class="footer default-footer">
 
        @if ( $general->social_status == true && count($socials) > 0 )
           <hr class="horizontal dark mb-4">
@@ -20,7 +20,7 @@
         @endif
 
         <div class="container">
-          <div class="row">
+          <div class="row footer-grid footer-layout-{{ $footer->layout ?? 'none' }}">
               @if ( !empty($footer->layout) )
               
                 @switch( $footer->layout )
@@ -111,23 +111,37 @@
 
                         <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
                           <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
+                            @php
+                              $footerWidget2 = GrahamCampbell\Security\Facades\Security::clean($footer->widget2);
+                              $footerWidget2 = preg_replace('#(<h[1-6][^>]*>)\s*fxnSEO\.com\s*(</h[1-6]>)#i', '$1About$2', $footerWidget2);
+                              $toolsFooterLink = '<li class="nav-item"><a class="nav-link ps-0" title="SEO Tools" href="'.route('tools').'">SEO Tools</a></li>';
+                              $footerWidget2 = preg_replace_callback(
+                                '#<li[^>]*>\s*<a[^>]*href=["\'][^"\']*/blog["\'][^>]*>.*?</a>\s*</li>#is',
+                                function ($match) use ($toolsFooterLink) {
+                                  $articlesLink = preg_replace('#>\s*(?:Our\s+)?Blog\s*<#i', '>All Blog<', $match[0]);
+                                  return $toolsFooterLink.$articlesLink;
+                                },
+                                $footerWidget2,
+                                1
+                              );
+                            @endphp
+                            {!! $footerWidget2 !!}
+                          </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col footer-youtube-tools">
+                          <div>
+                            {!! str_replace('>Tag Tools<', '>YouTube Tag Tools<', GrahamCampbell\Security\Facades\Security::clean($footer->widget3)) !!}
                           </div>
                         </div>
 
                         <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
                           <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
+                            {!! str_replace('>Backwards Text Generator<', '>Backwards Generator<', GrahamCampbell\Security\Facades\Security::clean($footer->widget4)) !!}
                           </div>
                         </div>
 
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget4) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col me-auto">
+                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col footer-website-tools me-auto">
                           <div>
                             {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget5) !!}
                           </div>
@@ -141,21 +155,24 @@
               
               @endif
 
-            @if ( !empty($footer->bottom_text) )
-              <div class="col-12">
-                <div class="text-center">
-                  <p class="my-4 text-sm">
-                    @php
-                        $footer_vars = array('%year%');
-                        $footer_val  = array( date('Y') );
-                        $footer_data  = str_replace( $footer_vars , $footer_val , $footer->bottom_text);
-                        echo htmlspecialchars_decode( $footer_data )
-                    @endphp
-                  </p>
-                </div>
-              </div>
-            @endif
-
           </div>
+
         </div>
       </footer>
+
+      @php
+          $footer_data = !empty($footer->bottom_text)
+              ? str_replace('%year%', date('Y'), $footer->bottom_text)
+              : 'Copyright &copy; ' . date('Y') . ' ' . config('app.name') . '. All rights reserved.';
+      @endphp
+      <div class="bottom-footer">
+        <div class="container">
+          <div class="footer-copyright">{!! htmlspecialchars_decode($footer_data) !!}</div>
+          <nav class="bottom-footer-menu" aria-label="{{ __('Legal') }}">
+            <a href="{{ url('/terms-conditions') }}">{{ __('Terms & Conditions') }}</a>
+            <a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a>
+            <a href="{{ url('/cookie-information') }}">{{ __('Cookie Info') }}</a>
+            <a href="{{ url('/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a>
+          </nav>
+        </div>
+      </div>

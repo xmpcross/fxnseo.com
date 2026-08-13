@@ -1,11 +1,20 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-JGE2B6YCEW');
+        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
 
-        {!! SEO::generate() !!}
+        @include('partials.meta-manager')
 
         @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
           <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
@@ -52,19 +61,12 @@
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
 
         <!-- Custom CSS -->
-        <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}" rel="stylesheet">
-        
-        @if ( !empty($general->font_family) )
+        @php $customCssPath = dirname(base_path()).'/assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css'; @endphp
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
 
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ urlencode($general->font_family) }}&display=swap">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ $general->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
@@ -264,7 +266,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button == true) ? '10' : '12'}} my-auto {{ $notice->align }}">
@@ -318,10 +322,6 @@
               </script>
             @endif
             
-            @if ( $advanced->footer_status && $advanced->insert_footer != null )
-              {!! $advanced->insert_footer !!}
-            @endif
-
           </div>
 
           @livewireScripts

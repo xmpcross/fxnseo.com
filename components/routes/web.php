@@ -10,11 +10,11 @@ use App\Http\Livewire\Public\Auth\ResetPassword;
 use App\Http\Livewire\Public\Auth\VerifyEmail;
 use App\Http\Livewire\Public\Blog;
 use App\Http\Livewire\Public\Home;
+use App\Http\Livewire\Public\ToolsPage;
 use App\Http\Livewire\Public\Pages as PublicPage;
 use App\Http\Livewire\Public\Posts as PublicPost;
 use App\Http\Livewire\Public\Resources as PublicResources;
 use App\Http\Livewire\Public\ResourceShow as PublicResourceShow;
-use App\Http\Livewire\Public\Tools\ImageCompressor;
 
 use App\Http\Livewire\Public\Install\Welcome as SWWelcome;
 use App\Http\Livewire\Public\Install\Requirements as SWRequirements;
@@ -78,6 +78,7 @@ use App\Http\Livewire\Admin\Settings\Languages\Translations\Edit as AdminLanguag
 
 use App\Http\Livewire\Admin\Settings\Redirects\Index as AdminRedirectsIndex;
 use App\Http\Livewire\Admin\Settings\Advanced as AdminAdvancedIndex;
+use App\Http\Livewire\Admin\Settings\Seo as AdminSeoIndex;
 
 use App\Http\Livewire\Admin\Indexing\Submit as AdminIndexingSubmitIndex;
 use App\Http\Livewire\Admin\Indexing\History as AdminIndexingHistoryIndex;
@@ -171,12 +172,26 @@ Route::group(['middleware' => 'swinstall', 'prefix' => 'install'], function () {
 
 });
 
-//Image Compressor
-Route::post('/image-compressor', [ImageCompressor::class, 'onImageCompressor'])->name('image-compressor');
+// Isolated homepage redesign for stakeholder review. The production home route
+// remains untouched until the preview is explicitly approved.
+Route::get('/homepage-preview', function () {
+    $resources = app(\App\Services\StrapiClient::class)->posts(1, 3)['data'] ?? [];
+    return view('homepage-preview', [
+        'resources' => $resources,
+        'general' => \App\Models\Admin\General::first(),
+        'footer' => \App\Models\Admin\FooterTranslation::where('locale', app()->getLocale())->first(),
+        'socials' => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
+    ]);
+})->name('homepage.preview');
 
 //Cookie
-Route::get('/cookies/accept', function(){
-    Cookie::queue('cookies', time(), 43200);
+Route::post('/cookies/accept', function(){
+    Cookie::queue('cookies', 'accepted', 43200);
+    return response()->noContent();
+});
+Route::post('/cookies/reject', function(){
+    Cookie::queue('cookies', 'necessary', 43200);
+    return response()->noContent();
 });
 
 //Reset License
@@ -243,6 +258,7 @@ Route::localizedGroup(function () {
 
 	//Home
 	Route::get('/', Home::class)->name('home');
+	Route::get('/tools', ToolsPage::class)->name('tools');
 
 	//Blog
 	try {
@@ -330,6 +346,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isadmin', 'localize
 		Route::group(['prefix' => 'settings'], function () {
 
 			Route::get('/general', AdminGeneralIndex::class)->name('admin.general.index');
+			Route::get('/seo', AdminSeoIndex::class)->name('admin.seo.index');
 			Route::get('/menus', AdminMenusIndex::class)->name('admin.menus.index');
 			Route::get('/header', AdminHeaderIndex::class)->name('admin.header.index');
 

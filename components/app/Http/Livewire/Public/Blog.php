@@ -30,7 +30,7 @@ class Blog extends Component
     
     public function render()
     {
-        $pageTrans     = PublicPage::withTranslation()->translatedIn( app()->getLocale() )->where('type', 'post')->where('post_status', true)->orderByTranslation('id', 'DESC')->paginate( General::first()->blog_page_count );
+        $pageTrans     = PublicPage::withTranslation()->translatedIn( app()->getLocale() )->where('type', 'post')->where('post_status', true)->orderByTranslation('id', 'DESC')->paginate(9);
         $page          = PublicPage::where('type', 'home')->first();
         $general       = General::orderBy('id', 'DESC')->first();
 
@@ -47,8 +47,8 @@ class Blog extends Component
                         break;
                     
                     default:
-                            $title       = __('Our Blog');
-                            $description = __('Stay up to date with the latest news');
+                            $title       = __('SEO Insights & Guides');
+                            $description = __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.');
                         break;
                 }
 

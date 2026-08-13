@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Public;
 
 use Livewire\Component;
 use App\Models\Admin\Page as PublicPost;
+use App\Models\Admin\PageCategory;
 
 use Artesaos\SEOTools\Facades\SEOMeta;
 use Artesaos\SEOTools\Facades\OpenGraph;
@@ -53,6 +54,7 @@ class Posts extends Component
 
             $page          = PublicPost::where('slug', $this->slug)->where('type', 'post')->firstOrFail();
             $general       = General::first();
+            $postCategory  = $page->category_id ? PageCategory::find($page->category_id) : null;
 
             $pageTrans = PublicPost::withTranslation()->translatedIn( app()->getLocale() )->whereTranslation('page_id', $page->id)->where('post_status', true)->firstOrFail();
         
@@ -130,6 +132,137 @@ class Posts extends Component
                                     return $translatedPage;
                                 })->take( Sidebar::first()->tool_count )->filter()->toArray();
 
+            $readAlsoPosts = PublicPost::where('type', 'post')
+                                ->where('post_status', true)
+                                ->where('id', '!=', $page->id)
+                                ->when($page->category_id, function ($query) use ($page) {
+                                    $query->orderByRaw('category_id = ? DESC', [$page->category_id]);
+                                })
+                                ->orderBy('id', 'DESC')
+                                ->get()
+                                ->map(function ($relatedPage) {
+                                    $translation = $relatedPage->translate(app()->getLocale());
+
+                                    if (!$translation) {
+                                        return null;
+                                    }
+
+                                    return [
+                                        'slug'           => $relatedPage->slug,
+                                        'title'          => $translation->title,
+                                        'featured_image' => $relatedPage->featured_image,
+                                        'published_at'   => $relatedPage->created_at,
+                                    ];
+                                })
+                                ->filter()
+                                ->take(2)
+                                ->values()
+                                ->toArray();
+
+            $readAlsoSlugs = collect($readAlsoPosts)->pluck('slug')->all();
+            $relatedPosts = PublicPost::where('type', 'post')
+                                ->where('post_status', true)
+                                ->where('id', '!=', $page->id)
+                                ->whereNotIn('slug', $readAlsoSlugs)
+                                ->when($page->category_id, function ($query) use ($page) {
+                                    $query->orderByRaw('category_id = ? DESC', [$page->category_id]);
+                                })
+                                ->orderBy('id', 'DESC')
+                                ->get()
+                                ->map(function ($relatedPage) use ($page) {
+                                    $translation = $relatedPage->translate(app()->getLocale());
+
+                                    if (!$translation) {
+                                        return null;
+                                    }
+
+                                    return [
+                                        'slug'              => $relatedPage->slug,
+                                        'title'             => $translation->title,
+                                        'short_description' => $translation->short_description,
+                                        'featured_image'    => $relatedPage->featured_image,
+                                        'published_at'      => $relatedPage->created_at,
+                                        'same_category'     => $page->category_id && $relatedPage->category_id === $page->category_id,
+                                    ];
+                                })
+                                ->filter()
+                                ->take(2)
+                                ->values()
+                                ->toArray();
+
+            $usedPostSlugs = collect($readAlsoPosts)->pluck('slug')
+                                ->merge(collect($relatedPosts)->pluck('slug'))
+                                ->all();
+            $spotlightPosts = PublicPost::where('type', 'post')
+                                ->where('post_status', true)
+                                ->where('id', '!=', $page->id)
+                                ->whereNotIn('slug', $usedPostSlugs)
+                                ->orderBy('id', 'DESC')
+                                ->take(4)
+                                ->get()
+                                ->map(function ($spotlightPage) {
+                                    $translation = $spotlightPage->translate(app()->getLocale());
+                                    if (!$translation) {
+                                        return null;
+                                    }
+
+                                    $category = $spotlightPage->category_id ? PageCategory::find($spotlightPage->category_id) : null;
+                                    return [
+                                        'slug'           => $spotlightPage->slug,
+                                        'title'          => $translation->title,
+                                        'category'       => $category->title ?? __('Blog'),
+                                        'featured_image' => $spotlightPage->featured_image,
+                                        'published_at'   => $spotlightPage->created_at,
+                                    ];
+                                })
+                                ->filter()
+                                ->values()
+                                ->toArray();
+
+            $mapFooterPost = function ($footerPage) {
+                if (!$footerPage) {
+                    return null;
+                }
+
+                $translation = $footerPage->translate(app()->getLocale());
+                if (!$translation) {
+                    return null;
+                }
+
+                return [
+                    'slug'           => $footerPage->slug,
+                    'title'          => $translation->title,
+                    'featured_image' => $footerPage->featured_image,
+                    'published_at'   => $footerPage->updated_at ?: $footerPage->created_at,
+                ];
+            };
+
+            $nextUpPosts = PublicPost::where('type', 'post')
+                                ->where('post_status', true)
+                                ->where('id', '!=', $page->id)
+                                ->orderBy('id', 'DESC')
+                                ->take(4)
+                                ->get()
+                                ->map($mapFooterPost)
+                                ->filter()
+                                ->values()
+                                ->toArray();
+
+            $previousPost = $mapFooterPost(
+                PublicPost::where('type', 'post')
+                    ->where('post_status', true)
+                    ->where('id', '<', $page->id)
+                    ->orderBy('id', 'DESC')
+                    ->first()
+            );
+            $nextPost = $mapFooterPost(
+                PublicPost::where('type', 'post')
+                    ->where('post_status', true)
+                    ->where('id', '>', $page->id)
+                    ->orderBy('id', 'ASC')
+                    ->first()
+            );
+
         return view('livewire.public.posts', [
             'page'          => $page,
             'general'       => $general,
@@ -143,6 +276,13 @@ class Posts extends Component
             'sidebar'       => Sidebar::first(),
             'recent_posts'  => $recent_posts,
             'popular_tools' => $popular_tools,
+            'post_category' => $postCategory,
+            'read_also_posts' => $readAlsoPosts,
+            'related_posts' => $relatedPosts,
+            'spotlight_posts' => $spotlightPosts,
+            'next_up_posts'  => $nextUpPosts,
+            'previous_post'  => $previousPost,
+            'next_post'      => $nextPost,
             'siteTitle'     => env('APP_NAME'),
             'menus'         => Menu::with('children')->where(['parent_id' => 'id'])->orderBy('sort','ASC')->get()->toArray(),
             'header'        => Header::first(),

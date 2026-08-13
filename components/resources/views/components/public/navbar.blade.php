@@ -32,12 +32,6 @@
     </button>
 
     <div class="navbar-nav flex-row order-lg-last m-auto">
-            @if ( $general->search_box_status )
-                <div class="m-auto">
-                    @livewire('public.search-box')
-                </div>
-            @endif
-
             @if ( $general->theme_mode )
                 <div class="nav-item m-auto">
                     @if ( empty( Cookie::get('theme_mode', $general->default_theme_mode) ) || Cookie::get('theme_mode', $general->default_theme_mode) === 'theme-light' )
@@ -91,7 +85,7 @@
                 @if ( $value['type'] == 'button' )
 
                   @if( count($value['children']) )
-                        <div class="nav-item dropdown">
+                        <div class="nav-item dropdown {{ count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides']) ? 'nav-mega' : '' }}">
                             <a class="btn btn-icon dropdown-toggle me-2 {{ $value['class'] }}" href="#navbarDropdownMenuButton{{ $key }}" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
                                @if ( !empty($value['icon']) )
                                  <i class="{{ $value['icon'] }} icon"></i>
@@ -99,7 +93,7 @@
                                {{ __($value['text']) }}
                             </a>
 
-                            <x-public.menu :childs="$value['children']" />
+                            <x-public.menu :childs="$value['children']" :mega="count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides'])" />
                         </div>
 
                   @else
@@ -156,8 +150,8 @@
                 @if ( $value['type'] == 'link' )
 
                   @if( count($value['children']) )
-                        <li class="nav-item dropdown mx-2">
-                            <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="#navbarDropdownMenuChild" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
+                        <li class="nav-item dropdown mx-2 {{ count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides']) ? 'nav-mega' : '' }}">
+                            <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="{{ ( $value['menu_items'] == 'custom' ) ? $value['url'] : route('home') . '/' . $value['url'] }}" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" @if(in_array($value['text'], ['SEO Tools', 'All SEO Tools'])) onclick="if(window.innerWidth >= 992){window.location.href=this.href;return false;}" @endif>
                                @if ( !empty($value['icon']) )
                                  <i class="{{ $value['icon'] }} me-2"></i>
                                @endif
@@ -171,7 +165,7 @@
                                
                             </a>
 
-                            <x-public.menu :childs="$value['children']" />
+                            <x-public.menu :childs="$value['children']" :mega="count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides'])" />
                         </li>
 
                   @else

@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-JGE2B6YCEW');
+        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
 
-        {!! SEO::generate() !!}
+        @include('partials.meta-manager')
+
+        @include('partials.seo-structured-data')
 
         @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
           <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
@@ -53,19 +64,12 @@
 
         <!-- Custom CSS -->
         @php $customCssPath = dirname(base_path()).'/assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css'; @endphp
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
-        @if ( !empty($general->font_family) )
-
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ urlencode($general->font_family) }}&display=swap">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ $general->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
@@ -74,7 +78,7 @@
         @livewireStyles
 
     </head>
-    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }}">
+    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} page-blog-listing">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
           {!! $advanced->insert_body !!}
@@ -101,51 +105,21 @@
                           </div>
                       @endif
 
-                      @if ($general->parallax_status)
-                          <section id="parallax" class="text-white">
-                              <div class="position-relative overflow-hidden text-center bg-light">
-                                <span class="mask" style="
-                                      @if ( $general->overlay_type == 'solid' )
-
-                                      background: {{ $general->solid_color }};opacity: {{ $general->opacity }};
-
-                                      @elseif( $general->overlay_type == 'gradient' )
-
-                                      background: {{ $general->gradient_first_color }};
-                                      background: -moz-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }}  );
-                                      background: -webkit-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      background: linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      opacity: {{ $general->opacity }};
-
-                                      @endif
-
-                                "></span>
-
-                                @if ( !empty($general->parallax_image) )
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ $general->parallax_image }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ $general->parallax_image }}); @endif"></div>
-                                @else
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ asset('assets/img/parallax.jpg') }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ asset('assets/img/parallax.jpg') }}); @endif"></div>
-                                @endif
-
-                                <div class="container position-relative zindex-1">
-                                    <div class="col text-center p-lg-5 mx-auto my-5">
-
-                                        @if ( $page->ads_status && $advertisement->area1_status && $advertisement->area1 != null )
-                                          <x-public.advertisement.area1 :advertisement="$advertisement" />
-                                        @endif
-
-                                        <h1 class="text-white">{{ __('Our Blog') }}</h1>
-                                        <p class="lead text-white letter-normal my-3">{{ __('Stay up to date with the latest news') }}</p>
-
-                                        @if ( $page->ads_status && $advertisement->area2_status && $advertisement->area2 != null )
-                                          <x-public.advertisement.area2 :advertisement="$advertisement" />
-                                        @endif
-                                    </div>
-                                </div>
-
-                              </div>
-                          </section>
-                      @endif
+                      <section class="blog-tools-hero">
+                        <div class="blog-tools-shell blog-tools-hero-grid">
+                          <div>
+                            <nav class="blog-tools-breadcrumb" aria-label="Breadcrumb"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __('Blog') }}</span></nav>
+                            <span class="blog-tools-kicker">{{ __('Insights for better visibility') }}</span>
+                            <h1>{{ __('SEO Insights & Guides') }}</h1>
+                            <p>{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
+                          </div>
+                          <div class="blog-tools-hero-stats" aria-label="Blog overview">
+                            <div><b>{{ __('SEO') }}</b><span>{{ __('Practical guidance') }}</span></div>
+                            <div><b>{{ __('Free') }}</b><span>{{ __('Expert resources') }}</span></div>
+                            <div><b>{{ __('New') }}</b><span>{{ __('Ideas to apply') }}</span></div>
+                          </div>
+                        </div>
+                      </section>
 
                       <div class="container py-4">
 
@@ -158,13 +132,6 @@
                                       <x-public.advertisement.area3 :advertisement="$advertisement" />
                                     @endif
                                     
-                                    @if ( !$general->parallax_status )
-                                      <div class="card card-body d-block mb-3">
-                                            <h1 class="text-default h4">{{ __('Our Blog') }}</h1>
-                                            <p class="text-default">{{ __('Stay up to date with the latest news') }}</p>
-                                      </div>
-                                    @endif
-
                                     @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
                                       <x-public.advertisement.area4 :advertisement="$advertisement" />
                                     @endif
@@ -290,7 +257,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button) ? '10' : '12'}} my-auto {{ $notice->align }}">
@@ -344,10 +313,6 @@
               </script>
             @endif
             
-            @if ( $advanced->footer_status && $advanced->insert_footer != null )
-              {!! $advanced->insert_footer !!}
-            @endif
-
           </div>
 
           @livewireScripts
