@@ -1,21 +1,5 @@
 /* Locally hosted Google Fonts — Latin variable subsets. */
 @font-face {
-  font-family: "Urbanist";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("../fonts/google/urbanist-variable.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "Urbanist";
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("../fonts/google/urbanist-variable-italic.woff2") format("woff2");
-}
-
-@font-face {
   font-family: "Outfit";
   font-style: normal;
   font-weight: 100 900;
@@ -37,4 +21,12 @@
   font-weight: 100 900;
   font-display: swap;
   src: url("../fonts/google/inter-variable-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("../fonts/google/bricolage-grotesque-variable.woff2?v=google-fonts-v9") format("woff2");
 }

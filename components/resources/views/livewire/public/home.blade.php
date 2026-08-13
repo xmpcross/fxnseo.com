@@ -77,23 +77,47 @@
   <section class="home-section home-resources">
     <div class="home-shell">
       <div class="home-section-head"><div><span class="home-kicker">Learn the why</span><h2>Practical SEO resources.</h2></div><a href="{{ route('public.resources') }}">Explore all resources <span>→</span></a></div>
-      <div class="home-resource-grid">
-        @forelse(collect($recent_posts)->take(3) as $post)
-          <a href="{{ url('/blog/'.$post['slug']) }}">
-            <figure class="home-resource-image">
-              <img src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
-            </figure>
-            <div class="home-resource-copy">
-              <span>Guide</span>
-              <h3>{{ $post['title'] }}</h3>
-              <p>{{ Illuminate\Support\Str::limit(strip_tags($post['short_description'] ?? $post['description'] ?? ''), 135) }}</p>
-              <b>Read article →</b>
+      @php $__homeResourcePosts = collect($recent_posts)->take(5)->values(); @endphp
+      @if ($__homeResourcePosts->isNotEmpty())
+        <div class="home-resource-showcase">
+          @php $__leadResource = $__homeResourcePosts->first(); @endphp
+          <article class="home-resource-lead">
+            <a class="home-resource-lead-image" href="{{ url('/blog/'.$__leadResource['slug']) }}">
+              <img src="{{ !empty($__leadResource['featured_image']) ? $__leadResource['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $__leadResource['title'] }}" loading="lazy">
+            </a>
+            <div class="home-resource-lead-overlay"></div>
+            <div class="home-resource-lead-copy">
+              <span class="home-resource-category"><i class="far fa-folder-open" aria-hidden="true"></i> {{ $__leadResource['category_name'] ?? 'Blog' }}</span>
+              <h3><a href="{{ url('/blog/'.$__leadResource['slug']) }}">{{ $__leadResource['title'] }}</a></h3>
+              <p>{{ Illuminate\Support\Str::limit(strip_tags($__leadResource['short_description'] ?? $__leadResource['description'] ?? ''), 175) }}</p>
+              <div class="home-resource-meta">
+                <span>{{ $resource_author }}</span>
+                @if (!empty($__leadResource['published_at']))<time datetime="{{ \Illuminate\Support\Carbon::parse($__leadResource['published_at'])->toDateString() }}">{{ \Illuminate\Support\Carbon::parse($__leadResource['published_at'])->format('F j, Y') }}</time>@endif
+              </div>
             </div>
-          </a>
-        @empty
-          <a class="home-resource-feature" href="{{ route('public.resources') }}"><span>Resource library</span><h3>Build stronger search foundations.</h3><p>Explore practical guidance for improving visibility, content, and technical performance.</p><b>Browse resources →</b></a>
-        @endforelse
-      </div>
+          </article>
+
+          <div class="home-resource-side-grid">
+            @foreach ($__homeResourcePosts->slice(1, 4) as $post)
+              <article class="home-resource-card">
+                <a class="home-resource-card-image" href="{{ url('/blog/'.$post['slug']) }}">
+                  <img src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
+                </a>
+                <div class="home-resource-card-copy">
+                  <span class="home-resource-category"><i class="far fa-folder-open" aria-hidden="true"></i> {{ $post['category_name'] ?? 'Blog' }}</span>
+                  <h3><a href="{{ url('/blog/'.$post['slug']) }}">{{ $post['title'] }}</a></h3>
+                  <div class="home-resource-meta">
+                    <span>{{ $resource_author }}</span>
+                    @if (!empty($post['published_at']))<time datetime="{{ \Illuminate\Support\Carbon::parse($post['published_at'])->toDateString() }}">{{ \Illuminate\Support\Carbon::parse($post['published_at'])->format('F j, Y') }}</time>@endif
+                  </div>
+                </div>
+              </article>
+            @endforeach
+          </div>
+        </div>
+      @else
+        <div class="home-empty"><a href="{{ route('public.resources') }}">{{ __('Browse the resource library') }} →</a></div>
+      @endif
     </div>
   </section>
 

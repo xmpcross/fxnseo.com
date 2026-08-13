@@ -78,6 +78,7 @@ use App\Http\Livewire\Admin\Settings\Languages\Translations\Edit as AdminLanguag
 
 use App\Http\Livewire\Admin\Settings\Redirects\Index as AdminRedirectsIndex;
 use App\Http\Livewire\Admin\Settings\Advanced as AdminAdvancedIndex;
+use App\Http\Livewire\Admin\Settings\Seo as AdminSeoIndex;
 
 use App\Http\Livewire\Admin\Indexing\Submit as AdminIndexingSubmitIndex;
 use App\Http\Livewire\Admin\Indexing\History as AdminIndexingHistoryIndex;
@@ -345,6 +346,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isadmin', 'localize
 		Route::group(['prefix' => 'settings'], function () {
 
 			Route::get('/general', AdminGeneralIndex::class)->name('admin.general.index');
+			Route::get('/seo', AdminSeoIndex::class)->name('admin.seo.index');
 			Route::get('/menus', AdminMenusIndex::class)->name('admin.menus.index');
 			Route::get('/header', AdminHeaderIndex::class)->name('admin.header.index');
 

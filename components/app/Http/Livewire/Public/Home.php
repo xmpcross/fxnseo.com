@@ -120,9 +120,12 @@ class Home extends Component
                                         $translatedPage->slug           = $page->slug;
                                         $translatedPage->target         = $page->target;
                                         $translatedPage->featured_image = $page->featured_image;
+                                        $translatedPage->published_at   = $page->created_at;
+                                        $category = $page->category_id ? PageCategory::find($page->category_id) : null;
+                                        $translatedPage->category_name  = $category->title ?? __('Blog');
                                     }
                                     return $translatedPage;
-                                })->take( Sidebar::first()->post_count )->filter()->toArray();
+                                })->take(max(5, (int) Sidebar::first()->post_count))->filter()->toArray();
 
             $popular_tools = PublicPage::where('type', 'tool')
                                 ->where('popular', true)
@@ -150,6 +153,7 @@ class Home extends Component
                 'tool_with_categories' => $tool_with_categories,
                 'tools'                => $tools,
                 'recent_posts'         => $recent_posts,
+                'resource_author'      => User::where('is_admin', true)->value('fullname') ?: config('app.name'),
                 'page'                 => $page,
                 'advertisement'        => $advertisement
             ])->layout('layouts.public', [

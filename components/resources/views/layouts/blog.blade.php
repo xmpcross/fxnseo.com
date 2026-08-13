@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-JGE2B6YCEW');
+        </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
 
-        {!! SEO::generate() !!}
+        @include('partials.meta-manager')
 
-        {{-- Structured data: SEO / GEO / AEO --}}
-        @php
-          $__ldLogo = (isset($header) && !empty($header->logo_light)) ? $header->logo_light : url('/assets/img/logo-light.svg');
-          $__schemas = [
-            [ '@context' => 'https://schema.org', '@type' => 'Organization', 'name' => env('APP_NAME'), 'url' => url('/'), 'logo' => $__ldLogo, 'sameAs' => ['https://www.facebook.com/fxnseo/', 'https://x.com/fxnseo'] ],
-            [ '@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => env('APP_NAME'), 'url' => url('/'), 'description' => 'Free online SEO tools — 60+ browser-based utilities for keyword analysis, backlinks, rank tracking, meta tags, schema, and YouTube.' ],
-          ];
-        @endphp
-        @foreach ($__schemas as $__s)
-        <script type="application/ld+json">{!! json_encode($__s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
-        @endforeach
+        @include('partials.seo-structured-data')
 
         @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
           <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
@@ -68,14 +67,9 @@
         <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
-        <style>
-          body, p, button, input, select, textarea, .card, .card .card-body {
-            font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif !important;
-          }
-        </style>
-
         <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}

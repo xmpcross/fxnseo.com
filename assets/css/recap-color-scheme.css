@@ -1,0 +1,271 @@
+/*
+ * Global light/dark palette mapped from the Recap theme.
+ * This file intentionally loads last so every public template shares one
+ * semantic color system, including custom page and blog components.
+ */
+:root,
+body.theme-light {
+  color-scheme: light;
+  --site-bg: #fafafa;
+  --site-surface: #ffffff;
+  --site-surface-alt: #fafafa;
+  --site-text: #161616;
+  --site-text-muted: #737373;
+  --site-border: #dbdbdb;
+  --site-accent: #206bea;
+  --site-accent-hover: #3b7ded;
+  --site-button-text: #ffffff;
+  --site-control-bg: #ffffff;
+  --site-header-bg: #ffffff;
+  --site-footer-bg: #fafafa;
+  --site-shadow: rgba(22, 22, 22, 0.08);
+  --bs-body-bg: var(--site-bg);
+  --bs-body-color: var(--site-text);
+  --bs-primary: var(--site-accent);
+  --bs-primary-rgb: 32, 107, 234;
+  --bs-border-color: var(--site-border);
+  --content-primary: var(--site-accent);
+  --content-ink: var(--site-text);
+  --content-muted: var(--site-text-muted);
+  --content-line: var(--site-border);
+  --content-soft: var(--site-surface-alt);
+}
+
+body.theme-dark {
+  color-scheme: dark;
+  --site-bg: #161616;
+  --site-surface: #232323;
+  --site-surface-alt: #232323;
+  --site-text: #ffffff;
+  --site-text-muted: #cdcdcd;
+  --site-border: #343434;
+  --site-accent: #ffffff;
+  --site-accent-hover: #cdcdcd;
+  --site-button-text: #ffffff;
+  --site-control-bg: #232323;
+  --site-header-bg: #232323;
+  --site-footer-bg: #161616;
+  --site-shadow: rgba(0, 0, 0, 0.28);
+  --bs-body-bg: var(--site-bg);
+  --bs-body-color: var(--site-text);
+  --bs-primary: #206bea;
+  --bs-primary-rgb: 32, 107, 234;
+  --bs-border-color: var(--site-border);
+  --content-primary: var(--site-accent);
+  --content-ink: var(--site-text);
+  --content-muted: var(--site-text-muted);
+  --content-line: var(--site-border);
+  --content-soft: var(--site-surface-alt);
+}
+
+body {
+  color: var(--site-text) !important;
+}
+
+body .page-wrapper,
+body .page-content {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body .text-dark {
+  color: var(--site-text) !important;
+}
+
+body .text-muted,
+body .form-text {
+  color: var(--site-text-muted);
+}
+
+body a:not(.btn):hover {
+  color: var(--site-accent-hover);
+}
+
+body .btn-primary,
+body .bg-primary,
+body .bg-gradient-primary {
+  background-color: #206bea !important;
+  border-color: #206bea !important;
+}
+
+body .btn-primary:hover {
+  background-color: #3b7ded !important;
+  border-color: #3b7ded !important;
+}
+
+body nav.navbar {
+  background: var(--site-header-bg) !important;
+  border-bottom-color: var(--site-border) !important;
+}
+
+body nav.navbar .navbar-brand,
+body nav.navbar .nav-link,
+body nav.navbar .dropdown-item {
+  color: var(--site-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body .dropdown-menu,
+body .modal-content,
+body .offcanvas,
+body .popover,
+body .card,
+body .list-group-item,
+body .accordion-item,
+body .accordion-button,
+body .form-fieldset {
+  background-color: var(--site-surface) !important;
+  border-color: var(--site-border) !important;
+  color: var(--site-text) !important;
+}
+
+body .dropdown-item:hover,
+body .dropdown-item:focus,
+body .accordion-button:not(.collapsed) {
+  background-color: var(--site-surface-alt) !important;
+  color: var(--site-text) !important;
+}
+
+body .form-control,
+body .form-select,
+body .input-group-text,
+body textarea,
+body input:not([type="checkbox"]):not([type="radio"]):not([type="range"]) {
+  background-color: var(--site-control-bg) !important;
+  border-color: var(--site-border) !important;
+  color: var(--site-text) !important;
+}
+
+body .form-control::placeholder,
+body textarea::placeholder,
+body input::placeholder {
+  color: var(--site-text-muted) !important;
+  opacity: 0.78;
+}
+
+body table,
+body th,
+body td,
+body hr {
+  border-color: var(--site-border) !important;
+}
+
+body footer.footer,
+body.theme-dark footer.footer {
+  background: var(--site-footer-bg) !important;
+  color: var(--site-text) !important;
+}
+
+body footer.footer h3,
+body footer.footer .nav-link,
+body footer.footer .footer-subheading,
+body footer.footer .footer-subheading a,
+body footer.footer .ftr-col-main p {
+  color: var(--site-text) !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+body footer.footer .ftr-col-main p,
+body footer.footer .nav-link {
+  color: var(--site-text-muted) !important;
+}
+
+body footer.footer .footer-subgroup-hover > ul,
+body footer.footer .footer-youtube-tools .footer-subgroup-hover > ul {
+  background: var(--site-surface) !important;
+  border-color: var(--site-border) !important;
+  box-shadow: 0 18px 45px var(--site-shadow) !important;
+}
+
+body .bottom-footer,
+body.theme-dark .bottom-footer {
+  background: var(--site-footer-bg) !important;
+  border-color: var(--site-border) !important;
+}
+
+body .bottom-footer .footer-copyright,
+body .bottom-footer-menu a {
+  color: var(--site-text-muted) !important;
+}
+
+/* Page-specific variables inherit the same global palette. */
+body .home-content {
+  --home-ink: var(--site-text);
+  --home-muted: var(--site-text-muted);
+  --home-green: var(--site-accent);
+  --home-bright: var(--site-accent-hover);
+  --home-mint: var(--site-surface-alt);
+  --home-paper: var(--site-bg);
+  --home-line: var(--site-border);
+  --home-white: var(--site-surface);
+  background: transparent !important;
+  color: var(--site-text);
+}
+
+body .tools-content {
+  --tools-ink: var(--site-text);
+  --tools-muted: var(--site-text-muted);
+  --tools-green: var(--site-accent);
+  --tools-mint: var(--site-surface-alt);
+  --tools-paper: var(--site-bg);
+  --tools-line: var(--site-border);
+  background: transparent !important;
+  color: var(--site-text);
+}
+
+body.theme-dark .tools-content,
+body.theme-dark .tools-directory,
+body.theme-dark .tools-filter-wrap {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+/* Page roots inherit the active theme instead of carrying page-specific colors. */
+body.page-blog-listing .page-content,
+body.page-slug-about-us .page-content,
+body.page-slug-faqs .page-content,
+body.page-slug-contact .page-content,
+body.page-slug-backlink-monitoring-guide .page-content,
+body.page-slug-link-opportunity-guide .page-content,
+body.page-slug-seo-audit-guide .page-content,
+body.page-type-post .page-content,
+body.route-home .home-content,
+body.route-tools .tools-content,
+body.route-tools .tools-directory {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.theme-dark .home-tool-card,
+body.theme-dark .home-resource-grid > a,
+body.theme-dark .home-steps article,
+body.theme-dark .home-empty,
+body.theme-dark .tools-card,
+body.theme-dark .tools-search,
+body.theme-dark .tools-category-nav a,
+body.theme-dark .tools-hero-stats div,
+body.theme-dark .faq-category,
+body.theme-dark .faq-accordion,
+body.theme-dark .pillar-body,
+body.theme-dark .pillar-toc,
+body.theme-dark .post-reading-card,
+body.theme-dark .post-questions,
+body.theme-dark .post-related,
+body.theme-dark .post-recommended {
+  background: var(--site-surface) !important;
+  border-color: var(--site-border) !important;
+  color: var(--site-text) !important;
+}
+
+body.theme-dark .tools-filter-wrap {
+  background: rgba(22, 22, 22, 0.94) !important;
+}
+
+body.theme-dark .home-hero,
+body.theme-dark .tools-hero {
+  background: radial-gradient(circle at 82% 18%, rgba(32, 107, 234, 0.22), transparent 30%), #232323 !important;
+}
+
+body.theme-dark img {
+  color-scheme: only light;
+}
