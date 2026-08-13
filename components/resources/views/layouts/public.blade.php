@@ -7,6 +7,39 @@
 
         {!! SEO::generate() !!}
 
+        {{-- Structured data: SEO / GEO / AEO --}}
+        @php
+          $__ldLogo = (isset($header) && !empty($header->logo_light)) ? $header->logo_light : url('/assets/img/logo-light.svg');
+          $__schemas = [
+            [
+              '@context' => 'https://schema.org', '@type' => 'Organization',
+              'name' => env('APP_NAME'), 'url' => url('/'),
+              'logo' => $__ldLogo,
+              'sameAs' => ['https://www.facebook.com/fxnseo/', 'https://x.com/fxnseo'],
+            ],
+            [
+              '@context' => 'https://schema.org', '@type' => 'WebSite',
+              'name' => env('APP_NAME'), 'url' => url('/'),
+              'description' => 'Free online SEO tools — 60+ browser-based utilities for keyword analysis, backlinks, rank tracking, meta tags, schema, and YouTube.',
+            ],
+          ];
+          if ( (($page->type ?? '') === 'tool') && isset($pageTrans) ) {
+            $__schemas[] = [
+              '@context' => 'https://schema.org', '@type' => 'WebApplication',
+              'name' => __($pageTrans->title), 'url' => url()->current(),
+              'applicationCategory' => 'BusinessApplication',
+              'operatingSystem' => 'All (web-based)',
+              'browserRequirements' => 'Requires JavaScript',
+              'offers' => ['@type' => 'Offer', 'price' => '0', 'priceCurrency' => 'USD'],
+              'description' => trim(strip_tags((string) ($pageTrans->short_description ?? ''))),
+              'publisher' => ['@type' => 'Organization', 'name' => env('APP_NAME'), 'url' => url('/')],
+            ];
+          }
+        @endphp
+        @foreach ($__schemas as $__s)
+        <script type="application/ld+json">{!! json_encode($__s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+        @endforeach
+
         @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
           <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
         @endforeach
@@ -53,19 +86,14 @@
 
         <!-- Custom CSS -->
         @php $customCssPath = dirname(base_path()).'/assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css'; @endphp
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
-        @if ( !empty($general->font_family) )
-
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ urlencode($general->font_family) }}&display=swap">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ $general->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <style>
+          body, p, button, input, select, textarea, .card, .card .card-body {
+            font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif !important;
+          }
+        </style>
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
@@ -74,7 +102,7 @@
         @livewireStyles
 
     </head>
-    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }}">
+    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }} {{ (isset($page) && isset($page->slug)) ? 'page-slug-'.$page->slug : '' }}">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
           {!! $advanced->insert_body !!}
@@ -146,8 +174,38 @@
 
                       <div class="container py-4">
 
+                          @php
+                            $__isLegal = in_array($page->slug ?? '', ['terms-conditions','privacy-policy','cookie-information','faqs']);
+                            $__toc = [];
+                            $__legalDesc = $pageTrans->description ?? '';
+                            if ($__isLegal && $__legalDesc) {
+                              // Prefer h2 sections; if the page uses a single h2 title + h3 sections, build the TOC from h3.
+                              $__hl = (preg_match_all('/<h2[\s>]/i', $__legalDesc) >= 2) ? 2 : 3;
+                              $__i = 0;
+                              $__legalDesc = preg_replace_callback('#<h'.$__hl.'([^>]*)>(.*?)</h'.$__hl.'>#is', function($m) use (&$__toc, &$__i, $__hl){
+                                $__i++; $id = 'sec-'.$__i; $text = trim(strip_tags($m[2]));
+                                $__toc[] = ['id' => $id, 'text' => $text];
+                                return '<h'.$__hl.' id="'.$id.'"'.$m[1].'>'.$m[2].'</h'.$__hl.'>';
+                              }, $__legalDesc);
+                            }
+                          @endphp
+
                           <div class="row">
-                              <div class="{{ ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' }}">
+
+                              @if ( $__isLegal && count($__toc) )
+                                <div class="col-lg-3 legal-toc-col">
+                                  <nav class="legal-toc">
+                                    <div class="legal-toc-title">{{ __('On this page') }}</div>
+                                    <ul>
+                                      @foreach ($__toc as $__t)
+                                        <li><a href="#{{ $__t['id'] }}">{{ $__t['text'] }}</a></li>
+                                      @endforeach
+                                    </ul>
+                                  </nav>
+                                </div>
+                              @endif
+
+                              <div class="{{ $__isLegal ? 'col-lg-9' : ( ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' ) }}">
 
                                   <div class="page">
                                     {{ $slot }}
@@ -162,7 +220,7 @@
                                               </div>
                                           @endif
 
-                                          <div class="card-body {{ ($general->author_box_status && !in_array($page->type ?? '', ['tool','home','page'])) ? 'pb-0' : ''}}">
+                                          <div class="card-body {{ ($general->author_box_status && !in_array($page->type ?? '', ['tool','home','page','contact','report'])) ? 'pb-0' : ''}}">
                                               @if ( Auth::user() && Auth::user()->is_admin )
                                                 <div class="d-flex justify-content-center mb-3">
                                                   @switch($page->type)
@@ -184,7 +242,22 @@
                                                 <x-public.advertisement.area4 :advertisement="$advertisement" />
                                               @endif
 
-                                              {!! $pageTrans->description !!}
+                                              @if ( ($page->type ?? '') == 'report' && !empty($pageTrans->description) )
+                                                @php
+                                                  // Reveal ~25% of the report description, with a "View More" link.
+                                                  $__rblocks = preg_split('/(?=<(?:h[1-6]|p|ul|ol|table|div|section|blockquote|pre)\b)/i', $pageTrans->description, -1, PREG_SPLIT_NO_EMPTY);
+                                                  $__rshow   = (int) max(1, ceil(count($__rblocks) / 4));
+                                                  $__rfirst  = implode('', array_slice($__rblocks, 0, $__rshow));
+                                                  $__rrest   = trim(implode('', array_slice($__rblocks, $__rshow)));
+                                                @endphp
+                                                {!! $__rfirst !!}
+                                                @if ( $__rrest !== '' )
+                                                  <a href="javascript:void(0)" class="tool-desc-more-link" onclick="this.nextElementSibling.style.display='block';this.style.display='none';return false;">{{ __('View More') }}</a>
+                                                  <div class="tool-desc-more-content" style="display:none;">{!! $__rrest !!}</div>
+                                                @endif
+                                              @else
+                                                {!! $__isLegal ? $__legalDesc : $pageTrans->description !!}
+                                              @endif
 
                                               @if ( $page->ads_status && $advertisement->area5_status && $advertisement->area5 != null )
                                                 <x-public.advertisement.area5 :advertisement="$advertisement" />
@@ -207,7 +280,7 @@
                                                   @default
                                               @endswitch
 
-                                            @if ( $general->share_icons_status )
+                                            @if ( $general->share_icons_status && !in_array($page->type ?? '', ['contact','page','report']) )
                                               <div class="social-share text-center">
                                                 <div class="is-divider"></div>
                                                 <div class="share-icons relative">
@@ -271,7 +344,7 @@
                                               </div>
                                             @endif
 
-                                            @if ( $general->author_box_status && !in_array($page->type ?? '', ['tool','home','page']) )
+                                            @if ( $general->author_box_status && !in_array($page->type ?? '', ['tool','home','page','contact','report']) )
                                               <hr class="horizontal dark">
                                               <div class="my-3">
                                                 <div class="row">
@@ -318,7 +391,7 @@
                                   </section>
                               </div>
 
-                              @if ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status)
+                              @if ( !$__isLegal && ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) )
                                 <div class="col-lg-3 ml-auto sidebars">
                                     <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
                                 </div>
@@ -332,24 +405,22 @@
 
             <x-public.footer :footer="$footer" :general="$general" :socials="$socials" />
 
-            <!-- Extra container under the footer -->
-            <div class="footer-extra">
-                <div class="container footer-extra-container">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 footer-extra-left">
-                            Copyrights &copy; 2026. All Rights Reserved by fxnSEO.com
-                        </div>
-                        <div class="col-md-6 footer-extra-right text-md-end">
-                            <a href="{{ route('home') }}/terms-conditions">Terms &amp; Conditions</a> |
-                            <a href="{{ route('home') }}/privacy-policy">Privacy Policy</a> |
-                            <a href="{{ route('home') }}/cookie-information">Cookie Information</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Theme JS -->
             <script src="{{ asset('assets/js/main.min.js') }}" defer></script>
+
+            <!-- Sticky navbar shadow: only when the sticky menu is activated (scrolled) -->
+            <script>
+              (function(){
+                var nav = document.querySelector('nav.navbar');
+                if (!nav || !nav.classList.contains('position-sticky')) return;
+                function onScroll(){
+                  if (window.scrollY > 10) nav.classList.add('navbar-stuck');
+                  else nav.classList.remove('navbar-stuck');
+                }
+                window.addEventListener('scroll', onScroll, { passive: true });
+                onScroll();
+              })();
+            </script>
 
             @if ( $general->lazy_loading )
               <script src="{{ asset('assets/js/lazysizes.min.js') }}" async></script>

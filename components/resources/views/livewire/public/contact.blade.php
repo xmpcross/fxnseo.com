@@ -1,4 +1,6 @@
 <div id="page-content" class="py-3">
+  <div class="row g-4">
+    <div class="col-lg-7">
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
@@ -49,4 +51,45 @@
             </div>
         </div>
     </form>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="contact-methods">
+        <h3 class="h5 fw-bold mb-2">{{ __('Get in touch') }}</h3>
+        <p class="text-sm text-secondary mb-4">{{ __('Have a question, a suggestion, or found an issue? Reach out — we are here to help.') }}</p>
+
+        <div class="contact-method d-flex align-items-start mb-3">
+          <div class="contact-method-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="fw-bold">{{ __('Email') }}</div>
+            <a href="mailto:contact@fxnseo.com">contact@fxnseo.com</a>
+          </div>
+        </div>
+
+        <div class="contact-method d-flex align-items-start mb-3">
+          <div class="contact-method-icon"><i class="fas fa-headset"></i></div>
+          <div>
+            <div class="fw-bold">{{ __('Support') }}</div>
+            <a href="mailto:support@fxnseo.com">support@fxnseo.com</a>
+          </div>
+        </div>
+
+        <div class="contact-method d-flex align-items-start mb-3">
+          <div class="contact-method-icon"><i class="fas fa-globe"></i></div>
+          <div>
+            <div class="fw-bold">{{ __('Website') }}</div>
+            <a href="https://fxnseo.com">fxnseo.com</a>
+          </div>
+        </div>
+
+        <div class="contact-method d-flex align-items-start">
+          <div class="contact-method-icon"><i class="fas fa-clock"></i></div>
+          <div>
+            <div class="fw-bold">{{ __('Response time') }}</div>
+            <span class="text-sm text-secondary">{{ __('Within 1-2 business days') }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -7,6 +7,18 @@
 
         {!! SEO::generate() !!}
 
+        {{-- Structured data: SEO / GEO / AEO --}}
+        @php
+          $__ldLogo = (isset($header) && !empty($header->logo_light)) ? $header->logo_light : url('/assets/img/logo-light.svg');
+          $__schemas = [
+            [ '@context' => 'https://schema.org', '@type' => 'Organization', 'name' => env('APP_NAME'), 'url' => url('/'), 'logo' => $__ldLogo, 'sameAs' => ['https://www.facebook.com/fxnseo/', 'https://x.com/fxnseo'] ],
+            [ '@context' => 'https://schema.org', '@type' => 'WebSite', 'name' => env('APP_NAME'), 'url' => url('/'), 'description' => 'Free online SEO tools — 60+ browser-based utilities for keyword analysis, backlinks, rank tracking, meta tags, schema, and YouTube.' ],
+          ];
+        @endphp
+        @foreach ($__schemas as $__s)
+        <script type="application/ld+json">{!! json_encode($__s, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}</script>
+        @endforeach
+
         @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
           <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
         @endforeach
@@ -53,19 +65,14 @@
 
         <!-- Custom CSS -->
         @php $customCssPath = dirname(base_path()).'/assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css'; @endphp
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
-        @if ( !empty($general->font_family) )
-
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ urlencode($general->font_family) }}&display=swap">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ $general->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <style>
+          body, p, button, input, select, textarea, .card, .card .card-body {
+            font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif !important;
+          }
+        </style>
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
@@ -74,7 +81,7 @@
         @livewireStyles
 
     </head>
-    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }}">
+    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} page-blog-listing">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
           {!! $advanced->insert_body !!}
@@ -134,8 +141,8 @@
                                           <x-public.advertisement.area1 :advertisement="$advertisement" />
                                         @endif
 
-                                        <h1 class="text-white">{{ __('Our Blog') }}</h1>
-                                        <p class="lead text-white letter-normal my-3">{{ __('Stay up to date with the latest news') }}</p>
+                                        <h1 class="text-white">{{ __('SEO Insights & Guides') }}</h1>
+                                        <p class="lead text-white letter-normal my-3">{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
 
                                         @if ( $page->ads_status && $advertisement->area2_status && $advertisement->area2 != null )
                                           <x-public.advertisement.area2 :advertisement="$advertisement" />
@@ -160,8 +167,8 @@
                                     
                                     @if ( !$general->parallax_status )
                                       <div class="card card-body d-block mb-3">
-                                            <h1 class="text-default h4">{{ __('Our Blog') }}</h1>
-                                            <p class="text-default">{{ __('Stay up to date with the latest news') }}</p>
+                                            <h1 class="text-default h4">{{ __('SEO Insights & Guides') }}</h1>
+                                            <p class="text-default">{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
                                       </div>
                                     @endif
 

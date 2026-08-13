@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Our commitment to quality and privacy">
+  <defs>
+    <clipPath id="c3"><rect x="0" y="0" width="400" height="300" rx="16"/></clipPath>
+    <radialGradient id="v3" cx="50%" cy="48%" r="72%"><stop offset="55%" stop-color="#040c13" stop-opacity="0"/><stop offset="100%" stop-color="#040c13" stop-opacity="0.22"/></radialGradient>
+  </defs>
+  <rect x="0" y="0" width="400" height="300" rx="16" fill="none"/>
+  <g clip-path="url(#c3)">
+    <circle cx="200" cy="150" r="120" fill="#e3ecff"/>
+    <!-- shackle -->
+    <path d="M172 152 v-20 a28 28 0 0 1 56 0 v20" fill="none" stroke="#2b5df5" stroke-width="13" stroke-linecap="round"/>
+    <!-- lock body -->
+    <rect x="158" y="148" width="84" height="74" rx="14" fill="#0046be"/>
+    <!-- keyhole -->
+    <circle cx="200" cy="180" r="10" fill="#ffffff"/>
+    <rect x="195" y="180" width="10" height="24" rx="4" fill="#ffffff"/>
+  </g>
+</svg>

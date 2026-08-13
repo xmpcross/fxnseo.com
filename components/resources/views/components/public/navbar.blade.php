@@ -190,6 +190,12 @@
                 @endif
 
             @endforeach
+
+            <li class="nav-item mx-2">
+                <a class="nav-link ps-2 d-flex align-items-center" href="{{ route('tools.directory') }}">
+                    {{ __('Tools') }}
+                </a>
+            </li>
             <!-- End::Navbar Left -->
         </ul>
     </div>

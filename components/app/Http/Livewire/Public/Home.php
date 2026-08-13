@@ -144,9 +144,10 @@ class Home extends Component
                 'general'              => $general,
                 'tool_with_categories' => $tool_with_categories,
                 'tools'                => $tools,
+                'recent_posts'         => $recent_posts,
                 'page'                 => $page,
                 'advertisement'        => $advertisement
-            ])->layout('layouts.public', [
+            ])->layout('layouts.homepage', [
                 'page'          => $page,
                 'pageTrans'     => $pageTrans,
                 'general'       => $general,

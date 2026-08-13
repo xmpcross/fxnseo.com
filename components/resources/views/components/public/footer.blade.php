@@ -1,3 +1,4 @@
+      <style>footer.footer ul li a{font-family:"Urbanist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}</style>
       <footer class="footer pt-3 mt-3 pb-0">
 
        @if ( $general->social_status == true && count($socials) > 0 )
@@ -159,3 +160,15 @@
           </div>
         </div>
       </footer>
+      <div class="footer-extra">
+        <div class="container footer-extra-container">
+          <div class="row align-items-center">
+            <div class="col-md-6 footer-extra-left">Copyrights &copy; {{ date('Y') }}. All Rights Reserved by fxnSEO.com</div>
+            <div class="col-md-6 footer-extra-right text-md-end">
+              <a href="{{ url('/terms-conditions') }}">Terms &amp; Conditions</a>
+              <a href="{{ url('/privacy-policy') }}">Privacy Policy</a>
+              <a href="{{ url('/cookie-information') }}">Cookie Information</a>
+            </div>
+          </div>
+        </div>
+      </div>
