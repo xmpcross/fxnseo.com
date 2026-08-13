@@ -95,6 +95,19 @@
           }
         </style>
 
+        <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
+        @if (isset($page) && in_array($page->slug ?? '', ['about-us', 'faqs', 'contact']))
+          <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        @endif
+
+        @if (Route::is('home'))
+          <link type="text/css" href="{{ asset('assets/css/home-content.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-content.css') ?: '1' }}" rel="stylesheet">
+        @endif
+
+        @if (Route::is('tools'))
+          <link type="text/css" href="{{ asset('assets/css/tools-content.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/tools-content.css') ?: '1' }}" rel="stylesheet">
+        @endif
+
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
         @endif
@@ -102,7 +115,7 @@
         @livewireStyles
 
     </head>
-    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }} {{ (isset($page) && isset($page->slug)) ? 'page-slug-'.$page->slug : '' }}">
+    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ Route::is('home') ? 'route-home' : '' }} {{ Route::is('tools') ? 'route-tools' : '' }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }} {{ (isset($page) && isset($page->slug)) ? 'page-slug-'.$page->slug : '' }}">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
           {!! $advanced->insert_body !!}
@@ -129,7 +142,25 @@
                           </div>
                       @endif
 
-                      @if ($general->parallax_status)
+                      @if (($page->slug ?? '') === 'about-us')
+                          <section class="about-tools-hero">
+                            <div class="about-tools-shell about-tools-hero-grid">
+                              <div>
+                                <nav class="about-tools-breadcrumb" aria-label="Breadcrumb">
+                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
+                                </nav>
+                                <span class="about-tools-kicker">{{ __('Built for clearer decisions') }}</span>
+                                <h1>{{ __($pageTrans->title) }}</h1>
+                                <p>{{ __($pageTrans->subtitle) }}</p>
+                              </div>
+                              <div class="about-tools-hero-stats" aria-label="Our principles">
+                                <div><b>{{ __('Free') }}</b><span>{{ __('Tools to use') }}</span></div>
+                                <div><b>{{ __('Fast') }}</b><span>{{ __('Focused results') }}</span></div>
+                                <div><b>{{ __('Private') }}</b><span>{{ __('Browser first') }}</span></div>
+                              </div>
+                            </div>
+                          </section>
+                      @elseif ($general->parallax_status)
                           <section id="parallax" class="text-white">
                               <div class="position-relative overflow-hidden text-center bg-light">
                                 <span class="mask" style="
@@ -188,6 +219,30 @@
                                 return '<h'.$__hl.' id="'.$id.'"'.$m[1].'>'.$m[2].'</h'.$__hl.'>';
                               }, $__legalDesc);
                             }
+
+                            $__renderedDescription = $__isLegal ? $__legalDesc : ($pageTrans->description ?? '');
+                            if (($page->slug ?? '') === 'about-us' && $__renderedDescription !== '' && class_exists('DOMDocument')) {
+                              $__dom = new \DOMDocument('1.0', 'UTF-8');
+                              $__previousLibxmlState = libxml_use_internal_errors(true);
+                              $__dom->loadHTML('<?xml encoding="UTF-8"><div id="about-description-root">'.$__renderedDescription.'</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+                              $__root = $__dom->getElementById('about-description-root');
+                              if ($__root) {
+                                $__nodes = [];
+                                foreach ($__root->childNodes as $__node) { $__nodes[] = $__node; }
+                                foreach ($__nodes as $__node) {
+                                  if ($__node instanceof \DOMElement && preg_match('/(^|\s)about-section(\s|$)/', $__node->getAttribute('class'))) {
+                                    $__container = $__dom->createElement('div');
+                                    $__container->setAttribute('class', 'container about-section-container');
+                                    $__root->replaceChild($__container, $__node);
+                                    $__container->appendChild($__node);
+                                  }
+                                }
+                                $__renderedDescription = '';
+                                foreach ($__root->childNodes as $__node) { $__renderedDescription .= $__dom->saveHTML($__node); }
+                              }
+                              libxml_clear_errors();
+                              libxml_use_internal_errors($__previousLibxmlState);
+                            }
                           @endphp
 
                           <div class="row">
@@ -213,7 +268,7 @@
 
                                   <section id="content-box" class="mb-3 page-{{ $page->id }}">
                                       <div class="card">
-                                          @if ( !$general->parallax_status && $page->type != 'tool' )
+                                          @if ( !$general->parallax_status && $page->type != 'tool' && ($page->slug ?? '') !== 'about-us' )
                                               <div class="card-header d-block {{ ($general->heading_background !== 'bg-white') ? $general->heading_background : 'bg-transparent' }}">
                                                     <h1 class="page-title h5 {{ ($general->heading_background !== 'bg-white') ? 'text-white' : ''}}">{{ __($pageTrans->title) }}</h1>
                                                     <p class="text-sm mb-0 {{ ($general->heading_background !== 'bg-white') ? 'text-white' : ''}}">{{ __($pageTrans->subtitle) }}</p>
@@ -256,7 +311,7 @@
                                                   <div class="tool-desc-more-content" style="display:none;">{!! $__rrest !!}</div>
                                                 @endif
                                               @else
-                                                {!! $__isLegal ? $__legalDesc : $pageTrans->description !!}
+                                                {!! $__renderedDescription !!}
                                               @endif
 
                                               @if ( $page->ads_status && $advertisement->area5_status && $advertisement->area5 != null )
@@ -570,10 +625,6 @@
               </script>
             @endif
             
-            @if ( $advanced->footer_status && $advanced->insert_footer != null )
-              {!! $advanced->insert_footer !!}
-            @endif
-
           </div>
 
           @livewireScripts

@@ -1894,3 +1894,29 @@ body.page-slug-faqs .faq-tool-link:hover{ text-decoration: underline; }
 
 /* ===== FAQs TOC anchor offset ===== */
 body.page-slug-faqs #content-box h2[id]{ scroll-margin-top: 90px; }
+
+/* ===== Global primary color ===== */
+:root{
+  --bs-primary:#275bf0;
+  --bs-primary-rgb:39,91,240;
+  --bs-link-color:#275bf0;
+  --bs-link-hover-color:#1d46c5;
+  --color-unstable-human-blue:#275bf0;
+  --color-unstable-light-blue:#5b7df5;
+  --color-unstable-link-blue:#275bf0;
+  --color-unstable-dark-blue:#1d46c5;
+}
+.text-primary,.link-primary,.page-link{color:#275bf0!important}
+.bg-primary,.badge.bg-primary,.badge-primary,.progress-bar,.dropdown-item.active,.dropdown-item:active{background-color:#275bf0!important}
+.border-primary,.form-check-input:checked,.form-selectgroup-input:checked+.form-selectgroup-label{border-color:#275bf0!important}
+.form-check-input:checked{background-color:#275bf0!important}
+.btn-primary{background-color:#275bf0!important;border-color:#275bf0!important}
+.btn-primary:hover,.btn-primary:focus,.btn-primary:active,.btn-primary.active,.show>.btn-primary.dropdown-toggle{background-color:#1d46c5!important;border-color:#1d46c5!important}
+.btn-outline-primary{color:#275bf0!important;border-color:#275bf0!important}
+.btn-outline-primary:hover,.btn-outline-primary:focus,.btn-outline-primary:active{background-color:#275bf0!important;border-color:#275bf0!important;color:#fff!important}
+.bg-gradient-primary{background-image:linear-gradient(310deg,#275bf0,#5b7df5)!important}
+.text-gradient.text-primary{background-image:linear-gradient(310deg,#275bf0,#5b7df5)!important;-webkit-background-clip:text!important;-webkit-text-fill-color:transparent!important;background-clip:text!important}
+.nav-pills .nav-link.active,.nav-pills .show>.nav-link,.page-item.active .page-link,.list-group-item.active{background-color:#275bf0!important;border-color:#275bf0!important}
+.small,small{font-size:14px!important}
+.contact-methods .contact-method-icon{background:linear-gradient(310deg,#275bf0,#5b7df5)!important}
+.about-accordion .accordion-button:not(.collapsed){color:#275bf0!important;background:#edf2ff!important}

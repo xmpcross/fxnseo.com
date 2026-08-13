@@ -32,12 +32,6 @@
     </button>
 
     <div class="navbar-nav flex-row order-lg-last m-auto">
-            @if ( $general->search_box_status )
-                <div class="m-auto">
-                    @livewire('public.search-box')
-                </div>
-            @endif
-
             @if ( $general->theme_mode )
                 <div class="nav-item m-auto">
                     @if ( empty( Cookie::get('theme_mode', $general->default_theme_mode) ) || Cookie::get('theme_mode', $general->default_theme_mode) === 'theme-light' )
@@ -190,12 +184,6 @@
                 @endif
 
             @endforeach
-
-            <li class="nav-item mx-2">
-                <a class="nav-link ps-2 d-flex align-items-center" href="{{ route('tools.directory') }}">
-                    {{ __('Tools') }}
-                </a>
-            </li>
             <!-- End::Navbar Left -->
         </ul>
     </div>

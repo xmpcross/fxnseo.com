@@ -10,6 +10,7 @@ use App\Http\Livewire\Public\Auth\ResetPassword;
 use App\Http\Livewire\Public\Auth\VerifyEmail;
 use App\Http\Livewire\Public\Blog;
 use App\Http\Livewire\Public\Home;
+use App\Http\Livewire\Public\ToolsPage;
 use App\Http\Livewire\Public\Pages as PublicPage;
 use App\Http\Livewire\Public\Posts as PublicPost;
 use App\Http\Livewire\Public\Resources as PublicResources;
@@ -178,44 +179,13 @@ Route::post('/image-compressor', [ImageCompressor::class, 'onImageCompressor'])-
 // remains untouched until the preview is explicitly approved.
 Route::get('/homepage-preview', function () {
     $resources = app(\App\Services\StrapiClient::class)->posts(1, 3)['data'] ?? [];
-    return view('homepage-preview', ['resources' => $resources]);
-})->name('homepage.preview');
-
-// Searchable directory of every enabled fxnSEOTools utility, grouped using the
-// same categories and ordering maintained by the existing admin area.
-Route::get('/tools', function () {
-    $categories = \App\Models\Admin\PageCategory::with(['pages' => function ($query) {
-        $query->withTranslation(app()->getLocale());
-    }])->orderBy('sort', 'ASC')->get()->map(function ($category) {
-        $tools = $category->pages->map(function ($page) {
-            $translation = $page->translate(app()->getLocale());
-            if (!$translation) return null;
-            return [
-                'title' => $translation->title,
-                'description' => $translation->short_description ?: $translation->subtitle,
-                'slug' => $page->slug,
-                'url' => $page->custom_tool_link ?: url('/' . $page->slug),
-                'target' => $page->target ?: '_self',
-                'icon' => $page->icon_image,
-                'new' => (bool) $page->new,
-            ];
-        })->filter()->values();
-        return [
-            'title' => $category->title,
-            'description' => $category->description,
-            'slug' => \Illuminate\Support\Str::slug($category->title),
-            'tools' => $tools,
-        ];
-    })->filter(fn ($category) => $category['tools']->isNotEmpty())->values();
-
-    return view('tools-directory', [
-        'categories' => $categories,
-        'toolCount' => $categories->sum(fn ($category) => $category['tools']->count()),
+    return view('homepage-preview', [
+        'resources' => $resources,
         'general' => \App\Models\Admin\General::first(),
         'footer' => \App\Models\Admin\FooterTranslation::where('locale', app()->getLocale())->first(),
         'socials' => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
     ]);
-})->name('tools.directory');
+})->name('homepage.preview');
 
 //Cookie
 Route::get('/cookies/accept', function(){
@@ -286,6 +256,7 @@ Route::localizedGroup(function () {
 
 	//Home
 	Route::get('/', Home::class)->name('home');
+	Route::get('/tools', ToolsPage::class)->name('tools');
 
 	//Blog
 	try {

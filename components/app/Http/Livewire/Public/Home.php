@@ -26,6 +26,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class Home extends Component
 {
     public $searchQuery = '';
+
+    protected function contentView(): string
+    {
+        return 'livewire.public.home';
+    }
     
     public function render()
     {
@@ -140,14 +145,14 @@ class Home extends Component
 
             $advanced = Advanced::first();
 
-            return view('livewire.public.home', [
+            return view($this->contentView(), [
                 'general'              => $general,
                 'tool_with_categories' => $tool_with_categories,
                 'tools'                => $tools,
                 'recent_posts'         => $recent_posts,
                 'page'                 => $page,
                 'advertisement'        => $advertisement
-            ])->layout('layouts.homepage', [
+            ])->layout('layouts.public', [
                 'page'          => $page,
                 'pageTrans'     => $pageTrans,
                 'general'       => $general,
