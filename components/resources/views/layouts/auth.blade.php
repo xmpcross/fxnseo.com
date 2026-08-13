@@ -267,7 +267,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button == true) ? '10' : '12'}} my-auto {{ $notice->align }}">

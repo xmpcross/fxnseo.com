@@ -1527,15 +1527,6 @@ body.page-type-tool #content-box h3{ font-size: 1.1rem !important; }
 body.page-type-tool #content-box h2{ font-size: 1.2rem !important; }
 body.page-type-tool #content-box h3{ font-size: 1rem !important; }
 
-/* ===== SEO tool pages: description moved to top; hide old below-tool content-box ===== */
-body.page-type-tool #content-box{ display: none !important; }
-body.page-type-tool .tool-description h2{ font-size: 1.2rem !important; }
-body.page-type-tool .tool-description h3{ font-size: 1rem !important; }
-
-/* ===== Tool description: View More link ===== */
-body.page-type-tool .tool-desc-more-link{ color: var(--color-unstable-link-blue) !important; cursor: pointer; font-weight: 600; display: inline-block; margin-top: .5rem; }
-body.page-type-tool .tool-desc-more-link:hover{ text-decoration: underline; }
-
 /* ===== Footer sub-group headings ===== */
 footer.footer .footer-subheading{ font-size: 13px !important; font-weight: 700; text-transform: uppercase; letter-spacing: .3px; margin: .75rem 0 .25rem; opacity: .85; }
 footer.footer .footer-subheading a{ color: inherit !important; text-decoration: none; }

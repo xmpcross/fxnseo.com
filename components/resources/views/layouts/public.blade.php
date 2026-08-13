@@ -160,7 +160,48 @@
                               </div>
                             </div>
                           </section>
-                      @elseif ($general->parallax_status)
+                      @elseif (($page->slug ?? '') === 'faqs')
+                          @php
+                            $__faqDescription = $pageTrans->description ?? '';
+                            $__faqQuestionCount = preg_match_all('/class=["\'][^"\']*accordion-item/i', $__faqDescription);
+                            $__faqCategoryCount = preg_match_all('/class=["\'][^"\']*faq-category/i', $__faqDescription);
+                          @endphp
+                          <section class="faq-tools-hero">
+                            <div class="faq-tools-shell faq-tools-hero-grid">
+                              <div>
+                                <nav class="faq-tools-breadcrumb" aria-label="Breadcrumb">
+                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
+                                </nav>
+                                <span class="faq-tools-kicker">{{ __('The answer library') }}</span>
+                                <h1>{{ __($pageTrans->title) }}</h1>
+                                <p>{{ __($pageTrans->subtitle) }}</p>
+                              </div>
+                              <div class="faq-tools-hero-stats" aria-label="FAQ overview">
+                                <div><b>{{ $__faqQuestionCount }}</b><span>{{ __('Answers') }}</span></div>
+                                <div><b>{{ $__faqCategoryCount }}</b><span>{{ __('Topics') }}</span></div>
+                                <div><b>0</b><span>{{ __('Sign-ups needed') }}</span></div>
+                              </div>
+                            </div>
+                          </section>
+                      @elseif (($page->slug ?? '') === 'contact')
+                          <section class="contact-tools-hero">
+                            <div class="contact-tools-shell contact-tools-hero-grid">
+                              <div>
+                                <nav class="contact-tools-breadcrumb" aria-label="Breadcrumb">
+                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
+                                </nav>
+                                <span class="contact-tools-kicker">{{ __('Start a conversation') }}</span>
+                                <h1>{{ __($pageTrans->title) }}</h1>
+                                <p>{{ __($pageTrans->subtitle) }}</p>
+                              </div>
+                              <div class="contact-tools-hero-stats" aria-label="Contact overview">
+                                <div><b>1–2</b><span>{{ __('Business days') }}</span></div>
+                                <div><b>2</b><span>{{ __('Direct inboxes') }}</span></div>
+                                <div><b>100%</b><span>{{ __('Human support') }}</span></div>
+                              </div>
+                            </div>
+                          </section>
+                      @elseif ($general->parallax_status && ($page->type ?? '') !== 'home' && ($page->slug ?? '') !== 'tools')
                           <section id="parallax" class="text-white">
                               <div class="position-relative overflow-hidden text-center bg-light">
                                 <span class="mask" style="
@@ -206,7 +247,8 @@
                       <div class="container py-4">
 
                           @php
-                            $__isLegal = in_array($page->slug ?? '', ['terms-conditions','privacy-policy','cookie-information','faqs']);
+                            $__isLegal = in_array($page->slug ?? '', ['terms-conditions','privacy-policy','cookie-information','affiliate-disclosure','faqs']);
+                            $__showLegalToc = $__isLegal && ($page->slug ?? '') !== 'faqs';
                             $__toc = [];
                             $__legalDesc = $pageTrans->description ?? '';
                             if ($__isLegal && $__legalDesc) {
@@ -245,9 +287,26 @@
                             }
                           @endphp
 
+                          @if (($page->slug ?? '') === 'faqs')
+                            <section class="faq-search-panel" aria-label="Search frequently asked questions">
+                              <div class="faq-search-copy">
+                                <span>{{ __('Quick answers') }}</span>
+                                <h2>{{ __('What can we help you find?') }}</h2>
+                                <p>{{ __('Use this guide to understand what each fxnSEO tool does, what information it needs, and how its results can support your SEO, content, website, or YouTube workflow.') }}</p>
+                              </div>
+                              <label class="faq-search-box" for="faq-search-input">
+                                <i class="fas fa-search" aria-hidden="true"></i>
+                                <span class="visually-hidden">{{ __('Search questions') }}</span>
+                                <input id="faq-search-input" type="search" autocomplete="off" placeholder="{{ __('Search questions, tools, or topics') }}">
+                                <button id="faq-search-clear" type="button" hidden>{{ __('Clear') }}</button>
+                              </label>
+                              <p id="faq-search-status" aria-live="polite"></p>
+                            </section>
+                          @endif
+
                           <div class="row">
 
-                              @if ( $__isLegal && count($__toc) )
+                              @if ( $__showLegalToc && count($__toc) )
                                 <div class="col-lg-3 legal-toc-col">
                                   <nav class="legal-toc">
                                     <div class="legal-toc-title">{{ __('On this page') }}</div>
@@ -260,7 +319,7 @@
                                 </div>
                               @endif
 
-                              <div class="{{ $__isLegal ? 'col-lg-9' : ( ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' ) }}">
+                              <div class="{{ ($page->slug ?? '') === 'faqs' ? 'col-12' : ($__showLegalToc ? 'col-lg-9' : ( ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' )) }}">
 
                                   <div class="page">
                                     {{ $slot }}
@@ -268,7 +327,7 @@
 
                                   <section id="content-box" class="mb-3 page-{{ $page->id }}">
                                       <div class="card">
-                                          @if ( !$general->parallax_status && $page->type != 'tool' && ($page->slug ?? '') !== 'about-us' )
+                                          @if ( !$general->parallax_status && !in_array($page->type ?? '', ['tool', 'post']) && !in_array($page->slug ?? '', ['about-us', 'faqs', 'contact']) )
                                               <div class="card-header d-block {{ ($general->heading_background !== 'bg-white') ? $general->heading_background : 'bg-transparent' }}">
                                                     <h1 class="page-title h5 {{ ($general->heading_background !== 'bg-white') ? 'text-white' : ''}}">{{ __($pageTrans->title) }}</h1>
                                                     <p class="text-sm mb-0 {{ ($general->heading_background !== 'bg-white') ? 'text-white' : ''}}">{{ __($pageTrans->subtitle) }}</p>
@@ -295,6 +354,22 @@
 
                                               @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
                                                 <x-public.advertisement.area4 :advertisement="$advertisement" />
+                                              @endif
+
+                                              @if ( ($page->type ?? '') === 'post' && !empty($page->featured_image) )
+                                                <figure class="single-post-featured">
+                                                  <img
+                                                    class="{{ $general->lazy_loading ? 'lazyload' : '' }}"
+                                                    alt="{{ __($pageTrans->title) }}"
+                                                    width="1200"
+                                                    height="675"
+                                                    @if ($general->lazy_loading)
+                                                      data-src="{{ $page->featured_image }}"
+                                                    @else
+                                                      src="{{ $page->featured_image }}"
+                                                    @endif
+                                                  >
+                                                </figure>
                                               @endif
 
                                               @if ( ($page->type ?? '') == 'report' && !empty($pageTrans->description) )
@@ -444,6 +519,24 @@
                                           </div>
                                       </div>
                                   </section>
+
+                                  @if (($page->slug ?? '') === 'faqs')
+                                    <section class="faq-help-guide">
+                                      <div class="faq-help-guide-copy">
+                                        <span>{{ __('Using these answers') }}</span>
+                                        <h2>{{ __('Choose a question, understand the result, then put the right tool to work.') }}</h2>
+                                        <p>{{ __('fxnSEOTools is designed for focused tasks. Start with the category that matches your goal, open a question for practical context, and follow its tool link when you are ready to run a check or generate an output. Most tools work directly in your browser and do not require an account or installation.') }}</p>
+                                      </div>
+                                      <div class="faq-help-guide-actions">
+                                        <h3>{{ __('Still need help?') }}</h3>
+                                        <p>{{ __('Browse the complete tool collection if you know the task you want to complete. If you have found an issue, need clarification, or want to suggest a tool, send our team a message.') }}</p>
+                                        <div>
+                                          <a href="{{ route('tools') }}">{{ __('Explore SEO Tools') }} <span>→</span></a>
+                                          <a href="{{ url('/contact') }}">{{ __('Contact Us') }}</a>
+                                        </div>
+                                      </div>
+                                    </section>
+                                  @endif
                               </div>
 
                               @if ( !$__isLegal && ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) )
@@ -453,6 +546,78 @@
                               @endif
                           </div>
                       </div>
+                      @if (($page->slug ?? '') === 'faqs')
+                        <script>
+                          document.addEventListener('DOMContentLoaded', function () {
+                            const input = document.getElementById('faq-search-input');
+                            const clear = document.getElementById('faq-search-clear');
+                            const status = document.getElementById('faq-search-status');
+                            const categories = Array.from(document.querySelectorAll('.page-slug-faqs .faq-category'));
+                            const items = Array.from(document.querySelectorAll('.page-slug-faqs .faq-category .accordion-item'));
+                            if (!input) return;
+
+                            const categoryDescriptions = [
+                              'Find clear answers about YouTube tags, channels, videos, thumbnails, metadata, restrictions, and the creator tools available on fxnSEO.',
+                              'Learn how our text utilities analyze, compare, transform, count, and improve written content for everyday publishing and SEO tasks.',
+                              'Understand the metrics and checks used to monitor domains, rankings, backlinks, authority, performance, and search visibility.',
+                              'Get guidance on technical website utilities for metadata, redirects, sitemaps, robots files, structured data, diagnostics, and maintenance.'
+                            ];
+                            categories.forEach(function (category, index) {
+                              const heading = category.querySelector(':scope > h2');
+                              if (!heading) return;
+                              const intro = document.createElement('div');
+                              intro.className = 'faq-category-intro';
+                              const description = document.createElement('p');
+                              description.textContent = categoryDescriptions[index] || 'Explore answers to common questions about this group of free online tools.';
+                              category.insertBefore(intro, heading);
+                              intro.appendChild(heading);
+                              intro.appendChild(description);
+                            });
+
+                            const collapsedGroups = [];
+                            function addViewMore(category) {
+                              if (!category) return;
+                              const groupItems = Array.from(category.querySelectorAll('.accordion-item'));
+                              if (groupItems.length <= 6) return;
+                              const group = { expanded: false, items: groupItems, button: document.createElement('button') };
+                              groupItems.slice(6).forEach(function (item) { item.dataset.faqExtra = String(collapsedGroups.length); item.hidden = true; });
+                              group.button.type = 'button';
+                              group.button.className = 'faq-view-more';
+                              group.button.textContent = 'View more';
+                              category.querySelector('.faq-accordion')?.appendChild(group.button);
+                              group.button.addEventListener('click', function () {
+                                group.expanded = !group.expanded;
+                                group.items.slice(6).forEach(function (item) { item.hidden = !group.expanded; });
+                                group.button.textContent = group.expanded ? 'View less' : 'View more';
+                              });
+                              collapsedGroups.push(group);
+                            }
+                            addViewMore(categories[0]);
+                            addViewMore(categories[2]);
+
+                            function filterFaqs() {
+                              const query = input.value.trim().toLowerCase();
+                              let visible = 0;
+                              items.forEach(function (item) {
+                                const groupIndex = item.dataset.faqExtra;
+                                const isCollapsedItem = groupIndex !== undefined && !collapsedGroups[Number(groupIndex)].expanded;
+                                const show = query ? item.textContent.toLowerCase().includes(query) : !isCollapsedItem;
+                                item.hidden = !show;
+                                if (show) visible++;
+                              });
+                              categories.forEach(function (category) {
+                                category.hidden = !Array.from(category.querySelectorAll('.accordion-item')).some(function (item) { return !item.hidden; });
+                              });
+                              clear.hidden = !query;
+                              collapsedGroups.forEach(function (group) { group.button.hidden = Boolean(query); });
+                              status.textContent = query ? visible + (visible === 1 ? ' answer found' : ' answers found') : '';
+                            }
+
+                            input.addEventListener('input', filterFaqs);
+                            clear.addEventListener('click', function () { input.value = ''; filterFaqs(); input.focus(); });
+                          });
+                        </script>
+                      @endif
                   </div>
                   <!-- End::page-content -->
             </div>
@@ -571,7 +736,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button == true) ? '10' : '12'}} my-auto {{ $notice->align }}">

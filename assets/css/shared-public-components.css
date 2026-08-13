@@ -507,7 +507,7 @@ footer.footer > h4 {
 }
 
 /* Global primary-blue footer palette. */
-footer.footer{background:linear-gradient(145deg,#f8faff,#edf2ff)!important;color:#34415f!important}
+footer.footer{background:#fff!important;color:#34415f!important}
 footer.footer h3{color:#17213a!important}
 footer.footer .nav-link,footer.footer .footer-subgroup-hover .footer-subheading,footer.footer .footer-subgroup-hover .footer-subheading a,footer.footer .ftr-col-main p{color:#52617f!important}
 footer.footer .nav-link:hover,footer.footer .footer-subgroup-hover .footer-subheading:hover,footer.footer .footer-subgroup-hover .footer-subheading:hover a{color:#275bf0!important}
@@ -516,8 +516,65 @@ footer.footer .footer-socials .btn{color:#275bf0!important;background:#fff!impor
 footer.footer .footer-socials .btn:hover{color:#fff!important;background:#275bf0!important}
 footer.footer .footer-subgroup-hover>ul,footer.footer .footer-youtube-tools .footer-subgroup-hover>ul{background:#fff;border-color:rgba(39,91,240,.18);box-shadow:0 18px 45px rgba(31,54,112,.16)}
 footer.footer .footer-subgroup-hover>ul .nav-link:hover{background:#edf2ff}
-.theme-dark footer.footer{background:linear-gradient(145deg,#f8faff,#edf2ff)!important;color:#34415f!important}
+.theme-dark footer.footer{background:#fff!important;color:#34415f!important}
 .theme-dark footer.footer h3{color:#17213a!important;-webkit-text-fill-color:currentColor!important}
 .theme-dark footer.footer .nav-link,.theme-dark footer.footer .footer-subheading,.theme-dark footer.footer .footer-subheading a,.theme-dark footer.footer .ftr-col-main p{color:#52617f!important;-webkit-text-fill-color:currentColor!important}
 .theme-dark footer.footer .footer-subgroup-hover>ul,.theme-dark footer.footer .footer-youtube-tools .footer-subgroup-hover>ul{background:#fff;border-color:rgba(39,91,240,.18)}
 @media(max-width:991px){footer.footer .ftr-col-main{border-bottom-color:rgba(39,91,240,.14)}}
+
+/* Single blog post featured image. */
+body.page-type-post .single-post-featured {
+  margin: 0 0 2rem;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #edf2ff;
+}
+body.page-type-post .single-post-featured img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* Site-wide cookie consent. */
+.cookie-consent {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 1100;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  width: min(900px, calc(100% - 3rem));
+  margin-inline: auto;
+  padding: 18px 20px;
+  border: 1px solid #d7e1fb;
+  border-radius: 8px;
+  color: #10251d;
+  background: rgba(255,255,255,.97);
+  box-shadow: 0 22px 65px rgba(25,42,75,.2);
+  font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  backdrop-filter: blur(14px);
+}
+.cookie-consent-icon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 8px; color: #275bf0; background: #edf2ff; font-size: 20px; }
+.cookie-consent h2 { margin: 0 0 5px; color: #10251d; font: 750 1rem "Urbanist", "Outfit", sans-serif; }
+.cookie-consent p { margin: 0; color: #65756e; font-size: 13px; line-height: 1.55; }
+.cookie-consent p a { color: #275bf0; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.cookie-consent-actions { display: flex; gap: 9px; }
+.cookie-consent-actions button { min-height: 42px; padding: 0 15px; border-radius: 8px; font: 700 13px "Outfit", sans-serif; cursor: pointer; }
+.cookie-consent-secondary { border: 1px solid #cbd7fa; color: #275bf0; background: #fff; }
+.cookie-consent-primary { border: 1px solid #275bf0; color: #fff; background: #275bf0; }
+.cookie-consent-primary:hover { background: #1f4bd1; }
+@media (max-width: 720px) {
+  .cookie-consent { grid-template-columns: 42px 1fr; gap: 13px; padding: 16px; }
+  .cookie-consent-icon { width: 42px; height: 42px; }
+  .cookie-consent-actions { grid-column: 1 / -1; }
+  .cookie-consent-actions button { flex: 1; }
+}
+@media (max-width: 420px) {
+  .cookie-consent { right: .75rem; bottom: .75rem; left: .75rem; width: calc(100% - 1.5rem); }
+  .cookie-consent-actions { flex-direction: column-reverse; }
+}

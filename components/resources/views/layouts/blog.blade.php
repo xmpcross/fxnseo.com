@@ -111,51 +111,21 @@
                           </div>
                       @endif
 
-                      @if ($general->parallax_status)
-                          <section id="parallax" class="text-white">
-                              <div class="position-relative overflow-hidden text-center bg-light">
-                                <span class="mask" style="
-                                      @if ( $general->overlay_type == 'solid' )
-
-                                      background: {{ $general->solid_color }};opacity: {{ $general->opacity }};
-
-                                      @elseif( $general->overlay_type == 'gradient' )
-
-                                      background: {{ $general->gradient_first_color }};
-                                      background: -moz-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }}  );
-                                      background: -webkit-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      background: linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      opacity: {{ $general->opacity }};
-
-                                      @endif
-
-                                "></span>
-
-                                @if ( !empty($general->parallax_image) )
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ $general->parallax_image }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ $general->parallax_image }}); @endif"></div>
-                                @else
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ asset('assets/img/parallax.jpg') }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ asset('assets/img/parallax.jpg') }}); @endif"></div>
-                                @endif
-
-                                <div class="container position-relative zindex-1">
-                                    <div class="col text-center p-lg-5 mx-auto my-5">
-
-                                        @if ( $page->ads_status && $advertisement->area1_status && $advertisement->area1 != null )
-                                          <x-public.advertisement.area1 :advertisement="$advertisement" />
-                                        @endif
-
-                                        <h1 class="text-white">{{ __('SEO Insights & Guides') }}</h1>
-                                        <p class="lead text-white letter-normal my-3">{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
-
-                                        @if ( $page->ads_status && $advertisement->area2_status && $advertisement->area2 != null )
-                                          <x-public.advertisement.area2 :advertisement="$advertisement" />
-                                        @endif
-                                    </div>
-                                </div>
-
-                              </div>
-                          </section>
-                      @endif
+                      <section class="blog-tools-hero">
+                        <div class="blog-tools-shell blog-tools-hero-grid">
+                          <div>
+                            <nav class="blog-tools-breadcrumb" aria-label="Breadcrumb"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __('Blog') }}</span></nav>
+                            <span class="blog-tools-kicker">{{ __('Insights for better visibility') }}</span>
+                            <h1>{{ __('SEO Insights & Guides') }}</h1>
+                            <p>{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
+                          </div>
+                          <div class="blog-tools-hero-stats" aria-label="Blog overview">
+                            <div><b>{{ __('SEO') }}</b><span>{{ __('Practical guidance') }}</span></div>
+                            <div><b>{{ __('Free') }}</b><span>{{ __('Expert resources') }}</span></div>
+                            <div><b>{{ __('New') }}</b><span>{{ __('Ideas to apply') }}</span></div>
+                          </div>
+                        </div>
+                      </section>
 
                       <div class="container py-4">
 
@@ -168,13 +138,6 @@
                                       <x-public.advertisement.area3 :advertisement="$advertisement" />
                                     @endif
                                     
-                                    @if ( !$general->parallax_status )
-                                      <div class="card card-body d-block mb-3">
-                                            <h1 class="text-default h4">{{ __('SEO Insights & Guides') }}</h1>
-                                            <p class="text-default">{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
-                                      </div>
-                                    @endif
-
                                     @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
                                       <x-public.advertisement.area4 :advertisement="$advertisement" />
                                     @endif
@@ -300,7 +263,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button) ? '10' : '12'}} my-auto {{ $notice->align }}">

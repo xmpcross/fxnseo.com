@@ -1,23 +1,5 @@
 @if ( $page->type == 'tool')
     <section id="tool-box">
-        @if ( !empty($pageTrans->description) )
-          @php
-            // Reveal ~25% of the description, with a "View More" link for the rest.
-            $__blocks = preg_split('/(?=<(?:h[1-6]|p|ul|ol|table|div|section|blockquote|pre)\b)/i', $pageTrans->description, -1, PREG_SPLIT_NO_EMPTY);
-            $__half   = (int) max(1, ceil(count($__blocks) / 4));
-            $__first  = implode('', array_slice($__blocks, 0, $__half));
-            $__rest   = trim(implode('', array_slice($__blocks, $__half)));
-          @endphp
-          <div class="card mb-3 tool-description">
-            <div class="card-body">
-              {!! $__first !!}
-              @if ( $__rest !== '' )
-                <a href="javascript:void(0)" class="tool-desc-more-link" onclick="this.nextElementSibling.style.display='block';this.style.display='none';return false;">{{ __('View More') }}</a>
-                <div class="tool-desc-more-content" style="display:none;">{!! $__rest !!}</div>
-              @endif
-            </div>
-          </div>
-        @endif
         <div class="card mb-3">
           @if ( !$general->parallax_status )
                 <div class="card-header d-block {{ ($general->heading_background !== 'bg-white') ? $general->heading_background : 'bg-transparent' }}">

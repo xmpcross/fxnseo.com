@@ -113,11 +113,12 @@
                           <div>
                             @php
                               $footerWidget2 = GrahamCampbell\Security\Facades\Security::clean($footer->widget2);
-                              $toolsFooterLink = '<li class="nav-item"><a class="nav-link ps-0" title="Tools" href="'.route('tools').'">Tools</a></li>';
+                              $footerWidget2 = preg_replace('#(<h[1-6][^>]*>)\s*fxnSEO\.com\s*(</h[1-6]>)#i', '$1About$2', $footerWidget2);
+                              $toolsFooterLink = '<li class="nav-item"><a class="nav-link ps-0" title="SEO Tools" href="'.route('tools').'">SEO Tools</a></li>';
                               $footerWidget2 = preg_replace_callback(
                                 '#<li[^>]*>\s*<a[^>]*href=["\'][^"\']*/blog["\'][^>]*>.*?</a>\s*</li>#is',
                                 function ($match) use ($toolsFooterLink) {
-                                  $articlesLink = preg_replace('#>\s*(?:Our\s+)?Blog\s*<#i', '>Blog<', $match[0]);
+                                  $articlesLink = preg_replace('#>\s*(?:Our\s+)?Blog\s*<#i', '>All Blog<', $match[0]);
                                   return $toolsFooterLink.$articlesLink;
                                 },
                                 $footerWidget2,
@@ -171,6 +172,7 @@
             <a href="{{ url('/terms-conditions') }}">{{ __('Terms & Conditions') }}</a>
             <a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a>
             <a href="{{ url('/cookie-information') }}">{{ __('Cookie Info') }}</a>
+            <a href="{{ url('/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a>
           </nav>
         </div>
       </div>

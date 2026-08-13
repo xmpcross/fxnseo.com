@@ -79,7 +79,17 @@
       <div class="home-section-head"><div><span class="home-kicker">Learn the why</span><h2>Practical SEO resources.</h2></div><a href="{{ route('public.resources') }}">Explore all resources <span>→</span></a></div>
       <div class="home-resource-grid">
         @forelse(collect($recent_posts)->take(3) as $post)
-          <a href="{{ url('/blog/'.$post['slug']) }}"><span>Guide</span><h3>{{ $post['title'] }}</h3><p>{{ Illuminate\Support\Str::limit(strip_tags($post['short_description'] ?? $post['description'] ?? ''), 135) }}</p><b>Read article →</b></a>
+          <a href="{{ url('/blog/'.$post['slug']) }}">
+            <figure class="home-resource-image">
+              <img src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
+            </figure>
+            <div class="home-resource-copy">
+              <span>Guide</span>
+              <h3>{{ $post['title'] }}</h3>
+              <p>{{ Illuminate\Support\Str::limit(strip_tags($post['short_description'] ?? $post['description'] ?? ''), 135) }}</p>
+              <b>Read article →</b>
+            </div>
+          </a>
         @empty
           <a class="home-resource-feature" href="{{ route('public.resources') }}"><span>Resource library</span><h3>Build stronger search foundations.</h3><p>Explore practical guidance for improving visibility, content, and technical performance.</p><b>Browse resources →</b></a>
         @endforelse

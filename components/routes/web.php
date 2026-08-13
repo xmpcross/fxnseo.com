@@ -15,7 +15,6 @@ use App\Http\Livewire\Public\Pages as PublicPage;
 use App\Http\Livewire\Public\Posts as PublicPost;
 use App\Http\Livewire\Public\Resources as PublicResources;
 use App\Http\Livewire\Public\ResourceShow as PublicResourceShow;
-use App\Http\Livewire\Public\Tools\ImageCompressor;
 
 use App\Http\Livewire\Public\Install\Welcome as SWWelcome;
 use App\Http\Livewire\Public\Install\Requirements as SWRequirements;
@@ -172,9 +171,6 @@ Route::group(['middleware' => 'swinstall', 'prefix' => 'install'], function () {
 
 });
 
-//Image Compressor
-Route::post('/image-compressor', [ImageCompressor::class, 'onImageCompressor'])->name('image-compressor');
-
 // Isolated homepage redesign for stakeholder review. The production home route
 // remains untouched until the preview is explicitly approved.
 Route::get('/homepage-preview', function () {
@@ -188,8 +184,13 @@ Route::get('/homepage-preview', function () {
 })->name('homepage.preview');
 
 //Cookie
-Route::get('/cookies/accept', function(){
-    Cookie::queue('cookies', time(), 43200);
+Route::post('/cookies/accept', function(){
+    Cookie::queue('cookies', 'accepted', 43200);
+    return response()->noContent();
+});
+Route::post('/cookies/reject', function(){
+    Cookie::queue('cookies', 'necessary', 43200);
+    return response()->noContent();
 });
 
 //Reset License
