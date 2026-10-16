@@ -1,6 +1,24 @@
+@php
+  $__themeCookie = Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light');
+  $__isThemeDark = ($__themeCookie === 'theme-dark');
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}" class="{{ $__isThemeDark ? 'dark theme-dark' : 'light theme-light' }}" id="html-root">
     <head>
+        <script>
+          (function(){
+            try {
+              var s = localStorage.getItem('site_theme');
+              if (s === 'dark' || (!s && {{ $__isThemeDark ? 'true' : 'false' }})) {
+                document.documentElement.classList.add('dark', 'theme-dark');
+                document.documentElement.classList.remove('light', 'theme-light');
+              } else if (s === 'light') {
+                document.documentElement.classList.add('light', 'theme-light');
+                document.documentElement.classList.remove('dark', 'theme-dark');
+              }
+            } catch(e) {}
+          })();
+        </script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
         <script>
@@ -69,6 +87,7 @@
         
         <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/tool-template.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/tool-template.css') ?: '1' }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
@@ -105,49 +124,69 @@
                           </div>
                       @endif
 
-                      <section class="blog-tools-hero">
-                        <div class="blog-tools-shell blog-tools-hero-grid">
-                          <div>
-                            <nav class="blog-tools-breadcrumb" aria-label="Breadcrumb"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __('Blog') }}</span></nav>
-                            <span class="blog-tools-kicker">{{ __('Insights for better visibility') }}</span>
-                            <h1>{{ __('SEO Insights & Guides') }}</h1>
-                            <p>{{ __('Actionable SEO tips, tool tutorials, and how-to guides to help you improve your rankings and grow your organic traffic.') }}</p>
+                      <!-- Modern Blog Hero System (Matches Homepage Aesthetics • Outfit Font • Emerald Accent) -->
+                      <section class="blog-editorial-hero">
+                        <div class="ambient-glow glow-1"></div>
+                        <div class="ambient-glow glow-2"></div>
+
+                        <div class="blog-editorial-shell">
+                          <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                            <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                            <span class="sep" aria-hidden="true">›</span>
+                            <span class="active">{{ __('SEO Blog & Guides') }}</span>
+                          </nav>
+
+                          <div class="tool-editorial-badge">
+                            <span class="pulse-indicator"></span>
+                            <span class="badge-label"><i class="fas fa-newspaper text-emerald me-1"></i> {{ __('Practical SEO Playbooks • Real Diagnostics') }}</span>
                           </div>
-                          <div class="blog-tools-hero-stats" aria-label="Blog overview">
-                            <div><b>{{ __('SEO') }}</b><span>{{ __('Practical guidance') }}</span></div>
-                            <div><b>{{ __('Free') }}</b><span>{{ __('Expert resources') }}</span></div>
-                            <div><b>{{ __('New') }}</b><span>{{ __('Ideas to apply') }}</span></div>
+
+                          <h1 class="blog-editorial-title hero-title">
+                            Master Search &amp; Growth with <br>
+                            <span class="blog-gradient-text">{{ __('Actionable SEO Guides') }}</span>
+                          </h1>
+                          <p class="blog-editorial-lead">{{ __('Step-by-step playbooks, backlink workflows, technical audit frameworks, and YouTube optimization tactics to sustainably grow your organic traffic.') }}</p>
+
+                          <div class="tool-editorial-chips">
+                            <div class="tool-chip"><i class="fas fa-check-circle text-emerald"></i> <span>{{ __('14 Free In-Depth Guides') }}</span></div>
+                            <div class="tool-chip"><i class="fas fa-link text-emerald"></i> <span>{{ __('Backlink & Authority Focus') }}</span></div>
+                            <div class="tool-chip"><i class="fab fa-youtube text-danger"></i> <span>{{ __('YouTube Growth Strategies') }}</span></div>
+                            <div class="tool-chip"><i class="fas fa-shield-alt text-emerald"></i> <span>{{ __('100% Free · No Paywall') }}</span></div>
                           </div>
                         </div>
                       </section>
 
-                      <div class="container py-4">
-
-                          <div class="row">
-                              <div class="{{ ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' }}">
+                      <!-- Main Blog Content Area (Wide Wrap Layout) -->
+                      <div class="wrap py-4 my-2">
+                          <div class="row g-4">
+                              <div class="{{ ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-8' : 'col-12' }}">
 
                                 <section id="blog-content">
-                                  <div class="row row-cards">
-                                    @if ( $page->ads_status && $advertisement->area3_status && $advertisement->area3 != null )
+                                  @if ( $page->ads_status && $advertisement->area3_status && $advertisement->area3 != null )
+                                    <div class="mb-4">
                                       <x-public.advertisement.area3 :advertisement="$advertisement" />
-                                    @endif
-                                    
-                                    @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
+                                    </div>
+                                  @endif
+                                  
+                                  @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
+                                    <div class="mb-4">
                                       <x-public.advertisement.area4 :advertisement="$advertisement" />
-                                    @endif
+                                    </div>
+                                  @endif
 
-                                    {{ $slot }}
-                                  </div>
+                                  {{ $slot }}
 
                                   @if ( $page->ads_status && $advertisement->area5_status && $advertisement->area5 != null )
-                                    <x-public.advertisement.area5 :advertisement="$advertisement" />
+                                    <div class="mt-4">
+                                      <x-public.advertisement.area5 :advertisement="$advertisement" />
+                                    </div>
                                   @endif
 
                                 </section>
                               </div>
 
                               @if ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status)
-                                <div class="col-lg-3 ml-auto sidebars">
+                                <div class="col-lg-4 sidebars">
                                     <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
                                 </div>
                               @endif

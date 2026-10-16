@@ -12,7 +12,7 @@
     <div class="home-shell home-hero-grid">
       <div class="home-hero-copy">
         <span class="home-kicker">Free tools for smarter SEO</span>
-        <h1>Turn search data into <em>clear next steps.</em></h1>
+        <h1 class="hero-title">Turn search data into <em>clear next steps.</em></h1>
         <p>Check websites, research domains, improve metadata, and solve everyday SEO tasks with focused tools that are ready when you are.</p>
 
         <form class="home-search" id="home-tool-search" role="search">

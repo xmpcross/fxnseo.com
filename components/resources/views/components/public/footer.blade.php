@@ -1,178 +1,99 @@
-      <footer class="footer default-footer">
-
-       @if ( $general->social_status == true && count($socials) > 0 )
-          <hr class="horizontal dark mb-4">
-          <h4 class="text-center mb-3">{{ __('Follow us') }}</h4>
-          <div class="social-share text-center">
-            <div class="share-icons relative">
-                @foreach ($socials as $key => $social)
-                  <a href="{{ $social['url'] }}" class="btn btn-{{ $social['name'] }} btn-icon" target="_blank">
-                      <span class="btn-inner--icon"><i class="fab fa-{{ $social['name'] }} fa-fw"></i></span>
-                      <span class="btn-inner--text">{{ ucfirst($social['name']) }}</span>
-                  </a>
-                @endforeach
-            </div>
-          </div>
-        @endif
-        
-        @if ( !empty($footer->layout) && $footer->layout != 'none' )
-          <hr class="horizontal dark mb-5">
-        @endif
-
-        <div class="container">
-          <div class="row footer-grid footer-layout-{{ $footer->layout ?? 'none' }}">
-              @if ( !empty($footer->layout) )
-              
-                @switch( $footer->layout )
-
-                    @case(1)
-
-                        <div class="col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(2)
-
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(3)
-
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-3 col-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(4)
-
-                        <div class="col-md-3 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget4) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(5)
-
-                        <div class="col-md-3 mb-3 ftr-col-main">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            @php
-                              $footerWidget2 = GrahamCampbell\Security\Facades\Security::clean($footer->widget2);
-                              $footerWidget2 = preg_replace('#(<h[1-6][^>]*>)\s*fxnSEO\.com\s*(</h[1-6]>)#i', '$1About$2', $footerWidget2);
-                              $toolsFooterLink = '<li class="nav-item"><a class="nav-link ps-0" title="SEO Tools" href="'.route('tools').'">SEO Tools</a></li>';
-                              $footerWidget2 = preg_replace_callback(
-                                '#<li[^>]*>\s*<a[^>]*href=["\'][^"\']*/blog["\'][^>]*>.*?</a>\s*</li>#is',
-                                function ($match) use ($toolsFooterLink) {
-                                  $articlesLink = preg_replace('#>\s*(?:Our\s+)?Blog\s*<#i', '>All Blog<', $match[0]);
-                                  return $toolsFooterLink.$articlesLink;
-                                },
-                                $footerWidget2,
-                                1
-                              );
-                            @endphp
-                            {!! $footerWidget2 !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col footer-youtube-tools">
-                          <div>
-                            {!! str_replace('>Tag Tools<', '>YouTube Tag Tools<', GrahamCampbell\Security\Facades\Security::clean($footer->widget3)) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            {!! str_replace('>Backwards Text Generator<', '>Backwards Generator<', GrahamCampbell\Security\Facades\Security::clean($footer->widget4)) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col footer-website-tools me-auto">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget5) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @default
-
-                @endswitch
-              
-              @endif
-
-          </div>
-
-        </div>
-      </footer>
-
-      @php
-          $footer_data = !empty($footer->bottom_text)
-              ? str_replace('%year%', date('Y'), $footer->bottom_text)
-              : 'Copyright &copy; ' . date('Y') . ' ' . config('app.name') . '. All rights reserved.';
-      @endphp
-      <div class="bottom-footer">
-        <div class="container">
-          <div class="footer-copyright">{!! htmlspecialchars_decode($footer_data) !!}</div>
-          <nav class="bottom-footer-menu" aria-label="{{ __('Legal') }}">
-            <a href="{{ url('/terms-conditions') }}">{{ __('Terms & Conditions') }}</a>
-            <a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a>
-            <a href="{{ url('/cookie-information') }}">{{ __('Cookie Info') }}</a>
-            <a href="{{ url('/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a>
-          </nav>
+<!-- Modern Site Footer Component (Matches Home Design • Outfit Font • Emerald Accent) -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-columns">
+      <!-- Brand Info -->
+      <div class="footer-col-brand">
+        <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
+          <img src="{{ asset('assets/img/logo-light.svg') }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
+          <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
+        </a>
+        <p>
+          {{ __('FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.') }}
+        </p>
+        <div class="footer-trust-badges">
+          <span>✓ {{ __('Verified Moz Data') }}</span> • <span>✓ {{ __('YouTube v3 API') }}</span>
         </div>
       </div>
+
+      <!-- Col 1: Popular SEO Tools -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Popular Tools') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ url('/domain-authority-checker') }}">{{ __('Domain Authority') }}</a></li>
+          <li><a href="{{ url('/page-authority-checker') }}">{{ __('Page Authority') }}</a></li>
+          <li><a href="{{ url('/da-pa-checker') }}">{{ __('DA PA Checker') }}</a></li>
+          <li><a href="{{ url('/backlink-checker') }}">{{ __('Backlink Checker') }}</a></li>
+          <li><a href="{{ url('/meta-tags-analyzer') }}">{{ __('Meta Tags Analyzer') }}</a></li>
+          <li><a href="{{ url('/keyword-density-checker') }}">{{ __('Keyword Density') }}</a></li>
+          <li><a href="{{ url('/google-index-checker') }}">{{ __('Google Index Checker') }}</a></li>
+          <li><a href="{{ url('/robots-txt-generator') }}">{{ __('Robots.txt Generator') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 2: YouTube Suite -->
+      <div>
+        <h4 class="footer-col-title">{{ __('YouTube Suite') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ url('/youtube-title-extractor') }}">{{ __('Title Extractor') }}</a></li>
+          <li><a href="{{ url('/youtube-tag-extractor') }}">{{ __('Tag Extractor') }}</a></li>
+          <li><a href="{{ url('/youtube-hashtag-extractor') }}">{{ __('Hashtag Extractor') }}</a></li>
+          <li><a href="{{ url('/youtube-channel-statistics') }}">{{ __('Channel Statistics') }}</a></li>
+          <li><a href="{{ url('/youtube-video-statistics') }}">{{ __('Video Statistics') }}</a></li>
+          <li><a href="{{ url('/youtube-money-calculator') }}">{{ __('Money Calculator') }}</a></li>
+          <li><a href="{{ url('/youtube-trend') }}">{{ __('Trending Videos') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Knowledge Hub -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Knowledge Hub') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ url('/blog') }}">{{ __('SEO Blog') }}</a></li>
+          <li><a href="{{ url('/backlink-monitoring-guide') }}">{{ __('Backlink Guide') }}</a></li>
+          <li><a href="{{ url('/link-opportunity-guide') }}">{{ __('Link Building Guide') }}</a></li>
+          <li><a href="{{ url('/seo-audit-guide') }}">{{ __('SEO Audit Hub') }}</a></li>
+          <li><a href="{{ url('/faqs') }}">{{ __('Common FAQs') }}</a></li>
+          <li><a href="{{ url('/report') }}">{{ __('Report Broken Tool') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Trust & Legal -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Trust & Legal') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ url('/about-us') }}">{{ __('About Us') }}</a></li>
+          <li><a href="{{ url('/contact') }}">{{ __('Contact Support') }}</a></li>
+          <li><a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
+          <li><a href="{{ url('/terms-conditions') }}">{{ __('Terms of Service') }}</a></li>
+          <li><a href="{{ url('/cookie-information') }}">{{ __('Cookie Information') }}</a></li>
+          <li><a href="{{ url('/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Compliance & Google AdSense Policy Notice -->
+    <div class="footer-compliance-box">
+      <p>
+        <strong>{{ __('Publisher & Advertising Disclosure:') }}</strong> {{ __('FXN SEO is an independent digital marketing intelligence resource. This platform is supported by digital advertising, including Google AdSense and affiliate partnerships. In accordance with Google Publisher Policies and FTC guidelines, we may receive compensation when visitors interact with sponsored placements or acquire services through external links, at no additional cost to you.') }}
+      </p>
+      <p>
+        <strong>{{ __('Data Privacy & GDPR Commitment:') }}</strong> {{ __('We do not log, retain, or commercialize individual website queries, target domains, or video URLs submitted to our tools. All third-party trademarks and brand logos (including Moz, YouTube, and Google) belong to their respective copyright holders.') }}
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom-bar">
+      <div>
+        © {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved.') }}
+      </div>
+      <div class="footer-bottom-links">
+        <a href="{{ url('/privacy-policy') }}">{{ __('Privacy') }}</a>
+        <a href="{{ url('/terms-conditions') }}">{{ __('Terms') }}</a>
+        <a href="{{ url('/cookie-information') }}">{{ __('Cookies') }}</a>
+        <a href="{{ url('/contact') }}">{{ __('Contact') }}</a>
+        <a href="{{ url('/report') }}">{{ __('Report') }}</a>
+      </div>
+    </div>
+  </div>
+</footer>

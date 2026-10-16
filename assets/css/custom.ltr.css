@@ -1772,9 +1772,9 @@ body.page-slug-about-us .about-section.about-who{ margin-top: 4rem !important; m
 .about-hero-wrap::after{ content: ''; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 45px rgba(4,12,19,.30); pointer-events: none; }
 body.page-slug-about-us .about-img{ box-shadow: none !important; }
 
-/* ===== Blog listing: image radius 8px ===== */
+/* ===== Blog listing: image radius 18px ===== */
 body.page-blog-listing .card-image img,
-body.page-blog-listing .card-image.border-radius-lg{ border-radius: 8px !important; }
+body.page-blog-listing .card-image.border-radius-lg{ border-radius: 18px 18px 0 0 !important; }
 
 /* ===== Top nav menu links: color #111111, hover #555555 ===== */
 nav.navbar .navbar-nav-hover .nav-link{ color: #111111 !important; }

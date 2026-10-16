@@ -20,14 +20,18 @@ class StrapiClient
 
     public function __construct()
     {
-        $this->base       = rtrim((string) env('STRAPI_URL', 'http://127.0.0.1:8888'), '/');
+        $this->base       = rtrim((string) env('STRAPI_URL', ''), '/');
         $this->publicBase = rtrim((string) (env('STRAPI_PUBLIC_URL') ?: env('STRAPI_URL', '')), '/');
         $this->token      = env('STRAPI_TOKEN') ?: null;
     }
 
     protected function request()
     {
-        $req = Http::timeout(8)->acceptJson();
+        if (empty($this->base)) {
+            return null;
+        }
+
+        $req = Http::timeout(4)->acceptJson();
 
         return $this->token ? $req->withToken($this->token) : $req;
     }
@@ -35,8 +39,16 @@ class StrapiClient
     /** Paginated list of published posts, newest first. Returns Strapi's {data, meta}. */
     public function posts(int $page = 1, int $pageSize = 12): array
     {
+        if (empty($this->base)) {
+            return ['data' => [], 'meta' => ['pagination' => ['page' => 1, 'pageCount' => 0, 'total' => 0]]];
+        }
+
         try {
-            $res = $this->request()->get($this->base . '/api/fxnseo-posts', [
+            $client = $this->request();
+            if (!$client) {
+                return ['data' => [], 'meta' => ['pagination' => ['page' => 1, 'pageCount' => 0, 'total' => 0]]];
+            }
+            $res = $client->get($this->base . '/api/fxnseo-posts', [
                 'sort'                  => 'publishedAt:desc',
                 'pagination[page]'      => $page,
                 'pagination[pageSize]'  => $pageSize,
@@ -56,8 +68,16 @@ class StrapiClient
     /** A single published post by slug, or null if not found. */
     public function post(string $slug): ?array
     {
+        if (empty($this->base)) {
+            return null;
+        }
+
         try {
-            $res = $this->request()->get($this->base . '/api/fxnseo-posts', [
+            $client = $this->request();
+            if (!$client) {
+                return null;
+            }
+            $res = $client->get($this->base . '/api/fxnseo-posts', [
                 'filters[slug][$eq]'   => $slug,
                 'populate'             => 'coverImage',
                 'pagination[pageSize]' => 1,
@@ -86,7 +106,7 @@ class StrapiClient
 
         // Already absolute
         if (preg_match('#^https?://#i', $url)) {
-            return $url;
+            return str_replace('strapi.fxnstudio.com', 'cms.fxnstudio.com', $url);
         }
 
         return $this->publicBase . '/' . ltrim($url, '/');

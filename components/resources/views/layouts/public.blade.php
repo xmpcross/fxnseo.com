@@ -1,6 +1,24 @@
+@php
+  $__themeCookie = Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light');
+  $__isThemeDark = ($__themeCookie === 'theme-dark');
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}" class="{{ $__isThemeDark ? 'dark theme-dark' : 'light theme-light' }}" id="html-root">
     <head>
+        <script>
+          (function(){
+            try {
+              var s = localStorage.getItem('site_theme');
+              if (s === 'dark' || (!s && {{ $__isThemeDark ? 'true' : 'false' }})) {
+                document.documentElement.classList.add('dark', 'theme-dark');
+                document.documentElement.classList.remove('light', 'theme-light');
+              } else if (s === 'light') {
+                document.documentElement.classList.add('light', 'theme-light');
+                document.documentElement.classList.remove('dark', 'theme-dark');
+              }
+            } catch(e) {}
+          })();
+        </script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
         <script>
@@ -68,7 +86,7 @@
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
         <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
-        @if (isset($page) && (in_array($page->slug ?? '', ['about-us', 'faqs', 'contact', 'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide']) || ($page->type ?? '') === 'post'))
+        @if (isset($page) && (in_array($page->slug ?? '', ['about-us', 'faqs', 'contact', 'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide', 'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure', 'report']) || ($page->type ?? '') === 'post'))
           <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
         @endif
 
@@ -79,6 +97,8 @@
         @if (Route::is('tools'))
           <link type="text/css" href="{{ asset('assets/css/tools-content.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/tools-content.css') ?: '1' }}" rel="stylesheet">
         @endif
+
+        <link type="text/css" href="{{ asset('assets/css/tool-template.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/tool-template.css') ?: '1' }}" rel="stylesheet">
 
         <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
@@ -134,7 +154,7 @@
                               <div class="post-editorial-grid">
                                 <div class="post-editorial-copy">
                                   <a class="post-editorial-category" href="{{ url('/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i>{{ $__postCategoryName }}</a>
-                                  <h1>{{ __($pageTrans->title) }}</h1>
+                                  <h1 class="hero-title">{{ __($pageTrans->title) }}</h1>
                                   @if (!empty($__postSummary))
                                     <p class="post-editorial-summary"><i class="fas fa-magic" aria-hidden="true"></i>{{ __($__postSummary) }}</p>
                                   @endif
@@ -180,7 +200,7 @@
                             <div class="pillar-hero-shell">
                               <nav aria-label="{{ __('Breadcrumb') }}"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>›</span><span>{{ __('Backlink Monitoring Guide') }}</span></nav>
                               <span class="pillar-hero-kicker">{{ $__pillarConfig['label'] }}</span>
-                              <h1>{{ __($pageTrans->title) }}</h1>
+                              <h1 class="hero-title">{{ __($pageTrans->title) }}</h1>
                               <p>{{ __($pageTrans->subtitle) }}</p>
                               <div class="pillar-hero-actions">
                                 <a href="{{ $__pillarConfig['anchor'] }}">{{ $__pillarConfig['primary'] }} <span>↓</span></a>
@@ -190,62 +210,234 @@
                             </div>
                           </section>
                       @elseif (($page->slug ?? '') === 'about-us')
-                          <section class="about-tools-hero">
-                            <div class="about-tools-shell about-tools-hero-grid">
-                              <div>
-                                <nav class="about-tools-breadcrumb" aria-label="Breadcrumb">
-                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
-                                </nav>
-                                <span class="about-tools-kicker">{{ __('Built for clearer decisions') }}</span>
-                                <h1>{{ __($pageTrans->title) }}</h1>
-                                <p>{{ __($pageTrans->subtitle) }}</p>
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-compass text-emerald me-1"></i> {{ __('Built for Clearer Decisions • Free Web Tools') }}</span>
                               </div>
-                              <div class="about-tools-hero-stats" aria-label="Our principles">
-                                <div><b>{{ __('Free') }}</b><span>{{ __('Tools to use') }}</span></div>
-                                <div><b>{{ __('Fast') }}</b><span>{{ __('Focused results') }}</span></div>
-                                <div><b>{{ __('Private') }}</b><span>{{ __('Browser first') }}</span></div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __('About') }} <span class="gradient-text">fxnSEOTools</span></h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('We build fast, browser-first tools that help creators, marketers, developers, and businesses make smarter search decisions without subscriptions or paywalls.')) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                <div class="tool-chip"><i class="fas fa-bolt"></i> <span>{{ __('60+ Focused Web Utilities') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('Browser-First Processing') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('100% Free · No Sign-Up Needed') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-award"></i> <span>{{ __('Engineered for Modern Web Teams') }}</span></div>
                               </div>
                             </div>
                           </section>
                       @elseif (($page->slug ?? '') === 'faqs')
-                          @php
-                            $__faqDescription = $pageTrans->description ?? '';
-                            $__faqQuestionCount = preg_match_all('/class=["\'][^"\']*accordion-item/i', $__faqDescription);
-                            $__faqCategoryCount = preg_match_all('/class=["\'][^"\']*faq-category/i', $__faqDescription);
-                          @endphp
-                          <section class="faq-tools-hero">
-                            <div class="faq-tools-shell faq-tools-hero-grid">
-                              <div>
-                                <nav class="faq-tools-breadcrumb" aria-label="Breadcrumb">
-                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
-                                </nav>
-                                <span class="faq-tools-kicker">{{ __('The answer library') }}</span>
-                                <h1>{{ __($pageTrans->title) }}</h1>
-                                <p>{{ __($pageTrans->subtitle) }}</p>
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-question-circle text-emerald me-1"></i> {{ __('Knowledge Hub • The Answer Library') }}</span>
                               </div>
-                              <div class="faq-tools-hero-stats" aria-label="FAQ overview">
-                                <div><b>{{ $__faqQuestionCount }}</b><span>{{ __('Answers') }}</span></div>
-                                <div><b>{{ $__faqCategoryCount }}</b><span>{{ __('Topics') }}</span></div>
-                                <div><b>0</b><span>{{ __('Sign-ups needed') }}</span></div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                <div class="tool-chip"><i class="fas fa-book-open"></i> <span>{{ __('Answers for 60+ Tools') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-check-double"></i> <span>{{ __('Clear Workflow Solutions') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('100% Free · No Account Required') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-tachometer-alt"></i> <span>{{ __('Direct Results Explained') }}</span></div>
                               </div>
                             </div>
                           </section>
                       @elseif (($page->slug ?? '') === 'contact')
-                          <section class="contact-tools-hero">
-                            <div class="contact-tools-shell contact-tools-hero-grid">
-                              <div>
-                                <nav class="contact-tools-breadcrumb" aria-label="Breadcrumb">
-                                  <a href="{{ route('home') }}">{{ __('Home') }}</a><span>/</span><span>{{ __($pageTrans->title) }}</span>
-                                </nav>
-                                <span class="contact-tools-kicker">{{ __('Start a conversation') }}</span>
-                                <h1>{{ __($pageTrans->title) }}</h1>
-                                <p>{{ __($pageTrans->subtitle) }}</p>
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-headset text-emerald me-1"></i> {{ __('Start a Conversation • Direct Support') }}</span>
                               </div>
-                              <div class="contact-tools-hero-stats" aria-label="Contact overview">
-                                <div><b>1–2</b><span>{{ __('Business days') }}</span></div>
-                                <div><b>2</b><span>{{ __('Direct inboxes') }}</span></div>
-                                <div><b>100%</b><span>{{ __('Human support') }}</span></div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __('Get in Touch with') }} <span class="gradient-text">fxnSEO</span></h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('Have questions, tool feedback, or bug reports? Reach out anytime — we are here to help.')) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                <div class="tool-chip"><i class="fas fa-clock"></i> <span>{{ __('1–2 Business Days Response') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-envelope-open-text"></i> <span>{{ __('Direct Team Inboxes') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-lightbulb"></i> <span>{{ __('Feature Suggestions Welcome') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-user-shield"></i> <span>{{ __('100% Human Support') }}</span></div>
                               </div>
+                            </div>
+                          </section>
+                      @elseif (($page->type ?? '') === 'tool')
+                          @php
+                            $__slug = $page->slug ?? '';
+                            $__isYt = str_contains($__slug, 'youtube');
+                            $__isDomain = preg_match('/domain|backlink|authority|da-pa|whois|dns|ip|hosting|server|moz|status-code|redirect|google-index|google-cache|page-size/i', $__slug);
+                            $__isContent = preg_match('/keyword|density|article|text|word|schema|meta|hashtag|twitter|open-graph/i', $__slug);
+
+                            if ($__slug === 'youtube-trend') {
+                                $__kickerIcon = 'fab fa-youtube text-danger';
+                                $__kickerText = __('YouTube Optimization • Real-Time API v3');
+                                $__chips = [
+                                    ['icon' => 'fas fa-bolt', 'text' => __('Live YouTube Data')],
+                                    ['icon' => 'fas fa-globe-americas', 'text' => __('80+ Country Feeds')],
+                                    ['icon' => 'fas fa-tags', 'text' => __('1-Click Tag Copying')],
+                                    ['icon' => 'fas fa-shield-alt', 'text' => __('100% Free · No Sign-Up')],
+                                ];
+                            } elseif ($__isYt) {
+                                $__kickerIcon = 'fab fa-youtube text-danger';
+                                $__kickerText = __('YouTube Creator Suite • Real-Time Engine');
+                                $__chips = [
+                                    ['icon' => 'fas fa-bolt', 'text' => __('Live YouTube Engine')],
+                                    ['icon' => 'fas fa-chart-line', 'text' => __('Instant Video Analytics')],
+                                    ['icon' => 'fas fa-copy', 'text' => __('1-Click Copy & Export')],
+                                    ['icon' => 'fas fa-shield-alt', 'text' => __('100% Free · No Sign-Up')],
+                                ];
+                            } elseif ($__isDomain) {
+                                $__kickerIcon = 'fas fa-network-wired text-emerald';
+                                $__kickerText = __('Domain & Web Diagnostics • Real-Time Engine');
+                                $__chips = [
+                                    ['icon' => 'fas fa-bolt', 'text' => __('Live Server & DNS Query')],
+                                    ['icon' => 'fas fa-search', 'text' => __('Deep Authority & Link Check')],
+                                    ['icon' => 'fas fa-check-circle', 'text' => __('Instant Diagnostic Report')],
+                                    ['icon' => 'fas fa-shield-alt', 'text' => __('100% Free · No Sign-Up')],
+                                ];
+                            } elseif ($__isContent) {
+                                $__kickerIcon = 'fas fa-feather-alt text-emerald';
+                                $__kickerText = __('Content & Keyword Engine • Real-Time Parser');
+                                $__chips = [
+                                    ['icon' => 'fas fa-bolt', 'text' => __('Semantic Content Scoring')],
+                                    ['icon' => 'fas fa-bullseye', 'text' => __('Search Density Optimization')],
+                                    ['icon' => 'fas fa-file-export', 'text' => __('Publishing-Ready Output')],
+                                    ['icon' => 'fas fa-shield-alt', 'text' => __('100% Free · No Sign-Up')],
+                                ];
+                            } else {
+                                $__kickerIcon = 'fas fa-search text-emerald';
+                                $__kickerText = __('SEO & Web Diagnostics • Instant Analysis');
+                                $__chips = [
+                                    ['icon' => 'fas fa-bolt', 'text' => __('Lightning-Fast Audit')],
+                                    ['icon' => 'fas fa-lock', 'text' => __('Browser-First Processing')],
+                                    ['icon' => 'fas fa-database', 'text' => __('Clean Actionable Data')],
+                                    ['icon' => 'fas fa-shield-alt', 'text' => __('100% Free · No Sign-Up')],
+                                ];
+                            }
+                          @endphp
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <a href="{{ route('tools') }}">{{ __('SEO Tools') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="{{ $__kickerIcon }} me-1"></i> {{ $__kickerText }}</span>
+                              </div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                @foreach ($__chips as $__chip)
+                                  <div class="tool-chip"><i class="{{ $__chip['icon'] }}"></i> <span>{{ $__chip['text'] }}</span></div>
+                                @endforeach
+                              </div>
+
+                              @if ( $page->ads_status == true && $advertisement->area1_status == true && $advertisement->area1 != null )
+                                <div class="tool-hero-ad mt-3">
+                                  <x-public.advertisement.area1 :advertisement="$advertisement" />
+                                </div>
+                              @endif
+                            </div>
+                          </section>
+                      @elseif (in_array(($page->slug ?? ''), ['terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure']))
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span>{{ __('Trust & Legal') }}</span>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-shield-alt text-emerald me-1"></i> {{ __('Trust & Compliance • Transparent Terms') }}</span>
+                              </div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('Read our official service terms, data privacy practices, and compliance commitments.')) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('Clear & Accessible Terms') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-user-shield"></i> <span>{{ __('Zero Unnecessary Data Tracking') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-lock"></i> <span>{{ __('SSL 256-bit Encryption') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-balance-scale"></i> <span>{{ __('GDPR & AdSense Compliant') }}</span></div>
+                              </div>
+                            </div>
+                          </section>
+                      @elseif (($page->type ?? '') === 'report' || ($page->slug ?? '') === 'report')
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-flag text-danger me-1"></i> {{ __('Quality Assurance • Bug & Tool Report') }}</span>
+                              </div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
+                              <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
+
+                              <div class="tool-editorial-chips">
+                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('Direct Technical Review') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('Continuous Uptime Monitoring') }}</span></div>
+                                <div class="tool-chip"><i class="fas fa-heart"></i> <span>{{ __('Community Driven Improvements') }}</span></div>
+                              </div>
+                            </div>
+                          </section>
+                      @elseif (($page->type ?? '') === 'page')
+                          <section class="tool-editorial-hero">
+                            <div class="tool-editorial-shell">
+                              <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <span class="sep" aria-hidden="true">›</span>
+                                <span class="active">{{ __($pageTrans->title) }}</span>
+                              </nav>
+
+                              <div class="tool-editorial-badge">
+                                <span class="pulse-indicator"></span>
+                                <span class="badge-label"><i class="fas fa-file-alt text-emerald me-1"></i> {{ __('Information & Resources') }}</span>
+                              </div>
+
+                              <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
+                              @if (!empty($pageTrans->subtitle))
+                                <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
+                              @endif
                             </div>
                           </section>
                       @elseif ($general->parallax_status && ($page->type ?? '') !== 'home' && ($page->slug ?? '') !== 'tools')
@@ -278,7 +470,7 @@
                                         @if ( $page->ads_status == true && $advertisement->area1_status == true && $advertisement->area1 != null )
                                           <x-public.advertisement.area1 :advertisement="$advertisement" />
                                         @endif
-                                        <h1 class="text-white">{{ __($pageTrans->title) }}</h1>
+                                        <h1 class="text-white hero-title">{{ __($pageTrans->title) }}</h1>
                                         <h2 class="lead text-white letter-normal my-3 h4 fw-normal">{{ __($pageTrans->subtitle) }}</h2>
 
                                         @if ( $page->ads_status == true && $advertisement->area2_status == true && $advertisement->area2 != null )
@@ -291,7 +483,7 @@
                           </section>
                       @endif
 
-                      <div class="container py-4">
+                       <div class="{{ in_array(($page->slug ?? ''), ['about-us', 'contact', 'faqs']) ? 'wrap py-4 py-lg-5' : 'container py-4' }}">
 
                           @php
                             $__isLegal = in_array($page->slug ?? '', ['terms-conditions','privacy-policy','cookie-information','affiliate-disclosure','faqs']);
@@ -408,27 +600,30 @@
                                 $__postDescriptionAfter = implode('', array_slice($__postBlocks, $__postInsertIndex));
                               }
                             }
-                            if (($page->slug ?? '') === 'about-us' && $__renderedDescription !== '' && class_exists('DOMDocument')) {
-                              $__dom = new \DOMDocument('1.0', 'UTF-8');
-                              $__previousLibxmlState = libxml_use_internal_errors(true);
-                              $__dom->loadHTML('<?xml encoding="UTF-8"><div id="about-description-root">'.$__renderedDescription.'</div>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-                              $__root = $__dom->getElementById('about-description-root');
-                              if ($__root) {
-                                $__nodes = [];
-                                foreach ($__root->childNodes as $__node) { $__nodes[] = $__node; }
-                                foreach ($__nodes as $__node) {
-                                  if ($__node instanceof \DOMElement && preg_match('/(^|\s)about-section(\s|$)/', $__node->getAttribute('class'))) {
-                                    $__container = $__dom->createElement('div');
-                                    $__container->setAttribute('class', 'container about-section-container');
-                                    $__root->replaceChild($__container, $__node);
-                                    $__container->appendChild($__node);
-                                  }
-                                }
-                                $__renderedDescription = '';
-                                foreach ($__root->childNodes as $__node) { $__renderedDescription .= $__dom->saveHTML($__node); }
-                              }
-                              libxml_clear_errors();
-                              libxml_use_internal_errors($__previousLibxmlState);
+
+                            if (($page->slug ?? '') === 'about-us' && $__renderedDescription !== '') {
+                              $__aboutOfferIcons = [
+                                'fas fa-file-alt',
+                                'fas fa-chart-line',
+                                'fas fa-tools',
+                                'fab fa-youtube',
+                              ];
+                              $__aboutIconIdx = 0;
+                              $__renderedDescription = preg_replace_callback(
+                                '#<h3>(.*?)</h3>\s*<p>(.*?)</p>#is',
+                                function ($m) use (&$__aboutOfferIcons, &$__aboutIconIdx) {
+                                  $icon = $__aboutOfferIcons[$__aboutIconIdx % count($__aboutOfferIcons)];
+                                  $__aboutIconIdx++;
+                                  return '<div class="about-card"><div class="about-card-icon"><i class="'.$icon.'"></i></div><div class="about-card-content"><h3>'.$m[1].'</h3><p>'.$m[2].'</p></div></div>';
+                                },
+                                $__renderedDescription
+                              );
+
+                              $__renderedDescription = preg_replace(
+                                '#<p>(.*?)(<a\s+href=[\"\x27][^\"\x27]*fxnseo\.com[\"\x27][^>]*>.*?</a>)(.*?)</p>#is',
+                                '<p>$1fxnseo.com$3</p><div class="start-today-actions"><a href="'.url('/#tools').'" class="btn-emerald-home">'.__('Explore 60+ Free Tools').' <span class="btn-arrow ms-1">→</span></a></div>',
+                                $__renderedDescription
+                              );
                             }
                           @endphp
 
@@ -464,7 +659,7 @@
                                 </div>
                               @endif
 
-                              <div class="{{ in_array(($page->type ?? ''), ['post']) || ($page->slug ?? '') === 'faqs' || $__isPillar ? 'col-12' : ($__showLegalToc ? 'col-lg-9' : ( ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' )) }}">
+                              <div class="{{ in_array(($page->type ?? ''), ['post', 'contact']) || in_array(($page->slug ?? ''), ['about-us', 'contact', 'faqs']) || $__isPillar ? 'col-12' : ($__showLegalToc ? 'col-lg-9' : ( ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' )) }}">
 
                                   <div class="page">
                                     {{ $slot }}
@@ -562,7 +757,11 @@
                                                   </aside>
                                                   {!! $__postDescriptionAfter !!}
                                                 @else
-                                                  {!! $__renderedDescription !!}
+                                                  @if (($page->slug ?? '') === 'youtube-trend')
+                                                    @include('partials.tools.youtube-trend-guide')
+                                                  @else
+                                                    {!! $__renderedDescription !!}
+                                                  @endif
                                                 @endif
                                               @endif
 
@@ -890,9 +1089,13 @@
                                   @endif
                               </div>
 
-                              @if ( !$__isLegal && !$__isPillar && ($page->type ?? '') !== 'post' && ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) )
+                              @if ( !$__isLegal && !$__isPillar && !in_array(($page->type ?? ''), ['post', 'contact']) && !in_array(($page->slug ?? ''), ['about-us', 'contact', 'faqs']) && ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) )
                                 <div class="col-lg-3 ml-auto sidebars">
-                                    <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
+                                    @if (($page->slug ?? '') === 'youtube-trend')
+                                        @include('partials.tools.youtube-trend-sidebar', ['advertisement' => $advertisement, 'page' => $page])
+                                    @else
+                                        <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
+                                    @endif
                                 </div>
                               @endif
                           </div>

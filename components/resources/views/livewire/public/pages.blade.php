@@ -21,17 +21,15 @@
                         <div class="row">
                           @foreach ($related_tools as $key => $value)
                             <div class="col-12 col-md-6 col-lg-4 mb-3">
-                                <a class="card text-decoration-none cursor-pointer item-box" href="{{ ( empty( $value['custom_tool_link'] ) ) ? route('home') . '/' . $value['slug'] : $value['custom_tool_link'] }}" target="{{ $value['target'] }}">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center">
-                                            @if ( $general->icon_before_tool_name_status )
-                                              <img class="avatar me-3 bg-transparent {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-src="{{ ($value['icon_image']) ? $value['icon_image'] : asset('assets/img/no-thumb.svg') }}" @if (!$general->lazy_loading) src="{{ ($value['icon_image']) ? $value['icon_image'] : asset('assets/img/no-thumb.svg') }}" @endif alt="{{ $value['title'] }}">
-                                            @endif
-                                            <div class="fw-medium">{{ $value['title'] }}</div>
-                                            @if ( $value['new'] )
-                                                <div class="ribbon-wrapper fw-bold" data-ribbon="{{ __('New') }}"></div>
-                                            @endif
-                                        </div>
+                                <a class="tool-related-card" href="{{ ( empty( $value['custom_tool_link'] ) ) ? route('home') . '/' . $value['slug'] : $value['custom_tool_link'] }}" target="{{ $value['target'] }}">
+                                    @if ( $general->icon_before_tool_name_status )
+                                      <img class="{{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-src="{{ ($value['icon_image']) ? $value['icon_image'] : asset('assets/img/no-thumb.svg') }}" @if (!$general->lazy_loading) src="{{ ($value['icon_image']) ? $value['icon_image'] : asset('assets/img/no-thumb.svg') }}" @endif alt="{{ $value['title'] }}">
+                                    @endif
+                                    <div class="tool-related-info">
+                                        <span class="tool-related-title">{{ $value['title'] }}</span>
+                                        @if ( $value['new'] )
+                                            <span class="tool-related-badge">{{ __('New') }}</span>
+                                        @endif
                                     </div>
                                 </a>
                             </div>

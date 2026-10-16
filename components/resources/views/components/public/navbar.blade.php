@@ -1,192 +1,176 @@
-<!-- Navbar Light -->
-<nav class="navbar navbar-expand-lg {{ ( Cookie::get('theme_mode', $general->default_theme_mode) == 'theme-light') ? 'navbar-light bg-white' : '' }} @if ($header->sticky_header)position-sticky z-index-sticky top-0 bg-default @endif">
-  <div class="container">
-    <a class="navbar-brand logo-image" title="{{ __($siteTitle) }}" href="{{ route('home') }}">
-
-        @if ( !empty($header->logo_light) )
-
-            @switch( Cookie::get('theme_mode', $general->default_theme_mode) )
-                @case('theme-dark')
-                    <img src="{{ $header->logo_dark }}" width="200" height="35" alt="{{ __($siteTitle) }}" class="navbar-brand-image">
-                    @break
-
-                @case('theme-light')
-                    <img src="{{ $header->logo_light }}" width="200" height="35" alt="{{ __($siteTitle) }}" class="navbar-brand-image">
-                    @break
-
-                @default
-                    <img src="{{ $header->logo_light }}" width="200" height="35" alt="{{ __($siteTitle) }}" class="navbar-brand-image">
-            @endswitch
-            
-        @else
-          {{ $siteTitle }}
-        @endif
+<!-- Modern Nav Header Component (Matches Home Design • Outfit Font • Emerald Accent) -->
+<header class="nav-header">
+  <div class="wrap nav-inner">
+    <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
+      <img src="{{ asset('assets/img/logo-light.svg') }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
+      <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
     </a>
 
-    <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon mt-2">
-        <span class="navbar-toggler-bar bar1"></span>
-        <span class="navbar-toggler-bar bar2"></span>
-        <span class="navbar-toggler-bar bar3"></span>
-      </span>
-    </button>
+    <nav class="nav-menu" aria-label="{{ __('Main Navigation') }}">
+      <!-- 1. All Tools -->
+      <a href="{{ route('tools') }}" class="nav-link {{ Route::is('tools') ? 'active' : '' }}">
+        <span>{{ __('Tools') }}</span>
+        <span class="nav-badge">74</span>
+      </a>
 
-    <div class="navbar-nav flex-row order-lg-last m-auto">
-            @if ( $general->theme_mode )
-                <div class="nav-item m-auto">
-                    @if ( empty( Cookie::get('theme_mode', $general->default_theme_mode) ) || Cookie::get('theme_mode', $general->default_theme_mode) === 'theme-light' )
-                        <button class="btn btn-icon btn-icon-only mb-0 me-2 bg-white btn-toggle-mode" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="{{ __('Enable dark mode') }}" data-bs-original-title="{{ __('Enable dark mode') }}" title="{{ __('Enable dark mode') }}">
-                            <i class="fas fa-moon text-warning"></i>
-                        </button>
-                    @else
-                        <button class="btn btn-icon btn-icon-only mb-0 me-2 bg-white btn-toggle-mode" data-bs-toggle="tooltip" data-bs-placement="bottom" aria-label="{{ __('Enable light mode') }}" data-bs-original-title="{{ __('Enable light mode') }}" title="{{ __('Enable light mode') }}">
-                            <i class="fas fa-sun text-warning"></i>
-                        </button>
-                    @endif
-                </div>
-            @endif
+      <!-- 2. SEO Guides Dropdown Menu -->
+      <div class="nav-item-dropdown">
+        <a href="{{ url('/blog') }}" class="nav-link {{ Request::is('*guide') ? 'active' : '' }}" aria-haspopup="true" aria-expanded="false">
+          <span>{{ __('Guides') }}</span>
+          <i class="fas fa-chevron-down text-xs ms-1"></i>
+        </a>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <i class="fas fa-link text-emerald"></i>
+            <div>
+              <div class="nav-drop-title">{{ __('Backlink Monitoring Guide') }}</div>
+              <div class="nav-drop-sub">{{ __('Detect lost links and audit link profiles') }}</div>
+            </div>
+          </a>
+          <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <i class="fas fa-bullseye text-emerald"></i>
+            <div>
+              <div class="nav-drop-title">{{ __('Link Building Guide') }}</div>
+              <div class="nav-drop-sub">{{ __('Prospecting & high-impact outreach') }}</div>
+            </div>
+          </a>
+          <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <i class="fas fa-chart-line text-emerald"></i>
+            <div>
+              <div class="nav-drop-title">{{ __('SEO Audit & Reporting Hub') }}</div>
+              <div class="nav-drop-sub">{{ __('Technical health check & diagnostic workflows') }}</div>
+            </div>
+          </a>
+          <div class="nav-dropdown-divider"></div>
+          <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
+            <i class="fas fa-newspaper text-emerald"></i>
+            <div>
+              <div class="nav-drop-title">{{ __('All SEO Guides & Tutorials') }}</div>
+              <div class="nav-drop-sub">{{ __('Explore the full knowledge repository') }}</div>
+            </div>
+          </a>
+        </div>
+      </div>
 
-            <!-- Begin:Lang Menu -->
-            @if ( $general->language_switcher == true )
+      <!-- 3. Blog -->
+      <a href="{{ url('/blog') }}" class="nav-link {{ (Request::is('blog') || Request::is('blog/*')) ? 'active' : '' }}">
+        <span>{{ __('Blog') }}</span>
+      </a>
 
-              @php
-                $mobileLangMenu = '';
-              @endphp
+      <!-- 4. About Us -->
+      <a href="{{ url('/about-us') }}" class="nav-link {{ Request::is('about-us') ? 'active' : '' }}">
+        <span>{{ __('About') }}</span>
+      </a>
 
-                <li class="nav-item dropdown m-auto lang-menu list-unstyled" wire:ignore>
-                    <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" data-bs-toggle="dropdown" href="#navbar-base">
-                        <img src="{{ asset('assets/img/flags/' . localization()->getCurrentLocale() . '.svg') }}" alt="{{ localization()->getCurrentLocale() }}" width="16" height="10" class="lang-image me-2 my-auto">
-                        {{ localization()->getCurrentLocaleNative() }}
-                            @if( Cookie::get('theme_mode') === 'theme-light' )
-                                <img src="{{ asset('assets/img/down-arrow-dark.svg') }}" alt="down-arrow-dark" class="arrow ms-1" width="10" height="7">
-                            @else
-                                <img src="{{ asset('assets/img/down-arrow.svg') }}" alt="down-arrow" class="arrow ms-1" width="10" height="7">
-                            @endif
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-language px-2">
-                        <div class="scrollable-lang">
-                           @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
-                               <li>
-                                  <a class="dropdown-item border-radius-md mb-1" rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
-                                    <img src="{{ asset('assets/img/flags/' . $properties->key() . '.svg') }}" alt="{{ $properties->key() }}" width="16" height="10" class="lang-image me-2 my-auto"> {{ $properties->native() }}
-                                  </a>
-                              </li>
-                           @endforeach
-                       </div>
-                    </ul>
-                </li>
+      <!-- 5. FAQs -->
+      <a href="{{ url('/faqs') }}" class="nav-link {{ Request::is('faqs') ? 'active' : '' }}">
+        <span>{{ __('FAQ') }}</span>
+      </a>
 
-            @endif
-            <!-- End:Lang Menu -->
+      <!-- 6. Contact -->
+      <a href="{{ url('/contact') }}" class="nav-link {{ Request::is('contact') ? 'active' : '' }}">
+        <span>{{ __('Contact') }}</span>
+      </a>
+    </nav>
 
-            <!-- Begin::Navbar Right -->
-            @foreach($menus as $key => $value)
+    <div class="nav-actions">
+      <button class="theme-toggle-btn" type="button" onclick="toggleSiteTheme()" title="{{ __('Toggle Light / Dark mode') }}" aria-label="{{ __('Toggle Theme') }}">
+        <span id="theme-icon">🌙</span>
+      </button>
 
-                @if ( $value['type'] == 'button' )
+      <a href="{{ route('tools') }}" class="btn btn-primary d-none d-sm-inline-flex">
+        <span>{{ __('Browse 70+ Tools →') }}</span>
+      </a>
 
-                  @if( count($value['children']) )
-                        <div class="nav-item dropdown {{ count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides']) ? 'nav-mega' : '' }}">
-                            <a class="btn btn-icon dropdown-toggle me-2 {{ $value['class'] }}" href="#navbarDropdownMenuButton{{ $key }}" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">
-                               @if ( !empty($value['icon']) )
-                                 <i class="{{ $value['icon'] }} icon"></i>
-                               @endif
-                               {{ __($value['text']) }}
-                            </a>
-
-                            <x-public.menu :childs="$value['children']" :mega="count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides'])" />
-                        </div>
-
-                  @else
-
-                    <div class="nav-item m-auto">
-                        <a class="btn btn-icon mb-0 me-2 {{ $value['class'] }}" href="{{ ( $value['menu_items']  == 'custom' ) ? $value['url'] : route('home') . '/' . $value['url'] }}" target="{{ $value['target'] }}">
-                           @if ( !empty($value['icon']) )
-                             <i class="{{ $value['icon'] }} icon"></i>
-                           @endif
-                          {{ __($value['text']) }}
-                        </a>
-                    </div>
-
-                  @endif
-
-              @endif
-
-            @endforeach
-            <!-- End::Navbar Right -->
-
-            <!-- Begin::Login -->
-            @php
-                $loginPage = \App\Models\Admin\AuthPages::where('name', 'Login')->first();
-                $profilePage = \App\Models\Admin\AuthPages::where('name', 'Profile')->first();
-                $registerPage = \App\Models\Admin\AuthPages::where('name', 'Register')->first();
-            @endphp
-
-            @auth
-                @include('components.public.userMenu', ['user' => Auth::user(), 'profilePage' => $profilePage])
-            @else
-
-               @if ($loginPage && $loginPage->status)
-                <div class="nav-item me-2">
-                    <a class="btn {{ ($registerPage && $registerPage->status) ? 'btn-default' : 'btn-success' }} mb-0 border-0 shadow-none" href="{{ route('login')}}">{{ __('Login') }}</a>
-                </div>
-                @endif
-
-               @if ($registerPage && $registerPage->status)
-                    <div class="nav-item">
-                        <a class="btn bg-gradient-primary mb-0" href="{{ route('register')}}">{{ __('Register') }}</a>
-                    </div>
-                @endif
-            @endauth
-            <!-- End::Login -->
-    </div>
-
-    <div class="collapse navbar-collapse" id="navigation">
-      
-        <ul class="navbar-nav navbar-nav-hover mx-auto">
-
-            <!-- Begin::Navbar Left -->
-            @foreach($menus as $key => $value)
-
-                @if ( $value['type'] == 'link' )
-
-                  @if( count($value['children']) )
-                        <li class="nav-item dropdown mx-2 {{ count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides']) ? 'nav-mega' : '' }}">
-                            <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="{{ ( $value['menu_items'] == 'custom' ) ? $value['url'] : route('home') . '/' . $value['url'] }}" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" @if(in_array($value['text'], ['SEO Tools', 'All SEO Tools'])) onclick="if(window.innerWidth >= 992){window.location.href=this.href;return false;}" @endif>
-                               @if ( !empty($value['icon']) )
-                                 <i class="{{ $value['icon'] }} me-2"></i>
-                               @endif
-                               {{ __($value['text']) }}
-
-                                @if( Cookie::get('theme_mode') === 'theme-light' )
-                                    <img src="{{ asset('assets/img/down-arrow-dark.svg') }}" alt="down-arrow" class="arrow ms-1" width="10" height="7">
-                                @else
-                                    <img src="{{ asset('assets/img/down-arrow.svg') }}" alt="down-arrow" class="arrow ms-1" width="10" height="7">
-                                @endif
-                               
-                            </a>
-
-                            <x-public.menu :childs="$value['children']" :mega="count($value['children']) >= 6 || in_array($value['text'], ['Website Tools', 'SEO Tools', 'All SEO Tools', 'SEO Guides'])" />
-                        </li>
-
-                  @else
-
-                    <li class="nav-item dropdown mx-2">
-                        <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center" href="{{ ( $value['menu_items']  == 'custom' ) ? $value['url'] : route('home') . '/' . $value['url'] }}" target="{{ $value['target'] }}">
-                           @if ( !empty($value['icon']) )
-                             <i class="{{ $value['icon'] }} me-2"></i>
-                           @endif
-                          {{ __($value['text']) }}
-                        </a>
-                    </li>
-
-                  @endif
-
-                @endif
-
-            @endforeach
-            <!-- End::Navbar Left -->
-        </ul>
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-toggle d-lg-none" type="button" onclick="toggleMobileNavDrawer()" aria-label="{{ __('Toggle Navigation Menu') }}" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </button>
     </div>
   </div>
-</nav>
-<!-- End Navbar -->
+
+  <!-- Mobile Collapsible Navigation Drawer -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer" style="display: none;">
+    <div class="wrap py-3">
+      <a href="{{ route('home') }}" class="mobile-nav-link">{{ __('Home') }}</a>
+      <a href="{{ route('tools') }}" class="mobile-nav-link d-flex justify-content-between align-items-center">
+        <span>{{ __('All SEO Tools') }}</span>
+        <span class="nav-badge">74</span>
+      </a>
+      
+      <div class="mobile-nav-section-title">{{ __('Guides & Playbooks') }}</div>
+      <a href="{{ url('/backlink-monitoring-guide') }}" class="mobile-nav-sublink">
+        <i class="fas fa-link text-emerald me-2"></i> {{ __('Backlink Monitoring Guide') }}
+      </a>
+      <a href="{{ url('/link-opportunity-guide') }}" class="mobile-nav-sublink">
+        <i class="fas fa-bullseye text-emerald me-2"></i> {{ __('Link Building Opportunity Guide') }}
+      </a>
+      <a href="{{ url('/seo-audit-guide') }}" class="mobile-nav-sublink">
+        <i class="fas fa-chart-line text-emerald me-2"></i> {{ __('SEO Audit & Reporting Hub') }}
+      </a>
+      <a href="{{ url('/blog') }}" class="mobile-nav-sublink">
+        <i class="fas fa-newspaper text-emerald me-2"></i> {{ __('All SEO Tutorials (Blog)') }}
+      </a>
+
+      <div class="mobile-nav-section-title">{{ __('Company & Support') }}</div>
+      <a href="{{ url('/about-us') }}" class="mobile-nav-link">{{ __('About Us') }}</a>
+      <a href="{{ url('/faqs') }}" class="mobile-nav-link">{{ __('Frequently Asked Questions') }}</a>
+      <a href="{{ url('/contact') }}" class="mobile-nav-link">{{ __('Contact Support') }}</a>
+      <a href="{{ url('/report') }}" class="mobile-nav-link">{{ __('Report Broken Link / Tool') }}</a>
+
+      <div class="pt-3">
+        <a href="{{ route('tools') }}" class="btn btn-primary w-100 text-center">{{ __('Browse 70+ Free Tools →') }}</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  function toggleMobileNavDrawer() {
+    const drawer = document.getElementById('mobileNavDrawer');
+    if (!drawer) return;
+    const isHidden = drawer.style.display === 'none' || drawer.style.display === '';
+    drawer.style.display = isHidden ? 'block' : 'none';
+  }
+
+  function toggleSiteTheme() {
+    const html = document.documentElement;
+    const body = document.body;
+    const isDark = html.classList.contains('dark') || html.classList.contains('theme-dark') || (body && body.classList.contains('theme-dark'));
+    const newTheme = isDark ? 'light' : 'dark';
+    
+    html.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
+    html.classList.add(newTheme);
+    html.classList.add('theme-' + newTheme);
+
+    if (body) {
+      body.classList.remove('theme-light', 'theme-dark', 'light', 'dark');
+      body.classList.add('theme-' + newTheme);
+      body.classList.add(newTheme);
+    }
+    
+    const icon = document.getElementById('theme-icon');
+    if (icon) icon.textContent = newTheme === 'light' ? '🌙' : '☀️';
+    
+    localStorage.setItem('site_theme', newTheme);
+    document.cookie = "theme_mode=theme-" + newTheme + "; path=/; max-age=31536000; SameSite=Lax";
+  }
+
+  (function() {
+    try {
+      const saved = localStorage.getItem('site_theme');
+      if (saved) {
+        document.documentElement.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
+        document.documentElement.classList.add(saved);
+        document.documentElement.classList.add('theme-' + saved);
+        if (document.body) {
+          document.body.classList.remove('theme-light', 'theme-dark', 'light', 'dark');
+          document.body.classList.add('theme-' + saved);
+          document.body.classList.add(saved);
+        }
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.textContent = saved === 'light' ? '🌙' : '☀️';
+      }
+    } catch(e) {}
+  })();
+</script>

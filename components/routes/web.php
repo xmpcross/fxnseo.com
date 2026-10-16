@@ -175,12 +175,66 @@ Route::group(['middleware' => 'swinstall', 'prefix' => 'install'], function () {
 // Isolated homepage redesign for stakeholder review. The production home route
 // remains untouched until the preview is explicitly approved.
 Route::get('/homepage-preview', function () {
-    $resources = app(\App\Services\StrapiClient::class)->posts(1, 3)['data'] ?? [];
+    $locale = app()->getLocale();
+    $resources = \App\Models\Admin\Page::where('type', 'post')
+        ->where('post_status', true)
+        ->orderBy('id', 'desc')
+        ->take(4)
+        ->get()
+        ->map(function ($page) use ($locale) {
+            $t = $page->translate($locale) ?: $page->translate('en');
+            return [
+                'slug'           => $page->slug,
+                'title'          => $t ? $t->title : $page->slug,
+                'excerpt'        => $t ? ($t->short_description ?: $t->subtitle) : '',
+                'featured_image' => $page->featured_image,
+                'published_at'   => $page->created_at ? $page->created_at->format('M d, Y') : 'Recent',
+            ];
+        })
+        ->toArray();
+
+    $categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
+        $q->where('tool_status', true)->withTranslation($locale);
+    }])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
+        $tools = $cat->pages->map(function ($p) use ($locale) {
+            $t = $p->translate($locale) ?: $p->translate('en');
+            return [
+                'id'          => $p->id,
+                'slug'        => $p->slug,
+                'title'       => $t ? $t->title : $p->slug,
+                'description' => $t ? ($t->short_description ?: $t->subtitle) : '',
+                'icon_image'  => $p->icon_image,
+                'popular'     => (bool) $p->popular,
+                'new'         => (bool) $p->new,
+                'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : url('/' . $p->slug),
+            ];
+        })->values();
+
+        return [
+            'id'    => $cat->id,
+            'title' => $cat->title,
+            'tools' => $tools,
+        ];
+    })->filter(function ($cat) {
+        return count($cat['tools']) > 0;
+    })->values()->toArray();
+
+    $allTools = collect($categories)->flatMap(function ($cat) {
+        return $cat['tools'];
+    })->unique('slug')->values()->toArray();
+
+    $popularTools = collect($allTools)->filter(function ($t) {
+        return !empty($t['popular']);
+    })->values()->toArray();
+
     return view('homepage-preview', [
-        'resources' => $resources,
-        'general' => \App\Models\Admin\General::first(),
-        'footer' => \App\Models\Admin\FooterTranslation::where('locale', app()->getLocale())->first(),
-        'socials' => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
+        'resources'    => $resources,
+        'categories'   => $categories,
+        'allTools'     => $allTools,
+        'popularTools' => $popularTools,
+        'general'      => \App\Models\Admin\General::first(),
+        'footer'       => \App\Models\Admin\FooterTranslation::where('locale', $locale)->first(),
+        'socials'      => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
     ]);
 })->name('homepage.preview');
 
@@ -257,7 +311,69 @@ Route::localizedGroup(function () {
 	});
 
 	//Home
-	Route::get('/', Home::class)->name('home');
+	Route::get('/', function () {
+		$locale = app()->getLocale();
+		$resources = \App\Models\Admin\Page::where('type', 'post')
+			->where('post_status', true)
+			->orderBy('id', 'desc')
+			->take(4)
+			->get()
+			->map(function ($page) use ($locale) {
+				$t = $page->translate($locale) ?: $page->translate('en');
+				return [
+					'slug'           => $page->slug,
+					'title'          => $t ? $t->title : $page->slug,
+					'excerpt'        => $t ? ($t->short_description ?: $t->subtitle) : '',
+					'featured_image' => $page->featured_image,
+					'published_at'   => $page->created_at ? $page->created_at->format('M d, Y') : 'Recent',
+				];
+			})
+			->toArray();
+
+		$categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
+			$q->where('tool_status', true)->withTranslation($locale);
+		}])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
+			$tools = $cat->pages->map(function ($p) use ($locale) {
+				$t = $p->translate($locale) ?: $p->translate('en');
+				return [
+					'id'          => $p->id,
+					'slug'        => $p->slug,
+					'title'       => $t ? $t->title : $p->slug,
+					'description' => $t ? ($t->short_description ?: $t->subtitle) : '',
+					'icon_image'  => $p->icon_image,
+					'popular'     => (bool) $p->popular,
+					'new'         => (bool) $p->new,
+					'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : url('/' . $p->slug),
+				];
+			})->values();
+
+			return [
+				'id'    => $cat->id,
+				'title' => $cat->title,
+				'tools' => $tools,
+			];
+		})->filter(function ($cat) {
+			return count($cat['tools']) > 0;
+		})->values()->toArray();
+
+		$allTools = collect($categories)->flatMap(function ($cat) {
+			return $cat['tools'];
+		})->unique('slug')->values()->toArray();
+
+		$popularTools = collect($allTools)->filter(function ($t) {
+			return !empty($t['popular']);
+		})->values()->toArray();
+
+		return view('livewire.public.home-live', [
+			'resources'    => $resources,
+			'categories'   => $categories,
+			'allTools'     => $allTools,
+			'popularTools' => $popularTools,
+			'general'      => \App\Models\Admin\General::first(),
+			'footer'       => \App\Models\Admin\FooterTranslation::where('locale', $locale)->first(),
+			'socials'      => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
+		]);
+	})->name('home');
 	Route::get('/tools', ToolsPage::class)->name('tools');
 
 	//Blog
@@ -287,9 +403,13 @@ Route::localizedGroup(function () {
 
 	})->name('admin.settings.indexing');
 
-	//Strapi-powered Resources (must precede the /{slug} catch-all)
-	Route::get('/resources', PublicResources::class)->name('public.resources');
-	Route::get('/resources/{slug}', PublicResourceShow::class)->where('slug', '^((?!admin.*).)*$')->name('public.resource');
+	//Resources redirected to native local blog
+	Route::get('/resources', function() {
+		return redirect('/blog', 301);
+	})->name('public.resources');
+	Route::get('/resources/{slug}', function($slug) {
+		return redirect('/blog/' . $slug, 301);
+	})->where('slug', '^((?!admin.*).)*$')->name('public.resource');
 
 	//Page
 	Route::get('/{slug}', PublicPage::class)->where('slug', '^((?!admin.*).)*$')->name('public.page');

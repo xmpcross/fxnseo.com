@@ -20,6 +20,7 @@
 					<thead>
 						<tr>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Slug') }}</th>
+							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Category') }}</th>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Default Language') }}</th>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Translation Progress') }}</th>
 							<th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">{{ __('Status') }}</th>
@@ -39,6 +40,9 @@
 											<img src="{{ ($post->featured_image) ? $post->featured_image : asset('assets/img/no-thumb.svg') }}" class="avatar avatar-sm me-3">
 											<div class="d-flex align-items-center">{{ $post->slug }}</div>
 										</div>
+									</td>
+									<td class="align-middle">
+										<span class="badge bg-light text-dark">{{ $post->page_categories->title ?? __('None') }}</span>
 									</td>
 									<td class="align-middle">
 										<img src="{{ asset('assets/img/flags/' . $default_lang . '.svg') }}" class="lang-image mx-auto"> 

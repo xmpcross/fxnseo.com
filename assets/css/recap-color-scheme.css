@@ -1,28 +1,41 @@
 /*
- * Global light/dark palette mapped from the Recap theme.
+ * Global light/dark palette and Outfit typography system.
  * This file intentionally loads last so every public template shares one
  * semantic color system, including custom page and blog components.
  */
+@import url("google-fonts-local.css");
+
+:root,
+body {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+button, input, select, textarea, .btn, .nav-link, .navbar-brand {
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
 :root,
 body.theme-light {
   color-scheme: light;
-  --site-bg: #fafafa;
+  --site-bg: #f8fafc;
   --site-surface: #ffffff;
-  --site-surface-alt: #fafafa;
-  --site-text: #161616;
-  --site-text-muted: #737373;
-  --site-border: #dbdbdb;
-  --site-accent: #206bea;
-  --site-accent-hover: #3b7ded;
+  --site-surface-alt: #f1f5f9;
+  --site-text: #0f172a;
+  --site-text-muted: #64748b;
+  --site-border: #e2e8f0;
+  --site-accent: #059669;
+  --site-accent-hover: #047857;
   --site-button-text: #ffffff;
   --site-control-bg: #ffffff;
   --site-header-bg: #ffffff;
-  --site-footer-bg: #fafafa;
-  --site-shadow: rgba(22, 22, 22, 0.08);
+  --site-footer-bg: #f8fafc;
+  --site-shadow: rgba(15, 23, 42, 0.06);
   --bs-body-bg: var(--site-bg);
   --bs-body-color: var(--site-text);
   --bs-primary: var(--site-accent);
-  --bs-primary-rgb: 32, 107, 234;
+  --bs-primary-rgb: 5, 150, 105;
   --bs-border-color: var(--site-border);
   --content-primary: var(--site-accent);
   --content-ink: var(--site-text);
@@ -33,23 +46,23 @@ body.theme-light {
 
 body.theme-dark {
   color-scheme: dark;
-  --site-bg: #161616;
-  --site-surface: #232323;
-  --site-surface-alt: #232323;
-  --site-text: #ffffff;
-  --site-text-muted: #cdcdcd;
-  --site-border: #343434;
-  --site-accent: #ffffff;
-  --site-accent-hover: #cdcdcd;
-  --site-button-text: #ffffff;
-  --site-control-bg: #232323;
-  --site-header-bg: #232323;
-  --site-footer-bg: #161616;
-  --site-shadow: rgba(0, 0, 0, 0.28);
+  --site-bg: #070a12;
+  --site-surface: #0f172a;
+  --site-surface-alt: #0d1322;
+  --site-text: #f1f5f9;
+  --site-text-muted: #94a3b8;
+  --site-border: rgba(255, 255, 255, 0.08);
+  --site-accent: #10b981;
+  --site-accent-hover: #059669;
+  --site-button-text: #022c22;
+  --site-control-bg: #0f172a;
+  --site-header-bg: #070a12;
+  --site-footer-bg: #04070d;
+  --site-shadow: rgba(0, 0, 0, 0.4);
   --bs-body-bg: var(--site-bg);
   --bs-body-color: var(--site-text);
-  --bs-primary: #206bea;
-  --bs-primary-rgb: 32, 107, 234;
+  --bs-primary: #10b981;
+  --bs-primary-rgb: 16, 185, 129;
   --bs-border-color: var(--site-border);
   --content-primary: var(--site-accent);
   --content-ink: var(--site-text);
@@ -84,18 +97,26 @@ body a:not(.btn):hover {
 body .btn-primary,
 body .bg-primary,
 body .bg-gradient-primary {
-  background-color: #206bea !important;
-  border-color: #206bea !important;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2) !important;
 }
 
-body .btn-primary:hover {
-  background-color: #3b7ded !important;
-  border-color: #3b7ded !important;
+body .btn-primary:hover,
+body .bg-primary:hover,
+body .bg-gradient-primary:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border-color: #047857 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
 }
 
 body nav.navbar {
   background: var(--site-header-bg) !important;
-  border-bottom-color: var(--site-border) !important;
+  border-bottom: 1px solid var(--site-border) !important;
 }
 
 body nav.navbar .navbar-brand,
@@ -268,4 +289,19 @@ body.theme-dark .tools-hero {
 
 body.theme-dark img {
   color-scheme: only light;
+}
+
+/* Heading and title font family inherits from body/parent. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.page-title,
+.post-title,
+.entry-title,
+.blog-entry-title,
+.post-editorial-hero h1 {
+  font-family: inherit !important;
 }

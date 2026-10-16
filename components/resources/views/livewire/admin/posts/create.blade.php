@@ -40,6 +40,16 @@
                     <option value="_blank">{{ __('_blank') }}</option>
                 </select>
             </div>
+
+            <div class="form-group">
+                <label class="form-label">{{ __('Category') }}</label>
+                <select class="form-control form-select" wire:model.defer="category_id">
+                    <option value="">{{ __('None') }}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category['id'] }}">{{ $category['title'] }}</option>
+                    @endforeach
+                </select>
+            </div>
 		</div>
 
         <div class="modal-footer">

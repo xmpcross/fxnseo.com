@@ -1,6 +1,24 @@
+@php
+  $__themeCookie = Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light');
+  $__isThemeDark = ($__themeCookie === 'theme-dark');
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}" class="{{ $__isThemeDark ? 'dark theme-dark' : 'light theme-light' }}" id="html-root">
     <head>
+        <script>
+          (function(){
+            try {
+              var s = localStorage.getItem('site_theme');
+              if (s === 'dark' || (!s && {{ $__isThemeDark ? 'true' : 'false' }})) {
+                document.documentElement.classList.add('dark', 'theme-dark');
+                document.documentElement.classList.remove('light', 'theme-light');
+              } else if (s === 'light') {
+                document.documentElement.classList.add('light', 'theme-light');
+                document.documentElement.classList.remove('dark', 'theme-dark');
+              }
+            } catch(e) {}
+          })();
+        </script>
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
         <script>

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Posts;
 use Livewire\Component;
 use DateTime;
 use App\Models\Admin\Page;
+use App\Models\Admin\PageCategory;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use GrahamCampbell\Security\Facades\Security;
 
@@ -13,8 +14,15 @@ class Create extends Component
     public $slug;
     public $featured_image;
     public $target = '_self';
+    public $category_id;
+    public $categories = [];
 
     protected $listeners = ['onSetFeaturedImage'];
+
+    public function mount()
+    {
+        $this->categories = PageCategory::orderBy('title', 'ASC')->get()->toArray();
+    }
 
     public function render()
     {
@@ -28,7 +36,7 @@ class Create extends Component
     **/
     private function resetInputFields()
     {
-        $this->reset(['slug', 'featured_image']);
+        $this->reset(['slug', 'featured_image', 'category_id']);
     }
 
     /**
@@ -74,6 +82,7 @@ class Create extends Component
             $page->type           = 'post';
             $page->featured_image = strip_tags($this->featured_image);
             $page->target         = Security::clean( strip_tags($this->target) );
+            $page->category_id    = $this->category_id ?: null;
             $page->created_at     = new DateTime();
             $page->save();
                    
