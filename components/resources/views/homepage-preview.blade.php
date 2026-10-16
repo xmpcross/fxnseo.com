@@ -1123,8 +1123,6 @@
       <nav class="nav-menu">
         <a href="#tools" class="nav-link active">Tools <span class="nav-badge">{{ count($allTools) }}</span></a>
         <a href="#editorial-insights" class="nav-link">Search Guides</a>
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#how-it-works" class="nav-link">How It Works</a>
         <a href="#faqs" class="nav-link">FAQ</a>
         <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
       </nav>
