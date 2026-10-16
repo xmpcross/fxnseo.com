@@ -192,6 +192,119 @@
       border-color: var(--emerald);
       transform: translateY(-1px);
     }
+    .mobile-toggle-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all 0.2s;
+    }
+    .mobile-toggle-btn:hover {
+      background: var(--bg-surface);
+      border-color: var(--emerald);
+    }
+    .nav-item-dropdown {
+      position: relative;
+    }
+    .nav-item-dropdown .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: -20px;
+      min-width: 320px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.25), 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 1070;
+      margin-top: 10px;
+      animation: navDropdownFade 0.2s ease forwards;
+    }
+    .nav-item-dropdown .nav-dropdown-menu::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+    @keyframes navDropdownFade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nav-item-dropdown:hover .nav-dropdown-menu,
+    .nav-item-dropdown:focus-within .nav-dropdown-menu {
+      display: flex;
+    }
+    .nav-dropdown-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      padding: 10px 14px !important;
+      border-radius: 12px !important;
+      color: var(--text) !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+    .nav-dropdown-item:hover {
+      background: var(--bg-alt) !important;
+      color: var(--brand, var(--emerald)) !important;
+      transform: translateX(3px);
+    }
+    .dropdown-icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .nav-drop-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .nav-drop-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+    .nav-dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 8px;
+    }
+    .home-mobile-drawer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 16px 0;
+    }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+    .mobile-nav-link:hover {
+      background: var(--bg-alt);
+      color: var(--brand, var(--emerald));
+    }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -1095,6 +1208,8 @@
       .process-grid, .editorial-grid { grid-template-columns: 1fr; }
       .footer-columns { grid-template-columns: 1fr 1fr; }
       .nav-menu { display: none; }
+      .mobile-toggle-btn { display: inline-flex; }
+      .d-none-mobile { display: none !important; }
     }
     @media (max-width: 768px) {
       .hero-launcher { border-radius: 18px; }
@@ -1120,18 +1235,102 @@
         <img src="{{ asset('assets/img/logo-light.svg') }}" alt="fxnSEO">
       </a>
 
+      @php
+        $autoNavPages = \App\Models\Admin\Page::whereIn('type', ['page', 'contact'])
+          ->whereNotIn('slug', [
+            'about-us', 'faqs', 'contact',
+            'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure',
+            'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide'
+          ])
+          ->get();
+      @endphp
+
       <nav class="nav-menu">
-        <a href="#tools" class="nav-link active">Tools <span class="nav-badge">{{ count($allTools) }}</span></a>
-        <a href="#editorial-insights" class="nav-link">Search Guides</a>
-        <a href="#faqs" class="nav-link">FAQ</a>
+        <a href="{{ route('tools') }}" class="nav-link">Tools <span class="nav-badge">{{ count($allTools) }}</span></a>
+        
+        <div class="nav-item-dropdown">
+          <a href="{{ url('/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            <span>Guides</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🔗</span>
+              <div>
+                <div class="nav-drop-title">Backlink Monitoring Guide</div>
+                <div class="nav-drop-sub">Detect lost links and audit link profiles</div>
+              </div>
+            </a>
+            <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🎯</span>
+              <div>
+                <div class="nav-drop-title">Link Building Guide</div>
+                <div class="nav-drop-sub">Prospecting & high-impact outreach</div>
+              </div>
+            </a>
+            <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📈</span>
+              <div>
+                <div class="nav-drop-title">SEO Audit & Reporting Hub</div>
+                <div class="nav-drop-sub">Technical health check & diagnostic workflows</div>
+              </div>
+            </a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📰</span>
+              <div>
+                <div class="nav-drop-title">All SEO Guides & Tutorials</div>
+                <div class="nav-drop-sub">Explore the full knowledge repository</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
         <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
+        <a href="{{ url('/about-us') }}" class="nav-link">About</a>
+        <a href="{{ url('/faqs') }}" class="nav-link">FAQ</a>
+        <a href="{{ url('/contact') }}" class="nav-link">Contact</a>
+
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
       </nav>
 
       <div class="nav-actions">
         <button class="theme-toggle-btn" type="button" onclick="toggleTheme()" title="Toggle Light / Dark mode" aria-label="Toggle Theme">
           <span id="theme-icon">🌙</span>
         </button>
-        <a href="#tools" class="btn btn-primary">Browse 60+ Tools →</a>
+        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">Browse {{ count($allTools) }}+ Tools →</a>
+        <button class="mobile-toggle-btn" type="button" onclick="togglePreviewMobileMenu()" aria-label="Toggle Navigation Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="previewMobileDrawer" class="home-mobile-drawer" style="display: none;">
+      <div class="wrap py-3" style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="{{ route('tools') }}" class="mobile-nav-link">
+          <span>Tools</span>
+          <span class="nav-badge">{{ count($allTools) }}</span>
+        </a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Guides & Tutorials</a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Blog</a>
+        <a href="{{ url('/about-us') }}" class="mobile-nav-link">About Us</a>
+        <a href="{{ url('/faqs') }}" class="mobile-nav-link">FAQs</a>
+        <a href="{{ url('/contact') }}" class="mobile-nav-link">Contact</a>
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
+        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Browse {{ count($allTools) }}+ Tools →</a>
       </div>
     </div>
   </header>
@@ -1670,6 +1869,14 @@
   </div>
 
   <script>
+    // Mobile menu toggle
+    function togglePreviewMobileMenu() {
+      const drawer = document.getElementById('previewMobileDrawer');
+      if (drawer) {
+        drawer.style.display = (drawer.style.display === 'none' || !drawer.style.display) ? 'block' : 'none';
+      }
+    }
+
     // Theme toggle logic (Light is default)
     function toggleTheme() {
       const html = document.getElementById('html-root');
