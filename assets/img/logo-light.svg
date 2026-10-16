@@ -1,18 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 46" role="img" aria-label="fxnSEOTools">
-  <title>fxnSEOTools</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 196 44" width="196" height="44" role="img" aria-label="fxnSEO Tools">
+  <title>fxnSEO Tools</title>
   <defs>
-    <linearGradient id="fxbadge" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0046be"/>
-      <stop offset="1" stop-color="#2b5df5"/>
+    <!-- Light Mode Gradients -->
+    <linearGradient id="fxBadgeLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="50%" stop-color="#0284c7"/>
+      <stop offset="100%" stop-color="#2563eb"/>
     </linearGradient>
+    <linearGradient id="fxSeoLight" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#059669"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <filter id="badgeShadowLight" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#059669" flood-opacity="0.25"/>
+    </filter>
   </defs>
-  <!-- Badge -->
-  <rect x="0" y="3" width="40" height="40" rx="10" fill="url(#fxbadge)"/>
-  <!-- Upward growth trend (SEO) -->
-  <path d="M10 32 L17.5 24.5 L23 29.5 L31 20" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M25.5 20 L31 20 L31 25.5" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <!-- Wordmark (dark, for light backgrounds) -->
-  <text x="49" y="31" font-family="'Urbanist','Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="800" letter-spacing="-0.4">
-    <tspan fill="#001e73">fxn</tspan><tspan fill="#0046be">SEO</tspan><tspan fill="#001e73">Tools</tspan>
-  </text>
+
+  <!-- Icon Mark -->
+  <g transform="translate(2, 2)">
+    <!-- Base Squircle -->
+    <rect x="0" y="0" width="40" height="40" rx="12" fill="url(#fxBadgeLight)" filter="url(#badgeShadowLight)"/>
+    <rect x="0" y="0" width="40" height="40" rx="12" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+    
+    <!-- Geometric Growth Ribbon / Search Node -->
+    <!-- Trend Line with Search Eye -->
+    <path d="M10 29.5 L17.5 21 L23 25.5 L31.5 14" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M25 14 L31.5 14 L31.5 20.5" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Focus Search Node -->
+    <circle cx="17.5" cy="21" r="3.2" fill="none" stroke="#ffffff" stroke-width="1.8"/>
+    <!-- Launch Dot -->
+    <circle cx="31.5" cy="14" r="1.5" fill="#a7f3d0"/>
+  </g>
+
+  <!-- Brand Wordmark Typography -->
+  <g transform="translate(52, 29)">
+    <text font-family="'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="23" letter-spacing="-0.5px">
+      <!-- fxn -->
+      <tspan font-weight="800" fill="#0f172a">fxn</tspan>
+      <!-- SEO -->
+      <tspan font-weight="900" fill="url(#fxSeoLight)">SEO</tspan>
+    </text>
+  </g>
+
+  <!-- Tag Pill: TOOLS -->
+  <g transform="translate(138, 13)">
+    <rect x="0" y="0" width="52" height="19" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="26" y="13" font-family="'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="800" fill="#334155" letter-spacing="1.2px" text-anchor="middle">TOOLS</text>
+  </g>
 </svg>
