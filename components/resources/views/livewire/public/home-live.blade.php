@@ -1894,7 +1894,7 @@
     </div>
   </footer>
 
-
+  <script>
     // Mobile menu toggle
     function toggleHomeMobileMenu() {
       const drawer = document.getElementById('homeMobileDrawer');
