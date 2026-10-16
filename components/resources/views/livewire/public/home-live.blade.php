@@ -60,34 +60,37 @@
       --orb-opacity: 0.15;
     }
 
-    /* Dark Mode Overrides (if toggled) */
+    /* Dark Mode Overrides (nxtsmarthome.com.au extracted color scheme) */
     html.dark {
       --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      --bg: #070a12;
-      --bg-surface: #0f172a;
-      --bg-card: rgba(15, 23, 42, 0.75);
-      --bg-card-hover: rgba(26, 38, 66, 0.85);
-      --bg-alt: #0d1322;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-light: rgba(255, 255, 255, 0.05);
-      --border-focus: rgba(16, 185, 129, 0.4);
-      --text: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-subtle: #64748b;
+      --bg: #151616;
+      --bg-surface: #222324;
+      --bg-card: rgba(34, 35, 36, 0.85);
+      --bg-card-hover: rgba(41, 42, 44, 0.95);
+      --bg-alt: #1f2937;
+      --border: #313131;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-focus: #9895ff;
+      --text: #ffffff;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
       --emerald: #10b981;
       --emerald-dark: #059669;
-      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --emerald-glow: rgba(16, 185, 129, 0.22);
       --emerald-soft: rgba(16, 185, 129, 0.12);
-      --cyan: #06b6d4;
-      --indigo: #6366f1;
-      --amber: #f59e0b;
-      --amber-soft: rgba(245, 158, 11, 0.15);
-      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
-      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.4);
-      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.5);
-      --shadow-xl: 0 25px 60px rgba(0, 0, 0, 0.6);
-      --nav-bg: rgba(7, 10, 18, 0.85);
-      --orb-opacity: 0.2;
+      --brand: #9895ff;
+      --brand-hover: #7b77e4;
+      --cyan: #38bdf8;
+      --indigo: #9895ff;
+      --amber: #ff9b1a;
+      --amber-soft: rgba(255, 155, 26, 0.15);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+      --shadow-xl: 0 25px 60px rgba(0, 0, 0, 0.65);
+      --nav-bg: rgba(21, 22, 22, 0.92);
+      --footer-bg: #0d0f10;
+      --orb-opacity: 0.18;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; }
@@ -260,7 +263,7 @@
     html.dark .hero-section,
     body.theme-dark .hero-section {
       background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 65%),
-                  linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, var(--bg) 100%);
+                  linear-gradient(180deg, rgba(29, 30, 32, 0.85) 0%, var(--bg) 100%);
     }
     .hero-content {
       text-align: center;
@@ -312,7 +315,7 @@
       -webkit-text-fill-color: transparent;
     }
     html.dark .hero-gradient-text {
-      background: linear-gradient(135deg, #ffffff 20%, #94a3b8 60%, var(--emerald) 100%);
+      background: linear-gradient(135deg, #ffffff 20%, #9ca3af 60%, var(--emerald) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }

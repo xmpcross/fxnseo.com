@@ -446,11 +446,11 @@ body.theme-dark.page-slug-about-us,
 body.theme-dark.page-slug-contact,
 .theme-dark .page-slug-about-us,
 .theme-dark .page-slug-contact {
-  --content-ink: #f1f5f9;
-  --content-muted: #94a3b8;
-  --content-line: rgba(255, 255, 255, 0.08);
-  --content-soft: #070a12;
-  --content-card-bg: #0f172a;
+  --content-ink: #ffffff;
+  --content-muted: #9ca3af;
+  --content-line: #313131;
+  --content-soft: #151616;
+  --content-card-bg: #222324;
 }
 
 .page-slug-about-us .page-content,
@@ -1004,21 +1004,21 @@ body.theme-dark .page-slug-contact .input-group-modern .form-control,
 html.dark .page-slug-contact .textarea-group-modern .form-control,
 body.theme-dark .page-slug-contact .textarea-group-modern .form-control,
 .theme-dark .page-slug-contact .textarea-group-modern .form-control {
-  background: #070a12 !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
-  color: #f1f5f9 !important;
+  background: #161718 !important;
+  border-color: #313131 !important;
+  color: #ffffff !important;
 }
 .page-slug-contact .form-control:focus {
-  border-color: #10b981 !important;
+  border-color: #9895ff !important;
   background: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2) !important;
+  box-shadow: 0 0 0 3px rgba(152, 149, 255, 0.2) !important;
   outline: none;
 }
 html.dark .page-slug-contact .form-control:focus,
 body.theme-dark .page-slug-contact .form-control:focus,
 .theme-dark .page-slug-contact .form-control:focus {
-  background: #0b1120 !important;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+  background: #1c1d1f !important;
+  box-shadow: 0 0 0 3px rgba(152, 149, 255, 0.25) !important;
 }
 
 .page-slug-contact .contact-action-row {
@@ -1053,8 +1053,8 @@ body.theme-dark .page-slug-contact .form-control:focus,
 
 /* Right Slate Channels Card */
 .page-slug-contact .contact-channels-card {
-  background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(145deg, #1c1d1f 0%, #222324 100%);
+  border: 1px solid #313131;
   padding: clamp(28px, 4vw, 44px);
   color: #ffffff;
   display: flex;
@@ -1063,6 +1063,8 @@ body.theme-dark .page-slug-contact .form-control:focus,
 html.dark .page-slug-contact .contact-channels-card,
 body.theme-dark .page-slug-contact .contact-channels-card,
 .theme-dark .page-slug-contact .contact-channels-card {
+  background: linear-gradient(145deg, #1c1d1f 0%, #222324 100%) !important;
+  border-color: #313131 !important;
 }
 .page-slug-contact .channels-badge {
   display: inline-flex;
@@ -1070,9 +1072,9 @@ body.theme-dark .page-slug-contact .contact-channels-card,
   gap: 8px;
   padding: 5px 12px;
   border-radius: 20px;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #34d399;
+  background: rgba(152, 149, 255, 0.15);
+  border: 1px solid rgba(152, 149, 255, 0.3);
+  color: #9895ff;
   font-size: 11.5px;
   font-weight: 700;
   text-transform: uppercase;
@@ -1083,8 +1085,8 @@ body.theme-dark .page-slug-contact .contact-channels-card,
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #34d399;
-  box-shadow: 0 0 8px #34d399;
+  background: #9895ff;
+  box-shadow: 0 0 8px #9895ff;
 }
 .page-slug-contact .channels-title {
   font-size: clamp(24px, 2.8vw, 32px);
@@ -2386,26 +2388,26 @@ html.dark.page-slug-faqs body,
 body.theme-dark.page-slug-faqs,
 html.dark .page-slug-faqs,
 body.theme-dark .page-slug-faqs {
-  background-color: #070a12 !important;
+  background-color: #151616 !important;
 }
 
 html.dark.page-slug-faqs .page-content,
 body.theme-dark.page-slug-faqs .page-content,
 html.dark.page-slug-faqs .page-content > .container,
 body.theme-dark.page-slug-faqs .page-content > .container {
-  background-color: #070a12 !important;
+  background-color: #151616 !important;
 }
 
 html.dark .faq-search-panel,
 body.theme-dark .faq-search-panel {
-  background: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-left: 4px solid #10b981 !important;
-  color: #f1f5f9 !important;
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
+  border-left: 4px solid #9895ff !important;
+  color: #ffffff !important;
 }
 html.dark .faq-search-copy span,
 body.theme-dark .faq-search-copy span {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 html.dark .faq-search-copy h2,
 body.theme-dark .faq-search-copy h2 {
@@ -2413,69 +2415,69 @@ body.theme-dark .faq-search-copy h2 {
 }
 html.dark .faq-search-copy p,
 body.theme-dark .faq-search-copy p {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .faq-search-box,
 body.theme-dark .faq-search-box {
-  background: #070a12 !important;
-  border-color: rgba(255, 255, 255, 0.12) !important;
+  background: #161718 !important;
+  border-color: #313131 !important;
 }
 html.dark .faq-search-box input,
 body.theme-dark .faq-search-box input {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .faq-search-box button,
 body.theme-dark .faq-search-box button {
-  background: rgba(16, 185, 129, 0.15) !important;
-  color: #34d399 !important;
+  background: rgba(152, 149, 255, 0.15) !important;
+  color: #9895ff !important;
 }
 
 html.dark.page-slug-faqs .faq-category,
 body.theme-dark.page-slug-faqs .faq-category {
-  background: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
 }
 html.dark.page-slug-faqs .faq-category > h2,
 body.theme-dark.page-slug-faqs .faq-category > h2 {
-  color: #f1f5f9 !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border-color: #313131 !important;
 }
 html.dark.page-slug-faqs .faq-category > h2::after,
 body.theme-dark.page-slug-faqs .faq-category > h2::after {
-  background: #10b981 !important;
+  background: #9895ff !important;
 }
 
 html.dark.page-slug-faqs .faq-accordion .accordion-item,
 body.theme-dark.page-slug-faqs .faq-accordion .accordion-item {
-  background: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
 }
 html.dark.page-slug-faqs .faq-accordion .accordion-button,
 body.theme-dark.page-slug-faqs .faq-accordion .accordion-button {
-  background: #0f172a !important;
-  color: #f1f5f9 !important;
+  background: #222324 !important;
+  color: #ffffff !important;
 }
 html.dark.page-slug-faqs .faq-accordion .accordion-button:not(.collapsed),
 body.theme-dark.page-slug-faqs .faq-accordion .accordion-button:not(.collapsed) {
-  background: rgba(16, 185, 129, 0.12) !important;
-  color: #34d399 !important;
+  background: rgba(152, 149, 255, 0.12) !important;
+  color: #9895ff !important;
 }
 html.dark.page-slug-faqs .faq-accordion .accordion-body,
 body.theme-dark.page-slug-faqs .faq-accordion .accordion-body {
-  background: #0f172a !important;
-  color: #94a3b8 !important;
+  background: #222324 !important;
+  color: #9ca3af !important;
 }
 html.dark.page-slug-faqs .faq-tool-link,
 body.theme-dark.page-slug-faqs .faq-tool-link {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 
 /* Dark Mode for Pillar Guides */
 html.dark .pillar-hero,
 body.theme-dark .pillar-hero {
-  background: radial-gradient(circle at 84% 20%, rgba(16, 185, 129, 0.15), transparent 31%),
-              linear-gradient(145deg, #070a12 12%, #0d1322 100%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: radial-gradient(circle at 84% 20%, rgba(152, 149, 255, 0.14), transparent 31%),
+              linear-gradient(145deg, #18191b 12%, #151616 100%) !important;
+  border-bottom: 1px solid #313131 !important;
 }
 html.dark .pillar-hero h1,
 body.theme-dark .pillar-hero h1 {
@@ -2483,12 +2485,12 @@ body.theme-dark .pillar-hero h1 {
 }
 html.dark .pillar-hero p,
 body.theme-dark .pillar-hero p {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .pillar-toc,
 body.theme-dark .pillar-toc {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 html.dark .pillar-toc h2,
 body.theme-dark .pillar-toc h2 {
@@ -2496,62 +2498,63 @@ body.theme-dark .pillar-toc h2 {
 }
 html.dark .pillar-toc a,
 body.theme-dark .pillar-toc a {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .pillar-toc a:hover,
 body.theme-dark .pillar-toc a:hover {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 html.dark .pillar-body h2, html.dark .pillar-body h3,
 body.theme-dark .pillar-body h2, body.theme-dark .pillar-body h3 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .pillar-body p, html.dark .pillar-body li,
 body.theme-dark .pillar-body p, body.theme-dark .pillar-body li {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .pillar-takeaways div,
 body.theme-dark .pillar-takeaways div {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 html.dark .pillar-card-grid article,
 body.theme-dark .pillar-card-grid article {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 html.dark .pillar-card-grid h3,
 body.theme-dark .pillar-card-grid h3 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .pillar-callout,
 body.theme-dark .pillar-callout {
-  background: #1e293b !important;
-  border-left-color: #10b981 !important;
+  background: #1f2937 !important;
+  border-left-color: #9895ff !important;
 }
 html.dark .pillar-callout strong,
 body.theme-dark .pillar-callout strong {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .pillar-compare article,
 body.theme-dark .pillar-compare article {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 html.dark .pillar-compare article h3,
 body.theme-dark .pillar-compare article h3 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .pillar-cta,
 body.theme-dark .pillar-cta {
-  background: linear-gradient(135deg, #064e3b, #047857) !important;
+  background: linear-gradient(135deg, #1c1d1f, #222324) !important;
+  border: 1px solid #313131 !important;
 }
 
 /* Dark Mode for Blog Listing and Post Reading */
 html.dark .post-editorial-hero,
 body.theme-dark .post-editorial-hero {
-  background: #0d1322 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #18191b !important;
+  border-bottom: 1px solid #313131 !important;
 }
 html.dark .post-editorial-copy h1,
 body.theme-dark .post-editorial-copy h1 {
@@ -2559,25 +2562,25 @@ body.theme-dark .post-editorial-copy h1 {
 }
 html.dark .post-editorial-summary,
 body.theme-dark .post-editorial-summary {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .post-editorial-byline,
 body.theme-dark .post-editorial-byline {
-  color: #cbd5e1 !important;
+  color: #9ca3af !important;
 }
 html.dark .post-reading-time,
 body.theme-dark .post-reading-time {
-  background: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  color: #f1f5f9 !important;
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
+  color: #ffffff !important;
 }
 html.dark .post-contents a,
 body.theme-dark .post-contents a {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .post-contents a:hover,
 body.theme-dark .post-contents a:hover {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 html.dark .single-post-reading-content h2,
 html.dark .single-post-reading-content h3,
@@ -2585,31 +2588,31 @@ html.dark .single-post-reading-content h4,
 body.theme-dark .single-post-reading-content h2,
 body.theme-dark .single-post-reading-content h3,
 body.theme-dark .single-post-reading-content h4 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .single-post-reading-content p,
 html.dark .single-post-reading-content li,
 body.theme-dark .single-post-reading-content p,
 body.theme-dark .single-post-reading-content li {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 html.dark .single-post-reading-content blockquote,
 body.theme-dark .single-post-reading-content blockquote {
-  background: #1e293b !important;
-  border-left-color: #10b981 !important;
-  color: #f1f5f9 !important;
+  background: #1f2937 !important;
+  border-left-color: #9895ff !important;
+  color: #ffffff !important;
 }
 html.dark .post-spotlight-copy h3,
 body.theme-dark .post-spotlight-copy h3 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .post-spotlight-copy h3 a,
 body.theme-dark .post-spotlight-copy h3 a {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .post-spotlight-copy h3 a:hover,
 body.theme-dark .post-spotlight-copy h3 a:hover {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 html.dark .post-read-also,
 body.theme-dark .post-read-also,
@@ -2617,32 +2620,32 @@ html.dark .post-related-showcase,
 body.theme-dark .post-related-showcase,
 html.dark .post-faq-showcase,
 body.theme-dark .post-faq-showcase {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 html.dark .post-read-also h2, html.dark .post-related-showcase h2, html.dark .post-faq-showcase h2,
 body.theme-dark .post-read-also h2, body.theme-dark .post-related-showcase h2, body.theme-dark .post-faq-showcase h2 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .post-read-also-copy h3 a,
 body.theme-dark .post-read-also-copy h3 a,
 html.dark .post-related-showcase-copy h3 a,
 body.theme-dark .post-related-showcase-copy h3 a {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 html.dark .post-read-also-copy h3 a:hover,
 body.theme-dark .post-read-also-copy h3 a:hover,
 html.dark .post-related-showcase-copy h3 a:hover,
 body.theme-dark .post-related-showcase-copy h3 a:hover {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 html.dark .post-faq-showcase-item.is-featured,
 body.theme-dark .post-faq-showcase-item.is-featured {
-  background: #1e293b !important;
+  background: #1f2937 !important;
 }
 html.dark .post-faq-question,
 body.theme-dark .post-faq-question {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 /* Pillar Guide Backgrounds & Containers in Dark Mode */
@@ -2653,7 +2656,7 @@ html.dark body.page-slug-link-opportunity-guide,
 body.theme-dark.page-slug-link-opportunity-guide,
 html.dark body.page-slug-seo-audit-guide,
 body.theme-dark.page-slug-seo-audit-guide {
-  background: #070a12 !important;
+  background: #151616 !important;
 }
 
 html.dark .page-slug-backlink-monitoring-guide .page-content,
@@ -2662,76 +2665,76 @@ html.dark .page-slug-link-opportunity-guide .page-content,
 body.theme-dark.page-slug-link-opportunity-guide .page-content,
 html.dark .page-slug-seo-audit-guide .page-content,
 body.theme-dark.page-slug-seo-audit-guide .page-content {
-  background: #070a12 !important;
+  background: #151616 !important;
 }
 
 html.dark .pillar-related,
 body.theme-dark .pillar-related {
-  border-top-color: rgba(255, 255, 255, 0.08) !important;
+  border-top-color: #313131 !important;
 }
 
 html.dark .pillar-related-head h2,
 body.theme-dark .pillar-related-head h2 {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 html.dark .pillar-related-grid article,
 body.theme-dark .pillar-related-grid article {
-  background: #0f172a !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border-color: #313131 !important;
 }
 
 html.dark .pillar-related-image,
 body.theme-dark .pillar-related-image {
-  background: #1e293b !important;
+  background: #1f2937 !important;
 }
 
 html.dark .pillar-related-copy h3 a,
 body.theme-dark .pillar-related-copy h3 a {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 html.dark .pillar-related-copy h3 a:hover,
 body.theme-dark .pillar-related-copy h3 a:hover {
-  color: #10b981 !important;
+  color: #9895ff !important;
 }
 
 html.dark .pillar-related-copy p,
 body.theme-dark .pillar-related-copy p {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 
 html.dark .pillar-lead,
 body.theme-dark .pillar-lead {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 html.dark .pillar-callout strong,
 body.theme-dark .pillar-callout strong {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 html.dark .pillar-callout p,
 body.theme-dark .pillar-callout p {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 
 html.dark .pillar-table-wrap,
 body.theme-dark .pillar-table-wrap {
-  border-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: #313131 !important;
 }
 
 html.dark .pillar-table-wrap th,
 body.theme-dark .pillar-table-wrap th {
-  background: #1e293b !important;
-  color: #f1f5f9 !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #1f2937 !important;
+  color: #ffffff !important;
+  border-bottom: 1px solid #313131 !important;
 }
 
 html.dark .pillar-table-wrap td,
 body.theme-dark .pillar-table-wrap td {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-  color: #cbd5e1 !important;
+  border-bottom: 1px solid #313131 !important;
+  color: #e5e7eb !important;
 }
 
 html.dark .pillar-table-wrap tbody tr:nth-child(even),
@@ -2743,22 +2746,22 @@ html.dark .pillar-problems details,
 body.theme-dark .pillar-problems details,
 html.dark .pillar-faq details,
 body.theme-dark .pillar-faq details {
-  background: #0f172a !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
 }
 
 html.dark .pillar-problems summary,
 body.theme-dark .pillar-problems summary,
 html.dark .pillar-faq summary,
 body.theme-dark .pillar-faq summary {
-  color: #f1f5f9 !important;
+  color: #ffffff !important;
 }
 
 html.dark .pillar-problems details p,
 body.theme-dark .pillar-problems details p,
 html.dark .pillar-faq details p,
 body.theme-dark .pillar-faq details p {
-  color: #94a3b8 !important;
+  color: #9ca3af !important;
 }
 
 /* Global Hero Title 800 font-weight reinforcement */

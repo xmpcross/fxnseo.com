@@ -44,31 +44,33 @@ body.theme-light {
   --content-soft: var(--site-surface-alt);
 }
 
-body.theme-dark {
+html.dark,
+body.theme-dark,
+html.dark body {
   color-scheme: dark;
-  --site-bg: #070a12;
-  --site-surface: #0f172a;
-  --site-surface-alt: #0d1322;
-  --site-text: #f1f5f9;
-  --site-text-muted: #94a3b8;
-  --site-border: rgba(255, 255, 255, 0.08);
-  --site-accent: #10b981;
-  --site-accent-hover: #059669;
-  --site-button-text: #022c22;
-  --site-control-bg: #0f172a;
-  --site-header-bg: #070a12;
-  --site-footer-bg: #04070d;
-  --site-shadow: rgba(0, 0, 0, 0.4);
+  --site-bg: #151616;
+  --site-surface: #222324;
+  --site-surface-alt: #1f2937;
+  --site-text: #ffffff;
+  --site-text-muted: #9ca3af;
+  --site-border: #313131;
+  --site-accent: #9895ff;
+  --site-accent-hover: #7b77e4;
+  --site-button-text: #ffffff;
+  --site-control-bg: #1c1d1f;
+  --site-header-bg: #151616;
+  --site-footer-bg: #0d0f10;
+  --site-shadow: rgba(0, 0, 0, 0.45);
   --bs-body-bg: var(--site-bg);
   --bs-body-color: var(--site-text);
-  --bs-primary: #10b981;
-  --bs-primary-rgb: 16, 185, 129;
+  --bs-primary: #7b77e4;
+  --bs-primary-rgb: 123, 119, 228;
   --bs-border-color: var(--site-border);
   --content-primary: var(--site-accent);
   --content-ink: var(--site-text);
   --content-muted: var(--site-text-muted);
   --content-line: var(--site-border);
-  --content-soft: var(--site-surface-alt);
+  --content-soft: var(--site-bg);
 }
 
 body {
@@ -278,13 +280,18 @@ body.theme-dark .post-recommended {
   color: var(--site-text) !important;
 }
 
+html.dark .tools-filter-wrap,
 body.theme-dark .tools-filter-wrap {
-  background: rgba(22, 22, 22, 0.94) !important;
+  background: rgba(21, 22, 22, 0.94) !important;
+  border-bottom: 1px solid #313131 !important;
 }
 
+html.dark .home-hero,
+html.dark .tools-hero,
 body.theme-dark .home-hero,
 body.theme-dark .tools-hero {
-  background: radial-gradient(circle at 82% 18%, rgba(32, 107, 234, 0.22), transparent 30%), #232323 !important;
+  background: radial-gradient(circle at 82% 18%, rgba(152, 149, 255, 0.14), transparent 30%), #18191b !important;
+  border-bottom: 1px solid #313131 !important;
 }
 
 body.theme-dark img {

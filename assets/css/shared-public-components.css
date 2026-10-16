@@ -20,17 +20,29 @@
 html.dark,
 body.theme-dark,
 body.dark {
-  --nav-bg: rgba(15, 23, 42, 0.95);
-  --border: rgba(255, 255, 255, 0.08);
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-subtle: #64748b;
-  --bg-alt: #0d1322;
-  --bg-surface: #0f172a;
+  --nav-bg: rgba(21, 22, 22, 0.92);
+  --page-bg: #151616;
+  --bg: #151616;
+  --bg-surface: #222324;
+  --bg-card: #222324;
+  --bg-card-hover: #292a2c;
+  --bg-alt: #1f2937;
+  --border: #313131;
+  --border-light: rgba(255, 255, 255, 0.08);
+  --border-subtle: #2b2c2d;
+  --border-focus: #9895ff;
+  --text: #ffffff;
+  --text-body: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-subtle: #6b7280;
   --emerald: #10b981;
   --emerald-dark: #059669;
   --emerald-soft: rgba(16, 185, 129, 0.12);
-  --emerald-glow: rgba(16, 185, 129, 0.35);
+  --emerald-glow: rgba(16, 185, 129, 0.22);
+  --brand: #9895ff;
+  --brand-hover: #7b77e4;
+  --amber: #ff9b1a;
+  --footer-bg: #0d0f10;
 }
 
 /* Base wrap container */
@@ -888,4 +900,150 @@ body #parallax h1 * {
     height: 100%;
     object-fit: cover;
   }
+}
+
+/* Dark Mode Component Overrides (NXT Smart Home Palette) */
+html.dark .nav-header,
+body.theme-dark .nav-header {
+  background: rgba(21, 22, 22, 0.92) !important;
+  border-bottom: 1px solid #313131 !important;
+}
+
+html.dark .nav-header .nav-link,
+body.theme-dark .nav-header .nav-link {
+  color: #d1d5db !important;
+}
+
+html.dark .nav-header .nav-link:hover,
+body.theme-dark .nav-header .nav-link:hover {
+  color: #ffffff !important;
+}
+
+html.dark .nav-theme-toggle,
+body.theme-dark .nav-theme-toggle {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #9895ff !important;
+}
+
+html.dark .navbar .mega-menu-panel,
+body.theme-dark .navbar .mega-menu-panel {
+  background: #1c1d1f !important;
+  border: 1px solid #313131 !important;
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark .navbar .mega-menu-grid>li>.dropdown-item,
+body.theme-dark .navbar .mega-menu-grid>li>.dropdown-item {
+  color: #e5e7eb !important;
+}
+
+html.dark .navbar .mega-menu-grid>li>.dropdown-item:hover,
+body.theme-dark .navbar .mega-menu-grid>li>.dropdown-item:hover {
+  background: #1f2937 !important;
+  border-color: #374151 !important;
+  color: #ffffff !important;
+}
+
+html.dark .navbar .mega-menu-grid .dropdown-header,
+body.theme-dark .navbar .mega-menu-grid .dropdown-header {
+  color: #ffffff !important;
+}
+
+html.dark .navbar .mega-menu-grid .dropdown-header i,
+body.theme-dark .navbar .mega-menu-grid .dropdown-header i {
+  color: #9895ff !important;
+}
+
+html.dark .navbar .seo-guides-mega-grid>.seo-guide-menu-card>.dropdown-item,
+body.theme-dark .navbar .seo-guides-mega-grid>.seo-guide-menu-card>.dropdown-item {
+  background: #222324 !important;
+  border: 1px solid #313131 !important;
+}
+
+html.dark .navbar .seo-guides-mega-grid>.seo-guide-menu-card>.dropdown-item:hover,
+body.theme-dark .navbar .seo-guides-mega-grid>.seo-guide-menu-card>.dropdown-item:hover {
+  border-color: #9895ff !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4) !important;
+}
+
+html.dark .navbar .seo-guide-menu-card .dropdown-header,
+body.theme-dark .navbar .seo-guide-menu-card .dropdown-header {
+  color: #ffffff !important;
+}
+
+html.dark .site-footer,
+body.theme-dark .site-footer,
+html.dark .modern-footer,
+body.theme-dark .modern-footer {
+  background: #0d0f10 !important;
+  border-top: 1px solid #1f2937 !important;
+  color: #9ca3af !important;
+}
+
+html.dark .site-footer a,
+body.theme-dark .site-footer a,
+html.dark .modern-footer a,
+body.theme-dark .modern-footer a {
+  color: #9ca3af !important;
+}
+
+html.dark .site-footer a:hover,
+body.theme-dark .site-footer a:hover,
+html.dark .modern-footer a:hover,
+body.theme-dark .modern-footer a:hover {
+  color: #ffffff !important;
+}
+
+html.dark .cookie-consent,
+body.theme-dark .cookie-consent {
+  background: #1c1d1f !important;
+  border: 1px solid #313131 !important;
+  box-shadow: 0 22px 65px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark .cookie-consent-icon,
+body.theme-dark .cookie-consent-icon {
+  background: #1f2937 !important;
+  color: #9895ff !important;
+}
+
+html.dark .cookie-consent h2,
+body.theme-dark .cookie-consent h2 {
+  color: #ffffff !important;
+}
+
+html.dark .cookie-consent p,
+body.theme-dark .cookie-consent p {
+  color: #9ca3af !important;
+}
+
+html.dark .cookie-consent p a,
+body.theme-dark .cookie-consent p a {
+  color: #9895ff !important;
+}
+
+html.dark .cookie-consent-secondary,
+body.theme-dark .cookie-consent-secondary {
+  border-color: #374151 !important;
+  color: #d1d5db !important;
+  background: #1f2937 !important;
+}
+
+html.dark .cookie-consent-secondary:hover,
+body.theme-dark .cookie-consent-secondary:hover {
+  background: #374151 !important;
+  color: #ffffff !important;
+}
+
+html.dark .cookie-consent-primary,
+body.theme-dark .cookie-consent-primary {
+  border-color: #7b77e4 !important;
+  color: #ffffff !important;
+  background: #7b77e4 !important;
+}
+
+html.dark .cookie-consent-primary:hover,
+body.theme-dark .cookie-consent-primary:hover {
+  background: #5955d1 !important;
 }
