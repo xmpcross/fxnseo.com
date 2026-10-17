@@ -408,9 +408,9 @@
         navigator.clipboard.writeText(text).then(() => {
             const originalText = element.textContent;
             element.textContent = '✓ Copied!';
-            element.style.background = '#10b981';
+            element.style.background = '#6c86f5';
             element.style.color = '#ffffff';
-            element.style.borderColor = '#10b981';
+            element.style.borderColor = '#6c86f5';
             setTimeout(() => {
                 element.textContent = originalText;
                 element.style.background = '';

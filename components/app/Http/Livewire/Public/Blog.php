@@ -11,7 +11,6 @@ use Artesaos\SEOTools\Facades\TwitterCard;
 
 use App\Models\Admin\General;
 use App\Models\Admin\Social;
-use App\Models\Admin\User;
 use App\Models\Admin\Menu;
 use App\Models\Admin\Header;
 use App\Models\Admin\Footer;
@@ -19,24 +18,76 @@ use App\Models\Admin\Gdpr;
 use App\Models\Admin\Advanced;
 use App\Models\Admin\Advertisement;
 use App\Models\Admin\FooterTranslation;
-use App\Models\Admin\Redirect;
-use App\Models\Admin\Sidebar;
 use Livewire\WithPagination;
 
 class Blog extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
+    public $search = '';
+    public $topic = '';
+    public $sort = 'newest';
+    protected $queryString = [
+        'search' => ['except' => ''],
+        'topic' => ['except' => ''],
+        'sort' => ['except' => 'newest'],
+    ];
+
+    public function updatedSearch() { $this->resetPage(); }
+    public function updatedTopic() { $this->resetPage(); }
+    public function updatedSort() { $this->resetPage(); }
+
+    public function clearFilters()
+    {
+        $this->search = '';
+        $this->topic = '';
+        $this->resetPage();
+    }
+
+    public static function topicFor($slug)
+    {
+        if (strpos($slug, 'youtube') !== false) return 'YouTube';
+        if (strpos($slug, 'backlink') !== false || strpos($slug, 'link-building') !== false) return 'Backlinks';
+        return 'Technical SEO';
+    }
     
     public function render()
     {
-        $pageTrans     = PublicPage::withTranslation()->translatedIn( app()->getLocale() )->where('type', 'post')->where('post_status', true)->orderByTranslation('id', 'DESC')->paginate(9);
+        $query = PublicPage::with('translations')->translatedIn(app()->getLocale())
+            ->where('type', 'post')->where('post_status', true);
+        $totalArticles = (clone $query)->count();
+        $featuredPost = (clone $query)->orderByDesc('id')->first();
+        $search = trim(mb_substr((string) $this->search, 0, 150));
+        if ($search !== '') {
+            $query->whereHas('translations', function ($translation) use ($search) {
+                $translation->where('locale', app()->getLocale())->where(function ($text) use ($search) {
+                    $text->where('title', 'like', '%' . $search . '%')
+                        ->orWhere('short_description', 'like', '%' . $search . '%');
+                });
+            });
+        }
+        if ($this->topic === 'youtube') {
+            $query->where('slug', 'like', '%youtube%');
+        } elseif ($this->topic === 'backlinks') {
+            $query->where(function ($q) {
+                $q->where('slug', 'like', '%backlink%')->orWhere('slug', 'like', '%link-building%');
+            });
+        } elseif ($this->topic === 'technical') {
+            $query->where('slug', 'not like', '%youtube%')->where('slug', 'not like', '%backlink%')
+                ->where('slug', 'not like', '%link-building%');
+        }
+        $pageTrans = $query->orderBy('id', $this->sort === 'oldest' ? 'ASC' : 'DESC')->paginate(9);
+        $pageTrans->withPath(route('blog'))->appends(array_filter([
+            'search' => $this->search, 'topic' => $this->topic,
+            'sort' => $this->sort === 'newest' ? null : $this->sort,
+        ], function ($value) { return $value !== null && $value !== ''; }));
+
         $page          = PublicPage::where('type', 'home')->first();
         $general       = General::orderBy('id', 'DESC')->first();
 
         if ( !empty($pageTrans) ) {
 
-                $url         = route('home') . '/blog';
+                $url         = route('blog') . ($pageTrans->currentPage() > 1 ? '?page=' . $pageTrans->currentPage() : '');
                 $image       = $page->featured_image;
                 $name        = config('app.name');
 
@@ -75,48 +126,21 @@ class Blog extends Component
                                     ->setDescription($description)
                                     ->setUrl($url);
 
-            $recent_posts = PublicPage::where('type', 'post')
-                                ->where('post_status', true)
-                                ->orderBy('id', 'DESC')
-                                ->get()
-                                ->map(function ($page) {
-                                    $translatedPage = $page->translate( app()->getLocale() );
-                                    if ($translatedPage) {
-                                        $translatedPage->slug           = $page->slug;
-                                        $translatedPage->target         = $page->target;
-                                        $translatedPage->featured_image = $page->featured_image;
-                                    }
-                                    return $translatedPage;
-                                })->take( Sidebar::first()->post_count )->filter()->toArray();
-
-            $popular_tools = PublicPage::where('type', 'tool')
-                                ->where('popular', true)
-                                ->where('tool_status', true)
-                                ->orderBy('id', 'DESC')
-                                ->get()
-                                ->map(function ($page) {
-                                    $translatedPage = $page->translate( app()->getLocale() );
-                                    if ($translatedPage) {
-                                        $translatedPage->slug             = $page->slug;
-                                        $translatedPage->target           = $page->target;
-                                        $translatedPage->custom_tool_link = $page->custom_tool_link;
-                                    }
-                                    return $translatedPage;
-                                })->take( Sidebar::first()->tool_count )->filter()->toArray();
-
             return view('livewire.public.blog', [
                 'page'      => $page,
                 'general'   => $general,
-                'pageTrans' => $pageTrans
+                'pageTrans' => $pageTrans,
+                'featuredPost' => $featuredPost,
+                'totalArticles' => $totalArticles
             ])->layout('layouts.blog', [
+                'blogPageNumber' => $pageTrans->currentPage(),
+                'blogSearch' => $this->search,
+                'blogTopic' => $this->topic,
+                'blogSort' => $this->sort,
                 'page'          => $page,
                 'pageTrans'     => $pageTrans,
                 'general'       => $general,
-                'profile'       => User::with('user_socials')->where('is_admin', true)->orderBy('id', 'DESC')->first(),
                 'advertisement' => Advertisement::orderBy('id', 'DESC')->first(),
-                'sidebar'       => Sidebar::orderBy('id', 'DESC')->first(),
-                'recent_posts'  => $recent_posts,
-                'popular_tools' => $popular_tools,
                 'siteTitle'     => env('APP_NAME'),
                 'menus'         => Menu::with('children')->where(['parent_id' => 'id'])->orderBy('sort','ASC')->get()->toArray(),
                 'header'        => Header::orderBy('id', 'DESC')->first(),

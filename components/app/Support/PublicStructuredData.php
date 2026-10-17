@@ -24,7 +24,7 @@ class PublicStructuredData
         $siteName = $settings->site_name ?: config('app.name');
         $organizationName = $settings->organization_name ?: $siteName;
         $siteUrl = url('/');
-        $currentUrl = url()->current();
+        $currentUrl = \Artesaos\SEOTools\Facades\SEOMeta::getCanonical() ?: url()->current();
         $title = trim((string) data_get($translation, 'page_title'))
             ?: trim((string) data_get($translation, 'title'))
             ?: $siteName;
@@ -32,6 +32,10 @@ class PublicStructuredData
             ?: trim(strip_tags((string) data_get($translation, 'description')))
             ?: $settings->site_description
             ?: config('meta.description');
+        if (request()->routeIs('blog')) {
+            $title = \Artesaos\SEOTools\Facades\SEOMeta::getTitle() ?: $siteName;
+            $description = \Artesaos\SEOTools\Facades\SEOMeta::getDescription() ?: $description;
+        }
         $description = Str::limit(preg_replace('/\s+/', ' ', $description), 300, '');
         $type = (string) data_get($page, 'type');
         $slug = (string) data_get($page, 'slug');
@@ -90,7 +94,7 @@ class PublicStructuredData
                 ->operatingSystem('Any modern web browser')
                 ->offers(Schema::offer()->price(0)->priceCurrency('USD'));
         } elseif (! in_array($type, ['post', 'tool'], true) && $settings->webpage_schema) {
-            $schemas[] = Schema::webPage()
+            $schemas[] = (request()->routeIs('blog') ? Schema::collectionPage() : Schema::webPage())
                 ->setProperty('@id', $currentUrl . '#webpage')
                 ->name($title)
                 ->url($currentUrl)

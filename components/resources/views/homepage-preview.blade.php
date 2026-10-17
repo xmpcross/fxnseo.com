@@ -22,14 +22,14 @@
       --bg-alt: #f1f5f9;
       --border: #e2e8f0;
       --border-light: #edf2f7;
-      --border-focus: rgba(16, 185, 129, 0.4);
+      --border-focus: rgba(108, 134, 245, 0.4);
       --text: #0f172a;
       --text-muted: #475569;
       --text-subtle: #64748b;
-      --emerald: #059669;
-      --emerald-dark: #047857;
-      --emerald-glow: rgba(5, 150, 105, 0.18);
-      --emerald-soft: rgba(5, 150, 105, 0.08);
+      --emerald: #2447e0;
+      --emerald-dark: #1b38b8;
+      --emerald-glow: rgba(36, 71, 224, 0.18);
+      --emerald-soft: rgba(36, 71, 224, 0.08);
       --cyan: #0284c7;
       --indigo: #4f46e5;
       --amber: #d97706;
@@ -52,18 +52,18 @@
       --bg-alt: #1f2937;
       --border: #313131;
       --border-light: rgba(255, 255, 255, 0.08);
-      --border-focus: #9895ff;
+      --border-focus: #8ba2ff;
       --text: #ffffff;
       --text-muted: #9ca3af;
       --text-subtle: #6b7280;
-      --emerald: #10b981;
-      --emerald-dark: #059669;
-      --emerald-glow: rgba(16, 185, 129, 0.22);
-      --emerald-soft: rgba(16, 185, 129, 0.12);
-      --brand: #9895ff;
-      --brand-hover: #7b77e4;
+      --emerald: #6c86f5;
+      --emerald-dark: #2447e0;
+      --emerald-glow: rgba(108, 134, 245, 0.22);
+      --emerald-soft: rgba(108, 134, 245, 0.12);
+      --brand: #8ba2ff;
+      --brand-hover: #6c86f5;
       --cyan: #38bdf8;
-      --indigo: #9895ff;
+      --indigo: #8ba2ff;
       --amber: #ff9b1a;
       --amber-soft: rgba(255, 155, 26, 0.15);
       --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
@@ -105,7 +105,7 @@
       animation: float 18s ease-in-out infinite alternate;
       transition: opacity 0.3s;
     }
-    .glow-1 { top: -220px; left: 12%; background: radial-gradient(circle, #10b981 0%, transparent 70%); }
+    .glow-1 { top: -220px; left: 12%; background: radial-gradient(circle, #6c86f5 0%, transparent 70%); }
     .glow-2 { top: 380px; right: -120px; background: radial-gradient(circle, #38bdf8 0%, transparent 70%); animation-delay: -6s; }
     .glow-3 { top: 1300px; left: -140px; background: radial-gradient(circle, #6366f1 0%, transparent 70%); animation-delay: -11s; }
     @keyframes float {
@@ -166,7 +166,7 @@
       border-radius: 20px;
       background: var(--emerald-soft);
       color: var(--emerald);
-      border: 1px solid rgba(5, 150, 105, 0.25);
+      border: 1px solid rgba(36, 71, 224, 0.25);
     }
     .nav-actions {
       display: flex;
@@ -331,13 +331,13 @@
       transform: translateY(-1px);
     }
     .btn-primary {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #6c86f5 0%, #2447e0 100%);
       color: #ffffff;
       font-weight: 800;
       box-shadow: 0 4px 18px var(--emerald-glow);
     }
     .btn-primary:hover {
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 8px 25px rgba(108, 134, 245, 0.4);
       transform: translateY(-2px);
       filter: brightness(1.04);
     }
@@ -348,7 +348,7 @@
       padding: 90px 0 100px;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 65%),
+      background: radial-gradient(ellipse at 50% 0%, rgba(108, 134, 245, 0.08) 0%, transparent 65%),
                   linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, var(--bg) 100%);
     }
     .hero-content {
@@ -365,7 +365,7 @@
       padding: 7px 18px;
       border-radius: 999px;
       background: var(--bg-surface);
-      border: 1px solid rgba(5, 150, 105, 0.3);
+      border: 1px solid rgba(36, 71, 224, 0.3);
       color: var(--emerald);
       font-size: 12px;
       font-weight: 800;
@@ -609,7 +609,7 @@
       color: #ffffff;
       border-color: var(--emerald);
       font-weight: 800;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 15px rgba(108, 134, 245, 0.3);
     }
     .search-input-box {
       position: relative;
@@ -632,7 +632,7 @@
     }
     .search-input-box input:focus {
       border-color: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+      box-shadow: 0 0 0 3px rgba(108, 134, 245, 0.15);
     }
     .search-icon {
       position: absolute;
@@ -663,7 +663,7 @@
       box-shadow: var(--shadow-md);
     }
     .tool-card:hover {
-      border-color: rgba(16, 185, 129, 0.5);
+      border-color: rgba(108, 134, 245, 0.5);
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
     }
@@ -678,7 +678,7 @@
       height: 48px;
       border-radius: 14px;
       background: var(--emerald-soft);
-      border: 1px solid rgba(5, 150, 105, 0.2);
+      border: 1px solid rgba(36, 71, 224, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -861,7 +861,7 @@
       margin-bottom: 20px;
       background: var(--emerald-soft);
       color: var(--emerald);
-      border: 1px solid rgba(5, 150, 105, 0.2);
+      border: 1px solid rgba(36, 71, 224, 0.2);
     }
     .feature-card h3 {
       font-family: var(--font-family);
@@ -1010,7 +1010,7 @@
     .guide-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
-      border-color: rgba(5, 150, 105, 0.4);
+      border-color: rgba(36, 71, 224, 0.4);
     }
     .guide-image-wrap {
       height: 185px;
@@ -1071,7 +1071,7 @@
       padding: 70px 0 100px;
     }
     .cta-card {
-      background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #0f172a 100%);
+      background: linear-gradient(135deg, #0d1b47 0%, #162e96 50%, #0f172a 100%);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 28px;
@@ -1080,7 +1080,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 36px;
-      box-shadow: 0 20px 50px rgba(6, 78, 59, 0.25);
+      box-shadow: 0 20px 50px rgba(13, 27, 71, 0.25);
       flex-wrap: wrap;
     }
     .cta-card h2 {
@@ -1093,16 +1093,16 @@
     }
     .cta-card p {
       font-size: 16.5px;
-      color: #d1fae5;
+      color: #d6dffd;
       max-width: 580px;
     }
     .cta-card .btn-primary {
       background: #ffffff;
-      color: #064e3b;
+      color: #0d1b47;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
     .cta-card .btn-primary:hover {
-      background: #f0fdf4;
+      background: #f2f5ff;
       transform: translateY(-2px);
     }
 
@@ -1182,7 +1182,7 @@
       right: 24px;
       z-index: 100;
       background: var(--bg-surface);
-      border: 1px solid rgba(5, 150, 105, 0.4);
+      border: 1px solid rgba(36, 71, 224, 0.4);
       padding: 12px 20px;
       border-radius: 999px;
       font-size: 12px;
@@ -1232,7 +1232,7 @@
   <header class="nav-header">
     <div class="wrap nav-inner">
       <a href="{{ route('homepage.preview') }}" class="brand-logo">
-        <img src="{{ asset('assets/img/logo-light.svg') }}" alt="fxnSEO">
+        <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO">
       </a>
 
       @php
@@ -1773,7 +1773,7 @@
         <!-- Brand Info -->
         <div class="footer-col-brand">
           <a href="{{ route('homepage.preview') }}" class="brand-logo">
-            <img src="{{ asset('assets/img/logo-light.svg') }}" alt="fxnSEO">
+            <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO">
           </a>
           <p>
             FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.
@@ -1793,7 +1793,7 @@
             <li><a href="{{ url('/meta-tags-analyzer') }}">Meta Tags Analyzer</a></li>
             <li><a href="{{ url('/keyword-density-checker') }}">Keyword Density</a></li>
             <li><a href="{{ url('/robots-txt-generator') }}">Robots.txt Generator</a></li>
-            <li><a href="{{ url('/xml-sitemap-generator') }}">XML Sitemap Generator</a></li>
+            <li><a href="{{ url('/blog/xml-sitemap-generator-better-seo') }}">XML Sitemap Guide</a></li>
           </ul>
         </div>
 

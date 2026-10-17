@@ -83,7 +83,8 @@ class Home extends Component
                                 ->setUrl($url);
 
             $tool_with_categories = PageCategory::with(['pages' => function ($query) {
-                                        $query->withTranslation( app()->getLocale() );
+                                        $query->where('type', 'tool')->where('tool_status', true)
+                                            ->withTranslation(app()->getLocale());
                                     }])->orderBy('sort', 'ASC')->get()
                                     ->transform(function ($category) {
                                         $category->setRelation('pages', $category->pages->map(function ($page) {

@@ -1,0 +1,549 @@
+/*
+ * Pillar guide template: backlink-monitoring-guide, link-opportunity-guide,
+ * seo-audit-guide. Applies to any page that renders the .pillar-* markup.
+ *
+ * A reference manual: a forest hero band, a sticky chapter rail, and a
+ * single readable column of ruled sections. No cards, no gradients.
+ * The ID prefix beats the legacy per-slug rules in content-pages.css.
+ */
+
+/* ---------- Hero ---------- */
+html#html-root .pillar-hero {
+  min-height: 0;
+  padding: clamp(28px, 4vw, 48px) 0 clamp(40px, 6vw, 80px);
+  background: var(--rd-panel);
+  color: var(--rd-panel-ink);
+  border: 0;
+  overflow: visible;
+}
+html#html-root .pillar-hero::before,
+html#html-root .pillar-hero::after,
+html#html-root .pillar-hero-shell::after { display: none; }
+
+html#html-root .pillar-hero-shell {
+  width: min(1280px, calc(100% - 48px));
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
+}
+html#html-root .pillar-hero nav {
+  margin-bottom: clamp(32px, 6vw, 72px);
+  font-size: 0.9375rem;
+  color: var(--rd-panel-muted);
+}
+html#html-root .pillar-hero nav a { color: var(--rd-panel-ink); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root .pillar-hero nav span:last-child { color: var(--rd-panel-ink); }
+
+html#html-root .pillar-hero-kicker {
+  display: block;
+  margin: 0 0 16px;
+  padding: 0;
+  background: none;
+  font: 600 1rem/1.4 var(--rd-font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--rd-signal);
+}
+html#html-root .pillar-hero-kicker::before { display: none; }
+
+html#html-root .pillar-hero h1 {
+  max-width: 18ch;
+  margin: 0 0 24px;
+  font-family: var(--rd-font-display) !important;
+  font-size: 4rem;
+  font-weight: 800 !important;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: #fff !important;
+}
+html#html-root .pillar-hero > div > p,
+html#html-root .pillar-hero-shell > p {
+  max-width: 56ch;
+  margin: 0;
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+  line-height: 1.6;
+  color: #d6e0fa !important;
+}
+html#html-root .pillar-hero-actions { gap: 12px; margin-top: 32px; }
+html#html-root .pillar-hero-actions a {
+  padding: 14px 22px;
+  border: 2px solid var(--rd-signal);
+  border-radius: var(--rd-radius);
+  background: var(--rd-signal);
+  color: #0e1b3d;
+  font: 700 1rem/1.2 var(--rd-font-body);
+  backdrop-filter: none;
+}
+html#html-root .pillar-hero-actions a + a {
+  background: transparent;
+  border-color: var(--rd-panel-ink);
+  color: var(--rd-panel-ink);
+}
+html#html-root .pillar-hero-actions a:hover { filter: brightness(1.08); }
+html#html-root .pillar-hero-proof {
+  gap: 4px 28px;
+  margin-top: 32px;
+  font-size: 0.9375rem;
+  color: var(--rd-panel-muted);
+}
+html#html-root .pillar-hero-proof span::before { display: none; }
+
+/* ---------- Page canvas and two-column frame ---------- */
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide),
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-content {
+  background: var(--rd-bg);
+}
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-content > .container {
+  width: min(1280px, calc(100% - 48px));
+  max-width: none;
+  padding: clamp(40px, 6vw, 72px) 0 clamp(48px, 7vw, 96px) !important;
+}
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box > .card {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  margin: 0 !important;
+}
+html#html-root .pillar-guide {
+  grid-template-columns: 240px minmax(0, 720px);
+  gap: clamp(32px, 6vw, 96px);
+  justify-content: start;
+  align-items: start;
+}
+
+/* ---------- Chapter rail ---------- */
+html#html-root .pillar-toc {
+  position: sticky;
+  top: 92px;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+html#html-root .pillar-toc h2 {
+  margin: 0 0 12px;
+  font: 800 1.0625rem/1.3 var(--rd-font-display) !important;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-toc ol { gap: 0; }
+html#html-root .pillar-toc li { border-left: 2px solid var(--rd-line); }
+html#html-root .pillar-toc a {
+  grid-template-columns: 28px 1fr;
+  padding: 7px 0 7px 14px;
+  border: 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--rd-muted);
+}
+html#html-root .pillar-toc a::before { color: var(--rd-subtle); font-size: 0.8125rem; font-variant-numeric: tabular-nums; }
+html#html-root .pillar-toc a:hover { color: var(--rd-ink); transform: none; }
+html#html-root .pillar-toc li:has(a[aria-current="true"]) { border-left-color: var(--rd-brand-mark); }
+html#html-root .pillar-toc a[aria-current="true"] { color: var(--rd-ink); font-weight: 700; }
+
+/* ---------- Reading column ---------- */
+html#html-root .pillar-body {
+  padding: 0;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-body > section { padding: 0 0 clamp(40px, 6vw, 64px); }
+html#html-root .pillar-body > section + section {
+  padding-top: clamp(40px, 6vw, 64px);
+  border-top: 2px solid var(--rd-line-strong);
+}
+html#html-root .pillar-body > section:last-child { padding-bottom: 0; }
+html#html-root .pillar-body p { color: var(--rd-muted); }
+html#html-root .pillar-body a { color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root .pillar-body strong { color: var(--rd-ink); }
+
+html#html-root .pillar-step {
+  display: block;
+  padding: 0;
+  margin: 0 0 8px;
+  background: none;
+  font: 600 1rem/1.4 var(--rd-font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--rd-brand);
+}
+html#html-root .pillar-body h2 {
+  max-width: none;
+  margin: 0 0 20px;
+  font-family: var(--rd-font-display) !important;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-body h3 {
+  font-family: var(--rd-font-display) !important;
+  font-size: 1.1875rem !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.015em;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-lead {
+  max-width: none;
+  font-size: clamp(1.1875rem, 2vw, 1.375rem);
+  line-height: 1.6;
+  color: var(--rd-ink) !important;
+}
+
+/* Key points under the intro */
+html#html-root .pillar-takeaways {
+  gap: 24px;
+  margin-top: 32px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+html#html-root .pillar-takeaways div,
+html#html-root .pillar-takeaways div:last-child {
+  padding: 14px 0 0;
+  border: 0;
+  border-top: 2px solid var(--rd-line-strong);
+  border-radius: 0;
+  background: none;
+}
+html#html-root .pillar-takeaways strong { margin-bottom: 4px; font: 800 1.25rem/1.2 var(--rd-font-display); color: var(--rd-ink); }
+html#html-root .pillar-takeaways span { font-size: 0.9375rem; line-height: 1.5; color: var(--rd-muted); }
+
+/* Callout */
+html#html-root .pillar-callout {
+  display: block;
+  margin-top: 28px;
+  padding: 20px 24px;
+  border: 0;
+  border-left: 4px solid var(--rd-brand-mark);
+  border-radius: 0 8px 8px 0;
+  background: var(--rd-brand-soft);
+}
+html#html-root .pillar-callout strong { display: block; font-size: 1.0625rem; color: var(--rd-ink); }
+html#html-root .pillar-callout p { margin: 4px 0 0; padding: 0; border: 0; color: var(--rd-ink); }
+
+/* Topic grid becomes a ruled list */
+html#html-root .pillar-card-grid { gap: 0 40px; }
+html#html-root .pillar-card-grid article {
+  overflow: visible;
+  padding: 20px 0 22px;
+  border: 0;
+  border-top: 1px solid var(--rd-line);
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  transform: none;
+}
+html#html-root .pillar-card-grid article::after { display: none; }
+html#html-root .pillar-card-grid article > span { display: none; }
+html#html-root .pillar-card-grid article:hover { border-color: var(--rd-line); transform: none; }
+html#html-root .pillar-card-grid h3 { margin: 0 0 6px; }
+html#html-root .pillar-card-grid p { font-size: 1rem; line-height: 1.55; }
+
+/* Table */
+html#html-root .pillar-table-wrap {
+  border: 0;
+  border-top: 2px solid var(--rd-line-strong);
+  border-bottom: 1px solid var(--rd-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+html#html-root .pillar-table-wrap table { font-size: 0.9375rem; }
+html#html-root .pillar-table-wrap th {
+  background: none !important;
+  color: var(--rd-ink) !important;
+  font-weight: 800;
+  border-bottom: 1px solid var(--rd-line-strong) !important;
+  white-space: nowrap;
+}
+html#html-root .pillar-table-wrap td { color: var(--rd-muted); border-bottom: 1px solid var(--rd-line) !important; }
+html#html-root .pillar-table-wrap td:first-child { color: var(--rd-ink); font-weight: 600; }
+html#html-root .pillar-table-wrap tbody tr:nth-child(even) { background: none; }
+
+/* Steps: a real sequence, so the numerals stay */
+html#html-root .pillar-workflow::before { display: none; }
+html#html-root .pillar-workflow article {
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 8px;
+  padding: 20px 0 22px;
+  border: 0;
+  border-top: 1px solid var(--rd-line);
+}
+html#html-root .pillar-workflow article:first-child { border-top: 2px solid var(--rd-line-strong); }
+html#html-root .pillar-workflow b {
+  display: block;
+  width: auto;
+  height: auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font: 800 2rem/1 var(--rd-font-display);
+  color: var(--rd-brand);
+  font-variant-numeric: tabular-nums;
+}
+html#html-root .pillar-workflow article > div { padding: 0; border: 0; }
+html#html-root .pillar-workflow h3 { margin: 2px 0 6px; }
+
+/* Layers comparison */
+html#html-root .pillar-compare { gap: 16px; margin: 28px 0; }
+html#html-root .pillar-compare article {
+  padding: 28px 20px 22px;
+  border: 1px solid var(--rd-line);
+  border-radius: 10px;
+  background: var(--rd-surface);
+  box-shadow: none;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-compare article.is-featured {
+  border: 2px solid var(--rd-line-strong);
+  background: var(--rd-brand-soft);
+  box-shadow: none;
+  transform: none;
+}
+html#html-root .pillar-compare article.is-featured h3,
+html#html-root .pillar-compare article.is-featured p,
+html#html-root .pillar-compare article.is-featured li { color: var(--rd-ink); }
+html#html-root .pillar-compare article > span {
+  top: -12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: var(--rd-signal);
+  color: #0e1b3d;
+  font: 700 0.8125rem/1.2 var(--rd-font-body);
+  letter-spacing: 0;
+  text-transform: none;
+}
+html#html-root .pillar-compare p,
+html#html-root .pillar-compare li { font-size: 0.9375rem; line-height: 1.55; }
+
+/* Questions: ruled disclosure rows */
+html#html-root .pillar-problems details,
+html#html-root .pillar-faq details {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid var(--rd-line);
+  border-radius: 0;
+  background: none;
+}
+html#html-root .pillar-problems,
+html#html-root .pillar-faq { border-top: 0; }
+html#html-root .pillar-faq details:first-of-type,
+html#html-root .pillar-problems details:first-child { border-top: 2px solid var(--rd-line-strong); }
+html#html-root .pillar-problems summary,
+html#html-root .pillar-faq summary {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  font: 800 1.0625rem/1.35 var(--rd-font-display);
+  letter-spacing: -0.01em;
+  color: var(--rd-ink);
+  list-style: none;
+}
+html#html-root .pillar-problems summary::-webkit-details-marker,
+html#html-root .pillar-faq summary::-webkit-details-marker { display: none; }
+html#html-root .pillar-problems summary::after,
+html#html-root .pillar-faq summary::after { content: "+"; font: 600 1.5rem/1 var(--rd-font-body); color: var(--rd-brand); }
+html#html-root .pillar-problems details[open] summary::after,
+html#html-root .pillar-faq details[open] summary::after { content: "\2212"; }
+html#html-root .pillar-problems details p,
+html#html-root .pillar-faq details p { padding: 0 0 20px; max-width: 62ch; }
+
+/* Closing action */
+html#html-root .pillar-cta {
+  position: static;
+  overflow: visible;
+  padding: clamp(24px, 4vw, 40px) !important;
+  border: 0 !important;
+  border-top: 2px solid var(--rd-line-strong) !important;
+  border-radius: 0 0 10px 10px;
+  background: var(--rd-brand-soft);
+  color: var(--rd-ink);
+}
+html#html-root .pillar-cta::after { display: none; }
+html#html-root .pillar-cta > span { font: 600 1rem/1.4 var(--rd-font-body); letter-spacing: 0; text-transform: none; color: var(--rd-brand); }
+html#html-root .pillar-cta h2 { margin: 8px 0 12px !important; color: var(--rd-ink) !important; }
+html#html-root .pillar-cta p { max-width: 56ch; color: var(--rd-muted); }
+html#html-root .pillar-body .pillar-cta > a {
+  display: inline-flex;
+  padding: 14px 22px;
+  border-radius: var(--rd-radius);
+  background: var(--rd-brand);
+  color: #fff;
+  font: 700 1rem/1.2 var(--rd-font-body);
+  text-decoration: none;
+}
+html#html-root.dark .pillar-body .pillar-cta > a { color: #080d1d; }
+
+/* ---------- Related articles ---------- */
+html#html-root .pillar-related {
+  max-width: none;
+  margin: clamp(40px, 6vw, 72px) 0 0;
+  padding: clamp(32px, 5vw, 48px) 0 0;
+  border-top: 2px solid var(--rd-line-strong);
+}
+html#html-root .pillar-related-head { align-items: baseline; margin-bottom: 24px; }
+html#html-root .pillar-related-head h2 {
+  margin: 0;
+  font-family: var(--rd-font-display) !important;
+  font-size: clamp(1.5rem, 2.6vw, 2rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.03em;
+  color: var(--rd-ink);
+}
+html#html-root .pillar-related-head > a { font-size: 1rem; font-weight: 600; color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root .pillar-related-grid { gap: 28px 24px; }
+html#html-root .pillar-related-grid article,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .pillar-related-grid article {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  overflow: visible;
+  box-shadow: none;
+  transform: none;
+}
+html#html-root .pillar-related-image { height: auto; aspect-ratio: 16 / 10; border-radius: 8px; }
+html#html-root .pillar-related-grid article:hover img { transform: none; }
+html#html-root .pillar-related-copy { padding: 14px 0 0; }
+html#html-root .pillar-related-copy > span { font-size: 0.9375rem; font-weight: 600; color: var(--rd-brand); }
+html#html-root .pillar-related-copy h3 {
+  margin: 6px 0 8px;
+  font-family: var(--rd-font-display) !important;
+  font-size: 1.125rem !important;
+  font-weight: 800 !important;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+}
+html#html-root .pillar-related-copy h3 a { color: var(--rd-ink); }
+html#html-root .pillar-related-copy h3 a:hover { color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root .pillar-related-copy p { font-size: 0.9375rem; line-height: 1.5; color: var(--rd-muted); }
+html#html-root .pillar-related-copy time { font-size: 0.875rem; color: var(--rd-subtle); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  html#html-root .pillar-guide { grid-template-columns: 1fr; gap: 32px; }
+  html#html-root .pillar-toc { position: static; }
+  html#html-root .pillar-toc ol { grid-template-columns: 1fr 1fr; column-gap: 24px; }
+  html#html-root .pillar-compare { grid-template-columns: 1fr; gap: 24px; }
+  html#html-root .pillar-hero h1 { max-width: none; }
+}
+@media (max-width: 620px) {
+  html#html-root .pillar-hero h1 { font-size: 2.5rem; }
+  html#html-root .pillar-toc ol { grid-template-columns: 1fr; }
+  html#html-root .pillar-takeaways,
+  html#html-root .pillar-card-grid { grid-template-columns: 1fr; }
+  html#html-root .pillar-hero-actions a { flex: 1 1 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html#html-root .pillar-guide * { transition: none !important; }
+}
+
+/* Legacy card wrapper and canvas use !important */
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) {
+  background: var(--rd-bg) !important;
+}
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box > .card,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box > .card > .card-body {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Sticky chapter rail: no ancestor between the rail and the page may clip or scroll */
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box > .card,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) #content-box > .card > .card-body,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-content,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-wrapper {
+  overflow: visible !important;
+}
+html#html-root .pillar-toc {
+  align-self: start;
+  max-height: calc(100vh - 116px);
+  overflow-y: auto;
+}
+
+/* ---------- Dark mode: beat the legacy !important dark rules ---------- */
+html#html-root.dark .pillar-hero {
+  background: var(--rd-panel) !important;
+  border: 0 !important;
+}
+html#html-root.dark .pillar-hero p { color: #d6e0fa !important; }
+html#html-root.dark .pillar-toc { background: none !important; border: 0 !important; }
+html#html-root.dark .pillar-toc h2 { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-toc a { color: var(--rd-muted) !important; }
+html#html-root.dark .pillar-toc a:hover,
+html#html-root.dark .pillar-toc a[aria-current="true"] { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-body h2,
+html#html-root.dark .pillar-body h3 { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-body p,
+html#html-root.dark .pillar-body li { color: var(--rd-muted) !important; }
+html#html-root.dark .pillar-body .pillar-lead { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-takeaways div { background: none !important; border: 0 !important; border-top: 2px solid var(--rd-line-strong) !important; }
+html#html-root.dark .pillar-card-grid article { background: none !important; border: 0 !important; border-top: 1px solid var(--rd-line) !important; }
+html#html-root.dark .pillar-card-grid h3 { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-callout { background: var(--rd-brand-soft) !important; border-left-color: var(--rd-brand-mark) !important; }
+html#html-root.dark .pillar-callout strong,
+html#html-root.dark .pillar-callout p { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-compare article { background: var(--rd-surface) !important; border-color: var(--rd-line) !important; }
+html#html-root.dark .pillar-compare article.is-featured { background: var(--rd-brand-soft) !important; border: 2px solid var(--rd-line-strong) !important; }
+html#html-root.dark .pillar-compare article h3 { color: var(--rd-ink) !important; }
+html#html-root.dark .pillar-cta { background: var(--rd-brand-soft) !important; border: 0 !important; border-top: 2px solid var(--rd-line-strong) !important; }
+html#html-root.dark .pillar-cta p { color: var(--rd-muted) !important; }
+
+/* One continuous canvas in both themes: no panel behind the reading column */
+html#html-root .pillar-body { background: transparent !important; }
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-content,
+html#html-root body:is(.page-slug-backlink-monitoring-guide, .page-slug-link-opportunity-guide, .page-slug-seo-audit-guide) .page-wrapper {
+  background: var(--rd-bg) !important;
+}
+
+/* ---------- Modern web guidance: scrollspy ---------- */
+/* Where supported, the browser tracks the current chapter natively. */
+@supports (scroll-target-group: auto) {
+  html#html-root .pillar-toc ol { scroll-target-group: auto; }
+}
+/* Non-colour cue for the current chapter, kept in Forced Colors mode too */
+html#html-root .pillar-toc a[aria-current="true"] { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 2px; }
+/* Anchored chapters clear the sticky header */
+html#html-root .pillar-body > section { scroll-margin-top: 96px; }
+
+/* ---------- Modern web guidance: responsive table ---------- */
+/* The wrapper is the query container, so the table adapts to its own width. */
+html#html-root .pillar-table-wrap { container-type: inline-size; overflow-x: auto; }
+@container (width < 560px) {
+  html#html-root .pillar-table-wrap table,
+  html#html-root .pillar-table-wrap tbody,
+  html#html-root .pillar-table-wrap tr,
+  html#html-root .pillar-table-wrap td { display: block; width: 100%; }
+  /* Headings move into each cell, so the header row leaves layout and the accessibility tree. */
+  html#html-root .pillar-table-wrap thead { display: none; }
+  html#html-root .pillar-table-wrap tr { padding: 14px 0; border-bottom: 1px solid var(--rd-line); }
+  html#html-root .pillar-table-wrap tr:last-child { border-bottom: 0; }
+  html#html-root .pillar-table-wrap td { padding: 4px 0 !important; border: 0 !important; }
+  html#html-root .pillar-table-wrap td:first-child { font: 800 1.0625rem/1.3 var(--rd-font-display); color: var(--rd-ink); }
+  html#html-root .pillar-table-wrap td:nth-child(2)::before { content: var(--label-2) ": " / var(--label-2); font-weight: 700; color: var(--rd-ink); }
+  html#html-root .pillar-table-wrap td:nth-child(3)::before { content: var(--label-3) ": " / var(--label-3); font-weight: 700; color: var(--rd-ink); }
+  html#html-root .pillar-table-wrap td:nth-child(4)::before { content: var(--label-4) ": " / var(--label-4); font-weight: 700; color: var(--rd-ink); }
+}
+
+/* ---------- Button text survives global link colours in both themes ---------- */
+html#html-root .pillar-hero-actions a:first-child,
+html#html-root .pillar-hero-actions a:first-child span { color: var(--rd-on-signal) !important; }
+html#html-root .pillar-hero-actions a + a,
+html#html-root .pillar-hero-actions a + a span { color: var(--rd-panel-ink) !important; }
+html#html-root .pillar-body .pillar-cta > a,
+html#html-root .pillar-body .pillar-cta > a span { color: var(--rd-on-brand) !important; text-decoration: none; }

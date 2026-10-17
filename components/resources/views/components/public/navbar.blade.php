@@ -1,136 +1,118 @@
-<!-- Modern Nav Header Component (Matches Home Design • Outfit Font • Emerald Accent) -->
-<header class="nav-header">
-  <div class="wrap nav-inner">
-    <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
-      <img src="{{ asset('assets/img/logo-light.svg') }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
-      <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
-    </a>
-
-    <nav class="nav-menu" aria-label="{{ __('Main Navigation') }}">
-      <!-- 1. All Tools -->
-      <a href="{{ route('tools') }}" class="nav-link {{ Route::is('tools') ? 'active' : '' }}">
-        <span>{{ __('Tools') }}</span>
-        <span class="nav-badge">74</span>
+@php
+  $navToolCount = \App\Models\Admin\Page::where('type', 'tool')->where('tool_status', true)->count();
+@endphp
+  <header class="nav-header site-home-header">
+    <div class="wrap nav-inner">
+      <a href="{{ url('/') }}" class="brand-logo" aria-label="fxnSEO">
+        <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
+        <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
       </a>
 
-      <!-- 2. SEO Guides Dropdown Menu -->
-      <div class="nav-item-dropdown">
-        <a href="{{ url('/blog') }}" class="nav-link {{ Request::is('*guide') ? 'active' : '' }}" aria-haspopup="true" aria-expanded="false">
-          <span>{{ __('Guides') }}</span>
-          <i class="fas fa-chevron-down text-xs ms-1"></i>
-        </a>
-        <div class="nav-dropdown-menu" role="menu">
-          <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
-            <i class="fas fa-link text-emerald"></i>
-            <div>
-              <div class="nav-drop-title">{{ __('Backlink Monitoring Guide') }}</div>
-              <div class="nav-drop-sub">{{ __('Detect lost links and audit link profiles') }}</div>
-            </div>
+      @php
+        $autoNavPages = \App\Models\Admin\Page::with('translations')->whereIn('type', ['page', 'contact'])
+          ->whereNotIn('slug', [
+            'about-us', 'faqs', 'contact',
+            'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure',
+            'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide'
+          ])
+          ->get();
+      @endphp
+
+      <nav class="nav-menu">
+        <a href="{{ route('tools') }}" class="nav-link">Tools <span class="nav-badge">{{ $navToolCount }}</span></a>
+
+        <div class="nav-item-dropdown">
+          <a href="{{ url('/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            <span>Guides</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
-          <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
-            <i class="fas fa-bullseye text-emerald"></i>
-            <div>
-              <div class="nav-drop-title">{{ __('Link Building Guide') }}</div>
-              <div class="nav-drop-sub">{{ __('Prospecting & high-impact outreach') }}</div>
-            </div>
-          </a>
-          <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
-            <i class="fas fa-chart-line text-emerald"></i>
-            <div>
-              <div class="nav-drop-title">{{ __('SEO Audit & Reporting Hub') }}</div>
-              <div class="nav-drop-sub">{{ __('Technical health check & diagnostic workflows') }}</div>
-            </div>
-          </a>
-          <div class="nav-dropdown-divider"></div>
-          <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
-            <i class="fas fa-newspaper text-emerald"></i>
-            <div>
-              <div class="nav-drop-title">{{ __('All SEO Guides & Tutorials') }}</div>
-              <div class="nav-drop-sub">{{ __('Explore the full knowledge repository') }}</div>
-            </div>
-          </a>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🔗</span>
+              <div>
+                <div class="nav-drop-title">Backlink Monitoring Guide</div>
+                <div class="nav-drop-sub">Detect lost links and audit link profiles</div>
+              </div>
+            </a>
+            <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🎯</span>
+              <div>
+                <div class="nav-drop-title">Link Building Guide</div>
+                <div class="nav-drop-sub">Prospecting & high-impact outreach</div>
+              </div>
+            </a>
+            <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📈</span>
+              <div>
+                <div class="nav-drop-title">SEO Audit & Reporting Hub</div>
+                <div class="nav-drop-sub">Technical health check & diagnostic workflows</div>
+              </div>
+            </a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📰</span>
+              <div>
+                <div class="nav-drop-title">All SEO Guides & Tutorials</div>
+                <div class="nav-drop-sub">Explore the full knowledge repository</div>
+              </div>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <!-- 3. Blog -->
-      <a href="{{ url('/blog') }}" class="nav-link {{ (Request::is('blog') || Request::is('blog/*')) ? 'active' : '' }}">
-        <span>{{ __('Blog') }}</span>
-      </a>
+        <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
+        <a href="{{ url('/faqs') }}" class="nav-link">FAQ</a>
+        <a href="{{ url('/contact') }}" class="nav-link">Contact</a>
 
-      <!-- 4. About Us -->
-      <a href="{{ url('/about-us') }}" class="nav-link {{ Request::is('about-us') ? 'active' : '' }}">
-        <span>{{ __('About') }}</span>
-      </a>
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
+      </nav>
 
-      <!-- 5. FAQs -->
-      <a href="{{ url('/faqs') }}" class="nav-link {{ Request::is('faqs') ? 'active' : '' }}">
-        <span>{{ __('FAQ') }}</span>
-      </a>
-
-      <!-- 6. Contact -->
-      <a href="{{ url('/contact') }}" class="nav-link {{ Request::is('contact') ? 'active' : '' }}">
-        <span>{{ __('Contact') }}</span>
-      </a>
-    </nav>
-
-    <div class="nav-actions">
-      <button class="theme-toggle-btn" type="button" onclick="toggleSiteTheme()" title="{{ __('Toggle Light / Dark mode') }}" aria-label="{{ __('Toggle Theme') }}">
-        <span id="theme-icon">🌙</span>
-      </button>
-
-      <a href="{{ route('tools') }}" class="btn btn-primary d-none d-sm-inline-flex">
-        <span>{{ __('Browse 70+ Tools →') }}</span>
-      </a>
-
-      <!-- Mobile Hamburger Button -->
-      <button class="mobile-menu-toggle d-lg-none" type="button" onclick="toggleMobileNavDrawer()" aria-label="{{ __('Toggle Navigation Menu') }}" aria-expanded="false">
-        <i class="fas fa-bars"></i>
-      </button>
-    </div>
-  </div>
-
-  <!-- Mobile Collapsible Navigation Drawer -->
-  <div class="mobile-nav-drawer" id="mobileNavDrawer" style="display: none;">
-    <div class="wrap py-3">
-      <a href="{{ route('home') }}" class="mobile-nav-link">{{ __('Home') }}</a>
-      <a href="{{ route('tools') }}" class="mobile-nav-link d-flex justify-content-between align-items-center">
-        <span>{{ __('All SEO Tools') }}</span>
-        <span class="nav-badge">74</span>
-      </a>
-      
-      <div class="mobile-nav-section-title">{{ __('Guides & Playbooks') }}</div>
-      <a href="{{ url('/backlink-monitoring-guide') }}" class="mobile-nav-sublink">
-        <i class="fas fa-link text-emerald me-2"></i> {{ __('Backlink Monitoring Guide') }}
-      </a>
-      <a href="{{ url('/link-opportunity-guide') }}" class="mobile-nav-sublink">
-        <i class="fas fa-bullseye text-emerald me-2"></i> {{ __('Link Building Opportunity Guide') }}
-      </a>
-      <a href="{{ url('/seo-audit-guide') }}" class="mobile-nav-sublink">
-        <i class="fas fa-chart-line text-emerald me-2"></i> {{ __('SEO Audit & Reporting Hub') }}
-      </a>
-      <a href="{{ url('/blog') }}" class="mobile-nav-sublink">
-        <i class="fas fa-newspaper text-emerald me-2"></i> {{ __('All SEO Tutorials (Blog)') }}
-      </a>
-
-      <div class="mobile-nav-section-title">{{ __('Company & Support') }}</div>
-      <a href="{{ url('/about-us') }}" class="mobile-nav-link">{{ __('About Us') }}</a>
-      <a href="{{ url('/faqs') }}" class="mobile-nav-link">{{ __('Frequently Asked Questions') }}</a>
-      <a href="{{ url('/contact') }}" class="mobile-nav-link">{{ __('Contact Support') }}</a>
-      <a href="{{ url('/report') }}" class="mobile-nav-link">{{ __('Report Broken Link / Tool') }}</a>
-
-      <div class="pt-3">
-        <a href="{{ route('tools') }}" class="btn btn-primary w-100 text-center">{{ __('Browse 70+ Free Tools →') }}</a>
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" type="button" onclick="toggleSiteTheme()" title="Toggle Light / Dark mode" aria-label="Toggle Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">All {{ $navToolCount }} tools</a>
+        <button class="mobile-toggle-btn" type="button" onclick="toggleMobileNavDrawer()" aria-controls="homeMobileDrawer" aria-expanded="false" aria-label="Toggle Navigation Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
       </div>
     </div>
-  </div>
-</header>
+
+    <!-- Mobile Drawer -->
+    <div id="homeMobileDrawer" class="home-mobile-drawer" style="display: none;">
+      <div class="wrap py-3" style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="{{ route('tools') }}" class="mobile-nav-link">
+          <span>Tools</span>
+          <span class="nav-badge">{{ $navToolCount }}</span>
+        </a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Guides & Tutorials</a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Blog</a>
+        <a href="{{ url('/faqs') }}" class="mobile-nav-link">FAQs</a>
+        <a href="{{ url('/contact') }}" class="mobile-nav-link">Contact</a>
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
+        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">All {{ $navToolCount }} tools</a>
+      </div>
+    </div>
+  </header>
 
 <script>
   function toggleMobileNavDrawer() {
-    const drawer = document.getElementById('mobileNavDrawer');
+    const drawer = document.getElementById('homeMobileDrawer');
     if (!drawer) return;
     const isHidden = drawer.style.display === 'none' || drawer.style.display === '';
     drawer.style.display = isHidden ? 'block' : 'none';
+    document.querySelector('.site-home-header .mobile-toggle-btn').setAttribute('aria-expanded', String(isHidden));
   }
 
   function toggleSiteTheme() {
@@ -138,7 +120,7 @@
     const body = document.body;
     const isDark = html.classList.contains('dark') || html.classList.contains('theme-dark') || (body && body.classList.contains('theme-dark'));
     const newTheme = isDark ? 'light' : 'dark';
-    
+
     html.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
     html.classList.add(newTheme);
     html.classList.add('theme-' + newTheme);
@@ -148,10 +130,10 @@
       body.classList.add('theme-' + newTheme);
       body.classList.add(newTheme);
     }
-    
+
     const icon = document.getElementById('theme-icon');
     if (icon) icon.textContent = newTheme === 'light' ? '🌙' : '☀️';
-    
+
     localStorage.setItem('site_theme', newTheme);
     document.cookie = "theme_mode=theme-" + newTheme + "; path=/; max-age=31536000; SameSite=Lax";
   }

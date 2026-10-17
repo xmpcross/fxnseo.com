@@ -28,22 +28,21 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
+        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="{{ (Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light') === 'theme-dark') ? 'dark' : 'light' }}">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/favicon.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.svg') ?: '1' }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/img/favicon.png') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.png') ?: '1' }}">
 
         @include('partials.meta-manager')
 
         @include('partials.seo-structured-data')
 
-        @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
-          <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
-        @endforeach
+        @include('partials.hreflang')
 
-        @if ( $general->page_load )
-            <!-- Pace -->
-            <script src="{{ asset('assets/js/pace.min.js') }}" defer></script>
-        @endif
 
         @if ( $general->adblock_detection )
           <!-- Sweet Alert 2 -->
@@ -55,12 +54,7 @@
         <link rel="preload" href="{{ asset('assets/css/fontawesome.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}"></noscript>
 
-        <!-- Nucleo Icons -->
-        <link rel="preload" href="{{ asset('assets/css/nucleo-icons.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-icons.css') }}"></noscript>
         
-        <link rel="preload" href="{{ asset('assets/css/nucleo-svg.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-svg.css') }}"></noscript>
 
         <!-- jQuery -->
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -71,11 +65,7 @@
         <!-- Bootstrap -->
         <script src="{{ asset('assets/js/bootstrap.min.js') }}" defer></script>
 
-        <!-- Perfect Scrollbar -->
-        <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" defer></script>
 
-        <!-- Smooth Scrollbar -->
-        <script src="{{ asset('assets/js/smooth-scrollbar.min.js') }}" defer></script>
 
         <!-- Theme CSS -->
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
@@ -96,7 +86,12 @@
 
         @livewireStyles
 
-    </head>
+      <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/journal-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/journal-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/blog-listing.css') }}?v={{ filemtime(dirname(base_path()).'/assets/css/blog-listing.css') }}">
+</head>
     <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} page-blog-listing">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
@@ -124,74 +119,19 @@
                           </div>
                       @endif
 
-                      <!-- Modern Blog Hero System (Matches Homepage Aesthetics • Outfit Font • Emerald Accent) -->
-                      <section class="blog-editorial-hero">
-                        <div class="ambient-glow glow-1"></div>
-                        <div class="ambient-glow glow-2"></div>
+                      <main id="blog-content">
+                        @if ($page->ads_status && $advertisement->area3_status && $advertisement->area3 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area3 :advertisement="$advertisement" /></div>
+                        @endif
+                        @if ($page->ads_status && $advertisement->area4_status && $advertisement->area4 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area4 :advertisement="$advertisement" /></div>
+                        @endif
+                        {{ $slot }}
+                        @if ($page->ads_status && $advertisement->area5_status && $advertisement->area5 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area5 :advertisement="$advertisement" /></div>
+                        @endif
+                      </main>
 
-                        <div class="blog-editorial-shell">
-                          <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                            <a href="{{ route('home') }}">{{ __('Home') }}</a>
-                            <span class="sep" aria-hidden="true">›</span>
-                            <span class="active">{{ __('SEO Blog & Guides') }}</span>
-                          </nav>
-
-                          <div class="tool-editorial-badge">
-                            <span class="pulse-indicator"></span>
-                            <span class="badge-label"><i class="fas fa-newspaper text-emerald me-1"></i> {{ __('Practical SEO Playbooks • Real Diagnostics') }}</span>
-                          </div>
-
-                          <h1 class="blog-editorial-title hero-title">
-                            Master Search &amp; Growth with <br>
-                            <span class="blog-gradient-text">{{ __('Actionable SEO Guides') }}</span>
-                          </h1>
-                          <p class="blog-editorial-lead">{{ __('Step-by-step playbooks, backlink workflows, technical audit frameworks, and YouTube optimization tactics to sustainably grow your organic traffic.') }}</p>
-
-                          <div class="tool-editorial-chips">
-                            <div class="tool-chip"><i class="fas fa-check-circle text-emerald"></i> <span>{{ __('14 Free In-Depth Guides') }}</span></div>
-                            <div class="tool-chip"><i class="fas fa-link text-emerald"></i> <span>{{ __('Backlink & Authority Focus') }}</span></div>
-                            <div class="tool-chip"><i class="fab fa-youtube text-danger"></i> <span>{{ __('YouTube Growth Strategies') }}</span></div>
-                            <div class="tool-chip"><i class="fas fa-shield-alt text-emerald"></i> <span>{{ __('100% Free · No Paywall') }}</span></div>
-                          </div>
-                        </div>
-                      </section>
-
-                      <!-- Main Blog Content Area (Wide Wrap Layout) -->
-                      <div class="wrap py-4 my-2">
-                          <div class="row g-4">
-                              <div class="{{ ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-8' : 'col-12' }}">
-
-                                <section id="blog-content">
-                                  @if ( $page->ads_status && $advertisement->area3_status && $advertisement->area3 != null )
-                                    <div class="mb-4">
-                                      <x-public.advertisement.area3 :advertisement="$advertisement" />
-                                    </div>
-                                  @endif
-                                  
-                                  @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
-                                    <div class="mb-4">
-                                      <x-public.advertisement.area4 :advertisement="$advertisement" />
-                                    </div>
-                                  @endif
-
-                                  {{ $slot }}
-
-                                  @if ( $page->ads_status && $advertisement->area5_status && $advertisement->area5 != null )
-                                    <div class="mt-4">
-                                      <x-public.advertisement.area5 :advertisement="$advertisement" />
-                                    </div>
-                                  @endif
-
-                                </section>
-                              </div>
-
-                              @if ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status)
-                                <div class="col-lg-4 sidebars">
-                                    <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
-                                </div>
-                              @endif
-                          </div>
-                      </div>
                   </div>
                   <!-- End::page-content -->
             </div>
@@ -212,23 +152,25 @@
                 const searchIcon = document.getElementById('search-icon');
                 const searchBox = document.getElementById('search-box');
 
-                // Show/hide search box
-                searchIcon.addEventListener('click', function () {
-                  if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-                    searchBox.style.display = 'block';
-                  } else {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                if (searchIcon && searchBox) {
+                  // Show/hide search box
+                  searchIcon.addEventListener('click', function () {
+                    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                      searchBox.style.display = 'block';
+                    } else {
+                      searchBox.style.display = 'none';
+                    }
+                  });
 
-                // Hide search box when user clicks outside of it
-                document.addEventListener('click', function (event) {
-                  const isClickInsideSearchBox = searchBox.contains(event.target);
-                  const isClickInsideSearchIcon = searchIcon.contains(event.target);
-                  if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                  // Hide search box when user clicks outside of it
+                  document.addEventListener('click', function (event) {
+                    const isClickInsideSearchBox = searchBox.contains(event.target);
+                    const isClickInsideSearchIcon = searchIcon.contains(event.target);
+                    if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
+                      searchBox.style.display = 'none';
+                    }
+                  });
+                }
               </script>
             @endif
 

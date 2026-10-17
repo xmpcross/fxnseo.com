@@ -21,13 +21,17 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="index,follow">
-  <title>FXN SEO — Free SEO & YouTube Intelligence Suite</title>
-  <meta name="description" content="Access 60+ free, high-performance SEO and YouTube optimization tools. Check domain authority, audit backlinks, inspect meta tags, generate sitemaps, and optimize content.">
+  @php
+    \Artesaos\SEOTools\Facades\SEOMeta::setTitle('Free SEO Tools for Backlinks, Websites & YouTube | FXN SEO');
+    \Artesaos\SEOTools\Facades\SEOMeta::setDescription('Check backlinks, inspect website metadata, trace redirects and research YouTube videos with free SEO tools and practical guides from FXN SEO.');
+    \Artesaos\SEOTools\Facades\SEOMeta::setCanonical(url('/'));
+  @endphp
+  @include('partials.meta-manager')
+  @include('partials.seo-structured-data')
+  @include('partials.hreflang')
+  <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="{{ asset('assets/img/favicon.svg') }}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-local.css') }}">
   <style>
     /* CSS Variables for Light Mode (Default) */
@@ -40,14 +44,14 @@
       --bg-alt: #f1f5f9;
       --border: #e2e8f0;
       --border-light: #edf2f7;
-      --border-focus: rgba(16, 185, 129, 0.4);
+      --border-focus: rgba(108, 134, 245, 0.4);
       --text: #0f172a;
       --text-muted: #475569;
       --text-subtle: #64748b;
-      --emerald: #059669;
-      --emerald-dark: #047857;
-      --emerald-glow: rgba(5, 150, 105, 0.18);
-      --emerald-soft: rgba(5, 150, 105, 0.08);
+      --emerald: #2447e0;
+      --emerald-dark: #1b38b8;
+      --emerald-glow: rgba(36, 71, 224, 0.18);
+      --emerald-soft: rgba(36, 71, 224, 0.08);
       --cyan: #0284c7;
       --indigo: #4f46e5;
       --amber: #d97706;
@@ -70,18 +74,18 @@
       --bg-alt: #1f2937;
       --border: #313131;
       --border-light: rgba(255, 255, 255, 0.08);
-      --border-focus: #9895ff;
+      --border-focus: #8ba2ff;
       --text: #ffffff;
       --text-muted: #9ca3af;
       --text-subtle: #6b7280;
-      --emerald: #10b981;
-      --emerald-dark: #059669;
-      --emerald-glow: rgba(16, 185, 129, 0.22);
-      --emerald-soft: rgba(16, 185, 129, 0.12);
-      --brand: #9895ff;
-      --brand-hover: #7b77e4;
+      --emerald: #6c86f5;
+      --emerald-dark: #2447e0;
+      --emerald-glow: rgba(108, 134, 245, 0.22);
+      --emerald-soft: rgba(108, 134, 245, 0.12);
+      --brand: #8ba2ff;
+      --brand-hover: #6c86f5;
       --cyan: #38bdf8;
-      --indigo: #9895ff;
+      --indigo: #8ba2ff;
       --amber: #ff9b1a;
       --amber-soft: rgba(255, 155, 26, 0.15);
       --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
@@ -94,13 +98,14 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
     body {
+      position: relative;
+      overflow-x: clip;
       background: var(--bg);
       color: var(--text);
       font-family: var(--font-family);
       line-height: 1.6;
-      overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -110,6 +115,8 @@
     a { color: inherit; text-decoration: none; }
     .wrap { width: min(1280px, calc(100% - 48px)); margin: 0 auto; }
 
+    .ambient-effects { position: absolute; inset: 0; overflow: clip; pointer-events: none; }
+
     /* Ambient Decorative Gradient Orbs */
     .ambient-glow {
       position: absolute;
@@ -118,12 +125,12 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 0;
-      filter: blur(140px);
+      filter: blur(40px);
       opacity: var(--orb-opacity);
       animation: float 18s ease-in-out infinite alternate;
       transition: opacity 0.3s;
     }
-    .glow-1 { top: -220px; left: 12%; background: radial-gradient(circle, #10b981 0%, transparent 70%); }
+    .glow-1 { top: -220px; left: 12%; background: radial-gradient(circle, #6c86f5 0%, transparent 70%); }
     .glow-2 { top: 380px; right: -120px; background: radial-gradient(circle, #38bdf8 0%, transparent 70%); animation-delay: -6s; }
     .glow-3 { top: 1300px; left: -140px; background: radial-gradient(circle, #6366f1 0%, transparent 70%); animation-delay: -11s; }
     @keyframes float {
@@ -131,202 +138,6 @@
       100% { transform: translate(50px, 35px) scale(1.08); }
     }
 
-    /* Navigation Header */
-    .nav-header {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      background: var(--nav-bg);
-      border-bottom: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-    .nav-inner {
-      height: 78px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 32px;
-    }
-    .brand-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .brand-logo img {
-      height: 38px;
-      width: auto;
-      display: block;
-    }
-    .logo-dark { display: none !important; }
-    .logo-light { display: block !important; }
-    html.dark .logo-dark, body.theme-dark .logo-dark { display: block !important; }
-    html.dark .logo-light, body.theme-dark .logo-light { display: none !important; }
-    .nav-menu {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-    .nav-link {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: var(--text);
-    }
-    .nav-badge {
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 2px 7px;
-      border-radius: 20px;
-      background: var(--emerald-soft);
-      color: var(--emerald);
-      border: 1px solid rgba(5, 150, 105, 0.25);
-    }
-    .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .theme-toggle-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 17px;
-      transition: all 0.2s;
-    }
-    .theme-toggle-btn:hover {
-      background: var(--bg-surface);
-      border-color: var(--emerald);
-      transform: translateY(-1px);
-    }
-    .mobile-toggle-btn {
-      display: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      color: var(--text);
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 17px;
-      transition: all 0.2s;
-    }
-    .mobile-toggle-btn:hover {
-      background: var(--bg-surface);
-      border-color: var(--emerald);
-    }
-    .nav-item-dropdown {
-      position: relative;
-    }
-    .nav-item-dropdown .nav-dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: -20px;
-      min-width: 320px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.25), 0 4px 12px -2px rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      z-index: 1070;
-      margin-top: 10px;
-      animation: navDropdownFade 0.2s ease forwards;
-    }
-    .nav-item-dropdown .nav-dropdown-menu::before {
-      content: "";
-      position: absolute;
-      top: -12px;
-      left: 0;
-      right: 0;
-      height: 12px;
-    }
-    @keyframes navDropdownFade {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .nav-item-dropdown:hover .nav-dropdown-menu,
-    .nav-item-dropdown:focus-within .nav-dropdown-menu {
-      display: flex;
-    }
-    .nav-dropdown-item {
-      display: flex !important;
-      align-items: center !important;
-      gap: 14px !important;
-      padding: 10px 14px !important;
-      border-radius: 12px !important;
-      color: var(--text) !important;
-      text-decoration: none !important;
-      transition: all 0.2s ease !important;
-    }
-    .nav-dropdown-item:hover {
-      background: var(--bg-alt) !important;
-      color: var(--brand, var(--emerald)) !important;
-      transform: translateX(3px);
-    }
-    .dropdown-icon {
-      font-size: 18px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    .nav-drop-title {
-      font-size: 13.5px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-    }
-    .nav-drop-sub {
-      font-size: 11.5px;
-      color: var(--text-muted);
-      line-height: 1.4;
-      margin-top: 2px;
-    }
-    .nav-dropdown-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 6px 8px;
-    }
-    .home-mobile-drawer {
-      border-top: 1px solid var(--border);
-      background: var(--bg-surface);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-      padding: 16px 0;
-    }
-    .mobile-nav-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 16px;
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text);
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.15s;
-    }
-    .mobile-nav-link:hover {
-      background: var(--bg-alt);
-      color: var(--brand, var(--emerald));
-    }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -353,13 +164,13 @@
       transform: translateY(-1px);
     }
     .btn-primary {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      background: linear-gradient(135deg, #6c86f5 0%, #2447e0 100%);
       color: #ffffff;
       font-weight: 800;
       box-shadow: 0 4px 18px var(--emerald-glow);
     }
     .btn-primary:hover {
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+      box-shadow: 0 8px 25px rgba(108, 134, 245, 0.4);
       transform: translateY(-2px);
       filter: brightness(1.04);
     }
@@ -370,12 +181,12 @@
       padding: 90px 0 100px;
       overflow: hidden;
       border-bottom: 1px solid var(--border);
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 65%),
+      background: radial-gradient(ellipse at 50% 0%, rgba(108, 134, 245, 0.08) 0%, transparent 65%),
                   linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, var(--bg) 100%);
     }
     html.dark .hero-section,
     body.theme-dark .hero-section {
-      background: radial-gradient(ellipse at 50% 0%, rgba(16, 185, 129, 0.12) 0%, transparent 65%),
+      background: radial-gradient(ellipse at 50% 0%, rgba(108, 134, 245, 0.12) 0%, transparent 65%),
                   linear-gradient(180deg, rgba(29, 30, 32, 0.85) 0%, var(--bg) 100%);
     }
     .hero-content {
@@ -392,7 +203,7 @@
       padding: 7px 18px;
       border-radius: 999px;
       background: var(--bg-surface);
-      border: 1px solid rgba(5, 150, 105, 0.3);
+      border: 1px solid rgba(36, 71, 224, 0.3);
       color: var(--emerald);
       font-size: 12px;
       font-weight: 800;
@@ -636,7 +447,7 @@
       color: #ffffff;
       border-color: var(--emerald);
       font-weight: 800;
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+      box-shadow: 0 4px 15px rgba(108, 134, 245, 0.3);
     }
     .search-input-box {
       position: relative;
@@ -659,7 +470,7 @@
     }
     .search-input-box input:focus {
       border-color: var(--emerald);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+      box-shadow: 0 0 0 3px rgba(108, 134, 245, 0.15);
     }
     .search-icon {
       position: absolute;
@@ -690,7 +501,7 @@
       box-shadow: var(--shadow-md);
     }
     .tool-card:hover {
-      border-color: rgba(16, 185, 129, 0.5);
+      border-color: rgba(108, 134, 245, 0.5);
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
     }
@@ -705,7 +516,7 @@
       height: 48px;
       border-radius: 14px;
       background: var(--emerald-soft);
-      border: 1px solid rgba(5, 150, 105, 0.2);
+      border: 1px solid rgba(36, 71, 224, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -888,7 +699,7 @@
       margin-bottom: 20px;
       background: var(--emerald-soft);
       color: var(--emerald);
-      border: 1px solid rgba(5, 150, 105, 0.2);
+      border: 1px solid rgba(36, 71, 224, 0.2);
     }
     .feature-card h3 {
       font-family: var(--font-family);
@@ -1037,7 +848,7 @@
     .guide-card:hover {
       transform: translateY(-4px);
       box-shadow: var(--shadow-lg);
-      border-color: rgba(5, 150, 105, 0.4);
+      border-color: rgba(36, 71, 224, 0.4);
     }
     .guide-image-wrap {
       height: 185px;
@@ -1098,7 +909,7 @@
       padding: 70px 0 100px;
     }
     .cta-card {
-      background: linear-gradient(135deg, #064e3b 0%, #065f46 50%, #0f172a 100%);
+      background: linear-gradient(135deg, #0d1b47 0%, #162e96 50%, #0f172a 100%);
       color: #ffffff;
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 28px;
@@ -1107,7 +918,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 36px;
-      box-shadow: 0 20px 50px rgba(6, 78, 59, 0.25);
+      box-shadow: 0 20px 50px rgba(13, 27, 71, 0.25);
       flex-wrap: wrap;
     }
     .cta-card h2 {
@@ -1120,16 +931,16 @@
     }
     .cta-card p {
       font-size: 16.5px;
-      color: #d1fae5;
+      color: #d6dffd;
       max-width: 580px;
     }
     .cta-card .btn-primary {
       background: #ffffff;
-      color: #064e3b;
+      color: #0d1b47;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
     .cta-card .btn-primary:hover {
-      background: #f0fdf4;
+      background: #f2f5ff;
       transform: translateY(-2px);
     }
 
@@ -1209,7 +1020,7 @@
       right: 24px;
       z-index: 100;
       background: var(--bg-surface);
-      border: 1px solid rgba(5, 150, 105, 0.4);
+      border: 1px solid rgba(36, 71, 224, 0.4);
       padding: 12px 20px;
       border-radius: 999px;
       font-size: 12px;
@@ -1230,6 +1041,8 @@
       text-transform: uppercase;
     }
 
+    @media (max-width: 768px), (prefers-reduced-motion: reduce) { .ambient-glow { animation: none; filter: none; } }
+
     /* Responsive */
     @media (max-width: 1024px) {
       .process-grid, .editorial-grid { grid-template-columns: 1fr; }
@@ -1247,191 +1060,66 @@
       .cta-card { padding: 40px 24px; }
     }
   </style>
+  <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-sections.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-sections.css') ?: '1' }}">
 </head>
 <body class="{{ $__isThemeDark ? 'theme-dark dark' : 'theme-light light' }}">
 
   <!-- Ambient Light Accents -->
-  <div class="ambient-glow glow-1"></div>
-  <div class="ambient-glow glow-2"></div>
-  <div class="ambient-glow glow-3"></div>
+  <div class="ambient-effects" aria-hidden="true">
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+  </div>
 
   <!-- Header Navigation -->
-  <header class="nav-header">
-    <div class="wrap nav-inner">
-      <a href="{{ route('home') }}" class="brand-logo" aria-label="fxnSEO">
-        <img src="{{ asset('assets/img/logo-light.svg') }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
-        <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
-      </a>
-
-      @php
-        $autoNavPages = \App\Models\Admin\Page::whereIn('type', ['page', 'contact'])
-          ->whereNotIn('slug', [
-            'about-us', 'faqs', 'contact',
-            'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure',
-            'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide'
-          ])
-          ->get();
-      @endphp
-
-      <nav class="nav-menu">
-        <a href="{{ route('tools') }}" class="nav-link">Tools <span class="nav-badge">{{ count($allTools) }}</span></a>
-        
-        <div class="nav-item-dropdown">
-          <a href="{{ url('/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
-            <span>Guides</span>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </a>
-          <div class="nav-dropdown-menu" role="menu">
-            <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
-              <span class="dropdown-icon">🔗</span>
-              <div>
-                <div class="nav-drop-title">Backlink Monitoring Guide</div>
-                <div class="nav-drop-sub">Detect lost links and audit link profiles</div>
-              </div>
-            </a>
-            <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
-              <span class="dropdown-icon">🎯</span>
-              <div>
-                <div class="nav-drop-title">Link Building Guide</div>
-                <div class="nav-drop-sub">Prospecting & high-impact outreach</div>
-              </div>
-            </a>
-            <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
-              <span class="dropdown-icon">📈</span>
-              <div>
-                <div class="nav-drop-title">SEO Audit & Reporting Hub</div>
-                <div class="nav-drop-sub">Technical health check & diagnostic workflows</div>
-              </div>
-            </a>
-            <div class="nav-dropdown-divider"></div>
-            <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
-              <span class="dropdown-icon">📰</span>
-              <div>
-                <div class="nav-drop-title">All SEO Guides & Tutorials</div>
-                <div class="nav-drop-sub">Explore the full knowledge repository</div>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
-        <a href="{{ url('/about-us') }}" class="nav-link">About</a>
-        <a href="{{ url('/faqs') }}" class="nav-link">FAQ</a>
-        <a href="{{ url('/contact') }}" class="nav-link">Contact</a>
-
-        @foreach($autoNavPages as $autoPage)
-          @php
-            $autoPageTrans = $autoPage->translate(app()->getLocale());
-            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
-          @endphp
-          <a href="{{ url('/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
-        @endforeach
-      </nav>
-
-      <div class="nav-actions">
-        <button class="theme-toggle-btn" type="button" onclick="toggleTheme()" title="Toggle Light / Dark mode" aria-label="Toggle Theme">
-          <span id="theme-icon">🌙</span>
-        </button>
-        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">Browse {{ count($allTools) }}+ Tools →</a>
-        <button class="mobile-toggle-btn" type="button" onclick="toggleHomeMobileMenu()" aria-label="Toggle Navigation Menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Drawer -->
-    <div id="homeMobileDrawer" class="home-mobile-drawer" style="display: none;">
-      <div class="wrap py-3" style="display: flex; flex-direction: column; gap: 4px;">
-        <a href="{{ route('tools') }}" class="mobile-nav-link">
-          <span>Tools</span>
-          <span class="nav-badge">{{ count($allTools) }}</span>
-        </a>
-        <a href="{{ url('/blog') }}" class="mobile-nav-link">Guides & Tutorials</a>
-        <a href="{{ url('/blog') }}" class="mobile-nav-link">Blog</a>
-        <a href="{{ url('/about-us') }}" class="mobile-nav-link">About Us</a>
-        <a href="{{ url('/faqs') }}" class="mobile-nav-link">FAQs</a>
-        <a href="{{ url('/contact') }}" class="mobile-nav-link">Contact</a>
-        @foreach($autoNavPages as $autoPage)
-          @php
-            $autoPageTrans = $autoPage->translate(app()->getLocale());
-            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
-          @endphp
-          <a href="{{ url('/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
-        @endforeach
-        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Browse {{ count($allTools) }}+ Tools →</a>
-      </div>
-    </div>
-  </header>
+  <x-public.navbar />
 
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="wrap hero-content">
-      <div class="hero-pill">
-        <span class="pulse-dot"></span>
-        <span>60+ Free SEO & YouTube Tools • Zero Registration</span>
-      </div>
+      <div class="hero-copy">
+        <h1 class="hero-title">Check a domain.<br>See the numbers.</h1>
 
-      <h1 class="hero-title">
-        Dominate Search Rankings with <br>
-        <span class="hero-gradient-text">Instant SEO Intelligence.</span>
-      </h1>
+        <p class="hero-desc">
+          Free SEO and YouTube tools that run in your browser. Look up Domain Authority, list backlinks, audit meta tags or pull data from a video, with no account and no card.
+        </p>
 
-      <p class="hero-desc">
-        Fast, pinpoint accuracy for measuring domain authority, inspecting backlinks, extracting YouTube tags, validating technical tags, and producing content ready to rank.
-      </p>
+        <!-- Quick-run launcher -->
+        <div class="hero-launcher">
+          <div class="launcher-tabs" role="group" aria-label="Choose a tool">
+            <button class="launcher-tab active" type="button" aria-pressed="true" onclick="switchLauncherTab(this, 'domain-authority-checker', 'Enter domain e.g. fxnseo.com or wikipedia.org', 'domain')">Domain Authority</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'backlink-checker', 'Enter domain to check live backlinks e.g. github.com', 'domain')">Backlink Checker</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'meta-tags-analyzer', 'Enter website URL to audit meta tags', 'link')">Meta Tags Analyzer</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'youtube-title-extractor', 'Paste YouTube video URL e.g. https://www.youtube.com/watch?v=...', 'link')">YouTube Extractor</button>
+          </div>
 
-      <!-- Interactive Quick-Run Launcher -->
-      <div class="hero-launcher">
-        <div class="launcher-tabs">
-          <button class="launcher-tab active" type="button" onclick="switchLauncherTab(this, 'domain-authority-checker', 'Enter domain e.g. fxnseo.com or wikipedia.org', 'domain')">
-            🌐 Domain Authority
-          </button>
-          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'youtube-title-extractor', 'Paste YouTube video URL e.g. https://www.youtube.com/watch?v=...', 'link')">
-            📹 YouTube Extractor
-          </button>
-          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'backlink-checker', 'Enter domain to check live backlinks e.g. github.com', 'domain')">
-            🔗 Backlink Checker
-          </button>
-          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'meta-tags-analyzer', 'Enter website URL to audit meta tags', 'link')">
-            🏷️ Meta Tags Analyzer
-          </button>
-        </div>
-
-        <form class="launcher-form" id="launcher-form" onsubmit="return handleLauncherSubmit(event)">
-          <span class="launcher-icon">⚡</span>
-          <input 
-            type="text" 
-            id="launcher-input" 
-            class="launcher-input" 
-            placeholder="Enter domain e.g. fxnseo.com or wikipedia.org" 
-            aria-label="Quick SEO Check"
-            required
-          >
-          <button type="submit" class="btn btn-primary">
-            Analyze Now →
-          </button>
-        </form>
-      </div>
-
-      <!-- Trust Stats -->
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-number">60<span>+</span></div>
-          <div class="stat-label">Production Tools<br>Ready to Use</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">100<span>%</span></div>
-          <div class="stat-label">Completely Free<br>No Card Needed</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">Moz<span>™</span></div>
-          <div class="stat-label">Official DA / PA<br>API Metrics</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">YT<span>v3</span></div>
-          <div class="stat-label">YouTube Data<br>Integration</div>
+          <form class="launcher-form" id="launcher-form" onsubmit="return handleLauncherSubmit(event)">
+            <input
+              type="text"
+              id="launcher-input"
+              class="launcher-input"
+              placeholder="Enter domain e.g. fxnseo.com or wikipedia.org"
+              aria-label="Domain or URL to check"
+              required
+            >
+            <button type="submit" class="btn btn-primary">Run check</button>
+          </form>
         </div>
       </div>
+
+      <figure class="hero-readout">
+        <figcaption><strong>Example result</strong> for a Domain Authority check</figcaption>
+        <dl class="readout-grid">
+          <div class="is-key"><dt>Domain Authority</dt><dd>54<small>/100</small></dd></div>
+          <div><dt>Page Authority</dt><dd>47<small>/100</small></dd></div>
+          <div><dt>Linking domains</dt><dd>1,204</dd></div>
+          <div><dt>Spam score</dt><dd>2<small>%</small></dd></div>
+        </dl>
+        <p>Metrics come from the Moz API. Treat them as a way to compare sites, not a ranking guarantee.</p>
+      </figure>
     </div>
   </section>
 
@@ -1440,31 +1128,30 @@
     <div class="wrap">
       <div class="section-head-bar">
         <div>
-          <span class="section-kicker">✦ Complete SEO Toolbox</span>
-          <h2 class="section-title">Explore All 60 Free Tools</h2>
+          <h2 class="section-title">All 60 free tools</h2>
         </div>
         <p class="section-subtitle">
-          From deep Moz authority checks to YouTube tag extraction and robots.txt generation — everything is available directly in your browser.
+          Domain authority, backlinks, metadata, redirects and YouTube research. Pick a tool and run it in your browser.
         </p>
       </div>
 
       <!-- Filter Pills & Search -->
       <div class="filter-bar">
         <div class="category-pills" id="category-pills">
-          <button class="category-pill active" onclick="filterCategory('all', this)">All Tools ({{ count($allTools) }})</button>
-          <button class="category-pill" onclick="filterCategory('popular', this)">🔥 Most Popular</button>
-          <button class="category-pill" onclick="filterCategory('youtube', this)">📹 YouTube Suite (18)</button>
-          <button class="category-pill" onclick="filterCategory('backlink', this)">🔗 Backlinks & Authority</button>
-          <button class="category-pill" onclick="filterCategory('content', this)">📝 Content & Text</button>
-          <button class="category-pill" onclick="filterCategory('technical', this)">⚙️ Technical & DNS</button>
+          <button class="category-pill active" onclick="filterCategory('all', this)">All tools ({{ count($allTools) }})</button>
+          <button class="category-pill" onclick="filterCategory('popular', this)">Most popular</button>
+          <button class="category-pill" onclick="filterCategory('youtube', this)">YouTube (18)</button>
+          <button class="category-pill" onclick="filterCategory('backlink', this)">Backlinks & authority</button>
+          <button class="category-pill" onclick="filterCategory('content', this)">Content & text</button>
+          <button class="category-pill" onclick="filterCategory('technical', this)">Technical & DNS</button>
         </div>
 
         <div class="search-input-box">
-          <span class="search-icon">🔍</span>
+          <label for="tool-search-input" class="tools-sr-only">Search tools</label>
           <input 
             type="text" 
             id="tool-search-input" 
-            placeholder="Search tools (e.g. Moz, YouTube, DNS)..." 
+            placeholder="Search tools: Moz, YouTube, DNS" 
             oninput="handleToolSearch(this.value)"
           >
         </div>
@@ -1498,7 +1185,7 @@
             <div class="card-top">
               <div class="tool-icon-wrap">
                 @if(!empty($tool['icon_image']))
-                  <img src="{{ $tool['icon_image'] }}" alt="{{ $tool['title'] }}">
+                  <img loading="lazy" decoding="async" src="{{ $tool['icon_image'] }}" alt="{{ $tool['title'] }}">
                 @else
                   ⚡
                 @endif
@@ -1537,10 +1224,9 @@
   <!-- Editorial Knowledge & Search Standards Section (AdSense Value-Add Content) -->
   <section class="section-editorial" id="editorial-insights">
     <div class="wrap">
-      <div class="editorial-header">
-        <span class="section-kicker" style="justify-content: center;">✦ Educational Search Standards</span>
+      <div class="section-head">
         <h2 class="section-title">The Four Pillars of Search Visibility</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
+        <p class="section-subtitle">
           High organic rankings require a balance of technical accessibility, editorial content relevance, domain authority, and multimedia discoverability.
         </p>
       </div>
@@ -1579,7 +1265,7 @@
             Modern semantic algorithms (like Google BERT and MUM) look for comprehensive answers to search intent rather than repeated keywords. Natural keyword density and high-converting meta tags drive click-throughs.
           </p>
           <ul class="editorial-points">
-            <li>Maintain recommended keyword frequency (1–3%) to avoid spam penalties.</li>
+            <li>Use relevant terms naturally and answer the reader’s question without repeating keywords unnecessarily.</li>
             <li>Write click-worthy meta titles (under 60 chars) and meta descriptions.</li>
             <li>Refresh outdated passages to maintain topical authority and freshness.</li>
           </ul>
@@ -1604,10 +1290,9 @@
   <!-- Features Section -->
   <section class="section-features" id="features">
     <div class="wrap">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Why FXN SEO Tools</span>
+      <div class="section-head">
         <h2 class="section-title">Built for Creators, Webmasters & SEO Teams</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
+        <p class="section-subtitle">
           Everything you need to diagnose search performance without paying expensive monthly subscription fees.
         </p>
       </div>
@@ -1643,8 +1328,7 @@
   <!-- 3-Step Process -->
   <section class="section-process" id="how-it-works">
     <div class="wrap">
-      <div style="text-align: center; max-width: 650px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Streamlined Workflow</span>
+      <div class="section-head">
         <h2 class="section-title">Three Steps to Concrete Results</h2>
       </div>
 
@@ -1676,74 +1360,43 @@
   <!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
   <section class="section-faq" id="faqs">
     <div class="wrap">
-      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Frequently Asked Questions</span>
+      <div class="section-head">
         <h2 class="section-title">Common Questions About Our SEO Suite</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
+        <p class="section-subtitle">
           Learn more about how our tools work, data sources, accuracy, and user privacy commitments.
         </p>
       </div>
 
       <div class="faq-container">
-        <div class="faq-item active">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>What is FXN SEO and how do the free tools work?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq" open>
+          <summary class="faq-question"><span>What is FXN SEO and how do the free tools work?</span></summary>
+          <div class="faq-answer">FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Are the Moz Domain Authority and Page Authority metrics official?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Are the Moz Domain Authority and Page Authority metrics official?</span></summary>
+          <div class="faq-answer">Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Do you store my input data, video URLs, or target domains?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Do you store my input data, video URLs, or target domains?</span></summary>
+          <div class="faq-answer">No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Why is keyword density important for on-page SEO?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Why is keyword density important for on-page SEO?</span></summary>
+          <div class="faq-answer">Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>How often should webmasters monitor backlinks and technical health?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>How often should webmasters monitor backlinks and technical health?</span></summary>
+          <div class="faq-answer">Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Can I use these tools on mobile devices and tablets?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.
-          </div>
-        </div>
+        <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Can I use these tools on mobile devices and tablets?</span></summary>
+          <div class="faq-answer">Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.</div>
+        </details>
       </div>
     </div>
   </section>
@@ -1753,10 +1406,9 @@
     <div class="wrap">
       <div class="section-head-bar">
         <div>
-          <span class="section-kicker">✦ In-Depth Editorial Hub</span>
           <h2 class="section-title">Fresh SEO & Backlink Insights</h2>
         </div>
-        <a href="{{ url('/blog') }}" class="btn btn-ghost">View All Articles →</a>
+        <a href="{{ url('/blog') }}" class="btn btn-ghost">View all articles</a>
       </div>
 
       <div class="guides-grid">
@@ -1769,7 +1421,7 @@
               <div class="guide-meta">{{ $post['published_at'] ?? 'Guide' }}</div>
               <h3 class="guide-title">{{ $post['title'] }}</h3>
               <p class="guide-excerpt">{{ \Illuminate\Support\Str::limit($post['excerpt'] ?: 'Discover essential strategies and actionable guidance for ranking higher in organic search.', 120) }}</p>
-              <span class="guide-link">Read Guide →</span>
+              <span class="guide-link">Read guide</span>
             </div>
           </a>
         @empty
@@ -1787,8 +1439,8 @@
           <h2>Ready to Audit & Grow Your Traffic?</h2>
           <p>Join thousands of webmasters, digital marketers, and agencies making smarter SEO decisions every single day.</p>
         </div>
-        <a href="#tools" class="btn btn-primary" style="padding: 16px 32px; font-size: 16px;">
-          Start Checking Now — 100% Free →
+        <a href="#tools" class="btn btn-primary">
+          Start checking, free
         </a>
       </div>
     </div>
@@ -1800,9 +1452,9 @@
       <div class="footer-columns">
         <!-- Brand Info -->
         <div class="footer-col-brand">
-          <a href="{{ route('home') }}" class="brand-logo" aria-label="fxnSEO">
-            <img src="{{ asset('assets/img/logo-light.svg') }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
-            <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
+          <a href="{{ url('/') }}" class="brand-logo" aria-label="fxnSEO">
+            <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
+            <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
           </a>
           <p>
             FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.
@@ -1895,62 +1547,17 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
-    function toggleHomeMobileMenu() {
-      const drawer = document.getElementById('homeMobileDrawer');
-      if (drawer) {
-        drawer.style.display = (drawer.style.display === 'none' || !drawer.style.display) ? 'block' : 'none';
-      }
-    }
-
-    // Theme toggle logic (Synchronized with global site theme)
-    function toggleTheme() {
-      const html = document.getElementById('html-root');
-      const body = document.body;
-      const isDark = html.classList.contains('dark') || html.classList.contains('theme-dark') || (body && body.classList.contains('theme-dark'));
-      const newTheme = isDark ? 'light' : 'dark';
-      
-      html.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
-      html.classList.add(newTheme, 'theme-' + newTheme);
-      
-      if (body) {
-        body.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
-        body.classList.add(newTheme, 'theme-' + newTheme);
-      }
-      
-      const icon = document.getElementById('theme-icon');
-      if (icon) icon.textContent = newTheme === 'light' ? '🌙' : '☀️';
-      
-      localStorage.setItem('site_theme', newTheme);
-      localStorage.setItem('preview_theme', newTheme);
-      document.cookie = "theme_mode=theme-" + newTheme + "; path=/; max-age=31536000; SameSite=Lax";
-    }
-
-    // Check saved theme preference
-    (function() {
-      try {
-        const saved = localStorage.getItem('site_theme') || localStorage.getItem('preview_theme');
-        if (saved) {
-          const html = document.getElementById('html-root');
-          html.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
-          html.classList.add(saved, 'theme-' + saved);
-          if (document.body) {
-            document.body.classList.remove('light', 'dark', 'theme-light', 'theme-dark');
-            document.body.classList.add(saved, 'theme-' + saved);
-          }
-          const icon = document.getElementById('theme-icon');
-          if (icon) icon.textContent = saved === 'light' ? '🌙' : '☀️';
-        }
-      } catch(e) {}
-    })();
-
     // State for launcher
     let currentLauncherSlug = 'domain-authority-checker';
     let currentLauncherParam = 'domain';
 
     function switchLauncherTab(btn, slug, placeholder, param) {
-      document.querySelectorAll('.launcher-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.launcher-tab').forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-pressed', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       currentLauncherSlug = slug;
       currentLauncherParam = param;
       const input = document.getElementById('launcher-input');
@@ -2027,13 +1634,6 @@
     }
 
     // FAQ Accordion Toggle
-    function toggleFaq(btn) {
-      const item = btn.closest('.faq-item');
-      const wasActive = item.classList.contains('active');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-      if (!wasActive) {
-        item.classList.add('active');
-      }
     }
   </script>
 </body>

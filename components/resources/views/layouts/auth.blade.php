@@ -28,20 +28,18 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
+        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/favicon.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.svg') ?: '1' }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/img/favicon.png') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.png') ?: '1' }}">
 
         @include('partials.meta-manager')
 
-        @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
-          <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
-        @endforeach
+        @include('partials.hreflang')
 
-        @if ( $general->page_load )
-            <!-- Pace -->
-            <script src="{{ asset('assets/js/pace.min.js') }}" defer></script>
-        @endif
 
         @if ( $general->adblock_detection )
           <!-- Sweet Alert 2 -->
@@ -53,12 +51,7 @@
         <link rel="preload" href="{{ asset('assets/css/fontawesome.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}"></noscript>
 
-        <!-- Nucleo Icons -->
-        <link rel="preload" href="{{ asset('assets/css/nucleo-icons.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-icons.css') }}"></noscript>
         
-        <link rel="preload" href="{{ asset('assets/css/nucleo-svg.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-svg.css') }}"></noscript>
 
         <!-- jQuery -->
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -69,11 +62,7 @@
         <!-- Bootstrap -->
         <script src="{{ asset('assets/js/bootstrap.min.js') }}" defer></script>
 
-        <!-- Perfect Scrollbar -->
-        <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" defer></script>
 
-        <!-- Smooth Scrollbar -->
-        <script src="{{ asset('assets/js/smooth-scrollbar.min.js') }}" defer></script>
 
         <!-- Theme CSS -->
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
@@ -92,7 +81,10 @@
 
         @livewireStyles
 
-    </head>
+      <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
+</head>
     <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }}">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
@@ -200,23 +192,25 @@
                 const searchIcon = document.getElementById('search-icon');
                 const searchBox = document.getElementById('search-box');
 
-                // Show/hide search box
-                searchIcon.addEventListener('click', function () {
-                  if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-                    searchBox.style.display = 'block';
-                  } else {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                if (searchIcon && searchBox) {
+                  // Show/hide search box
+                  searchIcon.addEventListener('click', function () {
+                    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                      searchBox.style.display = 'block';
+                    } else {
+                      searchBox.style.display = 'none';
+                    }
+                  });
 
-                // Hide search box when user clicks outside of it
-                document.addEventListener('click', function (event) {
-                  const isClickInsideSearchBox = searchBox.contains(event.target);
-                  const isClickInsideSearchIcon = searchIcon.contains(event.target);
-                  if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                  // Hide search box when user clicks outside of it
+                  document.addEventListener('click', function (event) {
+                    const isClickInsideSearchBox = searchBox.contains(event.target);
+                    const isClickInsideSearchIcon = searchIcon.contains(event.target);
+                    if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
+                      searchBox.style.display = 'none';
+                    }
+                  });
+                }
               </script>
             @endif
 

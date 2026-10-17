@@ -3,7 +3,8 @@
  * This file intentionally loads last so every public template shares one
  * semantic color system, including custom page and blog components.
  */
-@import url("google-fonts-local.css");
+
+
 
 :root,
 body {
@@ -25,8 +26,8 @@ body.theme-light {
   --site-text: #0f172a;
   --site-text-muted: #64748b;
   --site-border: #e2e8f0;
-  --site-accent: #059669;
-  --site-accent-hover: #047857;
+  --site-accent: #2447e0;
+  --site-accent-hover: #1b38b8;
   --site-button-text: #ffffff;
   --site-control-bg: #ffffff;
   --site-header-bg: #ffffff;
@@ -54,8 +55,8 @@ html.dark body {
   --site-text: #ffffff;
   --site-text-muted: #9ca3af;
   --site-border: #313131;
-  --site-accent: #9895ff;
-  --site-accent-hover: #7b77e4;
+  --site-accent: #8ba2ff;
+  --site-accent-hover: #6c86f5;
   --site-button-text: #ffffff;
   --site-control-bg: #1c1d1f;
   --site-header-bg: #151616;
@@ -63,7 +64,7 @@ html.dark body {
   --site-shadow: rgba(0, 0, 0, 0.45);
   --bs-body-bg: var(--site-bg);
   --bs-body-color: var(--site-text);
-  --bs-primary: #7b77e4;
+  --bs-primary: #6c86f5;
   --bs-primary-rgb: 123, 119, 228;
   --bs-border-color: var(--site-border);
   --content-primary: var(--site-accent);
@@ -99,19 +100,19 @@ body a:not(.btn):hover {
 body .btn-primary,
 body .bg-primary,
 body .bg-gradient-primary {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  border-color: #059669 !important;
+  background: linear-gradient(135deg, #6c86f5 0%, #2447e0 100%) !important;
+  border-color: #2447e0 !important;
   color: #ffffff !important;
   font-weight: 700 !important;
   border-radius: 12px !important;
-  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2) !important;
+  box-shadow: 0 4px 15px rgba(36, 71, 224, 0.2) !important;
 }
 
 body .btn-primary:hover,
 body .bg-primary:hover,
 body .bg-gradient-primary:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  border-color: #047857 !important;
+  background: linear-gradient(135deg, #2447e0 0%, #1b38b8 100%) !important;
+  border-color: #1b38b8 !important;
   color: #ffffff !important;
   transform: translateY(-1px) !important;
 }
@@ -290,7 +291,7 @@ html.dark .home-hero,
 html.dark .tools-hero,
 body.theme-dark .home-hero,
 body.theme-dark .tools-hero {
-  background: radial-gradient(circle at 82% 18%, rgba(152, 149, 255, 0.14), transparent 30%), #18191b !important;
+  background: radial-gradient(circle at 82% 18%, rgba(139, 162, 255, 0.14), transparent 30%), #18191b !important;
   border-bottom: 1px solid #313131 !important;
 }
 

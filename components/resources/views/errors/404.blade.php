@@ -66,9 +66,9 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: #ecfdf5;
-            color: #059669;
-            border: 1px solid rgba(5, 150, 105, 0.25);
+            background: #eef2ff;
+            color: #2447e0;
+            border: 1px solid rgba(36, 71, 224, 0.25);
             border-radius: 20px;
             padding: 4px 14px;
             font-size: 13px;
@@ -84,7 +84,7 @@
             letter-spacing: -0.03em;
           }
           .error-404-code span {
-            color: #059669;
+            color: #2447e0;
           }
           .error-404-title {
             font-size: 24px;
@@ -110,18 +110,18 @@
             align-items: center;
             gap: 8px;
             padding: 12px 24px;
-            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            background: linear-gradient(135deg, #2447e0 0%, #1b38b8 100%);
             color: #ffffff !important;
             font-weight: 700;
             font-size: 14px;
             border-radius: 12px;
             text-decoration: none !important;
-            box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+            box-shadow: 0 4px 14px rgba(36, 71, 224, 0.25);
             transition: all 0.2s ease;
           }
           .error-btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.35);
+            box-shadow: 0 8px 20px rgba(36, 71, 224, 0.35);
           }
           .error-btn-secondary {
             display: inline-flex;
@@ -166,7 +166,7 @@
                 <i class="fas fa-layer-group"></i>
                 <span>{{ __('Browse 70+ Tools') }}</span>
               </a>
-              <a href="{{ route('home') }}" class="error-btn-secondary">
+              <a href="{{ url('/') }}" class="error-btn-secondary">
                 <i class="fas fa-home"></i>
                 <span>{{ __('Return to Homepage') }}</span>
               </a>

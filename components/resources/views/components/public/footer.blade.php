@@ -4,9 +4,9 @@
     <div class="footer-columns">
       <!-- Brand Info -->
       <div class="footer-col-brand">
-        <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
-          <img src="{{ asset('assets/img/logo-light.svg') }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
-          <img src="{{ asset('assets/img/logo-dark.svg') }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
+        <a href="{{ url('/') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
+          <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
+          <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
         </a>
         <p>
           {{ __('FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.') }}

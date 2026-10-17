@@ -53,7 +53,7 @@
                         $toolSlug = $value['slug'] ?? '';
                         $isYtItem = str_contains($toolSlug, 'youtube');
                         $toolIconClass = $isYtItem ? 'fab fa-youtube text-danger' : 'fas fa-bolt text-emerald';
-                        $toolBgClass = $isYtItem ? '#fee2e2' : '#ecfdf5';
+                        $toolBgClass = $isYtItem ? '#fee2e2' : '#eef2ff';
                     @endphp
                     <a href="{{ ( empty( $value['custom_tool_link'] ) ) ? route('home') . '/' . $value['slug'] : $value['custom_tool_link'] }}" title="{{ $value['title'] }}" target="{{ $value['target'] }}" class="yt-suite-item">
                         <div class="yt-suite-icon" style="background: {{ $toolBgClass }};">

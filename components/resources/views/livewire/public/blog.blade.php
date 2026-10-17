@@ -1,106 +1,57 @@
-<div class="blog-card-grid row">
-  @foreach ($pageTrans as $pageTran)
+<div class="journal">
+  <section class="journal-intro">
+    <div class="journal-shell">
+      <nav class="journal-breadcrumb" aria-label="{{ __('Breadcrumb') }}"><a href="{{ url('/') }}">{{ __('Home') }}</a><span aria-hidden="true">/</span><span>{{ __('The journal') }}</span></nav>
+      <div class="journal-intro-row">
+        <div><h1>{{ __('Less guesswork.') }}<br><em>{{ __('Better search.') }}</em></h1></div>
+        <div class="journal-intro-note"><p>{{ __('Practical ideas for the people doing the work. Explore clear guides to technical SEO, better backlinks, and videos worth finding.') }}</p><a href="#journal-library">{{ __('Find your next read') }}</a></div>
+      </div>
+    </div>
+  </section>
+
+  @if ($featuredPost && $search === '' && $topic === '' && $sort === 'newest' && $pageTrans->currentPage() === 1)
     @php
-      $summary = $pageTran->short_description ?: $pageTran->subtitle;
-      $postDate = $pageTran->created_at ? \Illuminate\Support\Carbon::parse($pageTran->created_at)->format('M j, Y') : null;
-      $isSpotlight = $loop->first && ($pageTrans->currentPage() == 1);
+      $featureMinutes = max(1, (int) ceil(str_word_count(strip_tags($featuredPost->description ?? '')) / 200));
+      $featureTopic = \App\Http\Livewire\Public\Blog::topicFor($featuredPost->slug);
     @endphp
+    <section class="journal-feature-section journal-shell" aria-label="{{ __('Featured article') }}">
+      <article class="journal-feature">
+        <a class="journal-feature-image" href="{{ url('/blog/'.$featuredPost->slug) }}" aria-label="{{ $featuredPost->title }}"><img src="{{ $featuredPost->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $featuredPost->title }}" width="1200" height="675" fetchpriority="high"><span class="journal-feature-stamp">{{ __('Editor’s pick') }}</span></a>
+        <div class="journal-feature-copy"><div class="journal-meta"><span>{{ __($featureTopic) }}</span><span aria-hidden="true">·</span><span>{{ $featureMinutes }} {{ __('min read') }}</span></div><h2><a href="{{ url('/blog/'.$featuredPost->slug) }}">{{ $featuredPost->title }}</a></h2><p>{{ \Illuminate\Support\Str::limit(strip_tags($featuredPost->short_description ?: $featuredPost->subtitle), 190) }}</p><a class="journal-feature-link" href="{{ url('/blog/'.$featuredPost->slug) }}">{{ __('Read the story') }}</a></div>
+      </article>
+    </section>
+  @endif
 
-    @if ($isSpotlight)
-      <!-- 1. Featured Spotlight Article (Top of Page 1) -->
-      <div class="col-12 mb-4">
-        <article class="blog-spotlight-card">
-          <div class="blog-spotlight-media">
-            <a href="{{ route('home') . '/blog/' . $pageTran->slug }}" aria-label="{{ $pageTran->title }}">
-              <img 
-                class="{{ ($general->lazy_loading == true) ? 'lazyload' : '' }}" 
-                alt="{{ $pageTran->title }}" 
-                {{ ($general->lazy_loading == true) ? 'data-' : '' }}src="{{ ($pageTran->featured_image) ? $pageTran->featured_image : asset('assets/img/no-thumb.svg') }}"
-                loading="eager"
-              >
-            </a>
-            <span class="blog-spotlight-badge">
-              <i class="fas fa-star text-amber me-1"></i> {{ __('Featured Playbook') }}
-            </span>
-          </div>
-
-          <div class="blog-spotlight-body">
-            <div class="blog-meta-bar mb-2">
-              <span class="blog-meta-tag"><i class="far fa-clock me-1 text-emerald"></i> {{ __('5 min read') }}</span>
-              <span class="blog-meta-dot">•</span>
-              <span class="blog-meta-tag"><i class="far fa-check-circle me-1 text-emerald"></i> {{ __('Verified SEO Strategy') }}</span>
-              @if ($postDate)
-                <span class="blog-meta-dot">•</span>
-                <span class="blog-meta-tag"><i class="far fa-calendar-alt me-1"></i> {{ $postDate }}</span>
-              @endif
-            </div>
-
-            <h2 class="blog-spotlight-title">
-              <a href="{{ route('home') . '/blog/' . $pageTran->slug }}">{{ $pageTran->title }}</a>
-            </h2>
-
-            @if (!empty($summary))
-              <p class="blog-spotlight-summary">{{ \Illuminate\Support\Str::limit($summary, 160) }}</p>
-            @endif
-
-            <div class="mt-auto pt-3">
-              <a href="{{ route('home') . '/blog/' . $pageTran->slug }}" class="blog-spotlight-btn">
-                <span>{{ __('Read Complete Guide') }}</span>
-                <i class="fas fa-arrow-right" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
-        </article>
+  <section class="journal-library journal-shell" id="journal-library" aria-labelledby="journal-library-heading">
+    <div class="journal-library-heading"><div><h2 id="journal-library-heading">{{ __('Ideas you can put to work.') }}</h2></div><span class="journal-total">{{ $totalArticles }} {{ __('articles. Always free.') }}</span></div>
+    <div class="journal-controls">
+      <div class="journal-tabs" role="group" aria-label="{{ __('Filter articles by topic') }}">
+        @foreach (['' => __('All articles'), 'backlinks' => __('Backlinks'), 'technical' => __('Technical SEO'), 'youtube' => __('YouTube')] as $topicKey => $topicLabel)
+          <button type="button" wire:click="$set('topic', '{{ $topicKey }}')" class="{{ $topic === $topicKey ? 'is-active' : '' }}" aria-pressed="{{ $topic === $topicKey ? 'true' : 'false' }}">{{ $topicLabel }}</button>
+        @endforeach
       </div>
-    @else
-      <!-- 2. Standard Responsive Blog Card (2 per row on wide container) -->
-      <div class="col-md-6 d-flex mb-4">
-        <article class="card blog-entry-card w-100">
-          <div class="card-image position-relative">
-            <a href="{{ route('home') . '/blog/' . $pageTran->slug }}" aria-label="{{ $pageTran->title }}">
-              <img 
-                class="w-100 {{ ($general->lazy_loading == true) ? 'lazyload' : '' }}" 
-                alt="{{ $pageTran->title }}" 
-                {{ ($general->lazy_loading == true) ? 'data-' : '' }}src="{{ ($pageTran->featured_image) ? $pageTran->featured_image : asset('assets/img/no-thumb.svg') }}"
-                loading="lazy"
-              >
-            </a>
-            <span class="blog-pill-badge"><i class="fas fa-book-open me-1"></i> {{ __('Guide') }}</span>
-          </div>
-
-          <div class="card-body">
-            <div class="blog-meta-bar mb-2">
-              <span class="blog-meta-tag"><i class="far fa-clock me-1"></i> {{ __('4 min read') }}</span>
-              <span class="blog-meta-dot">•</span>
-              <span class="blog-meta-tag"><i class="far fa-check-circle me-1 text-emerald"></i> {{ __('Verified') }}</span>
-              @if ($postDate)
-                <span class="blog-meta-dot">•</span>
-                <span class="blog-meta-tag">{{ $postDate }}</span>
-              @endif
-            </div>
-
-            <h2 class="blog-entry-title">
-              <a href="{{ route('home') . '/blog/' . $pageTran->slug }}">{{ $pageTran->title }}</a>
-            </h2>
-
-            @if (!empty($summary))
-              <p class="blog-entry-summary">{{ \Illuminate\Support\Str::limit($summary, 105) }}</p>
-            @endif
-
-            <div class="blog-card-footer mt-auto pt-2">
-              <a href="{{ route('home') . '/blog/' . $pageTran->slug }}" class="blog-read-more">
-                <span>{{ __('Read Guide') }}</span>
-                <i class="fas fa-arrow-right text-xs" aria-hidden="true"></i>
-              </a>
-            </div>
-          </div>
+      <label class="journal-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><span class="journal-sr-only">{{ __('Search articles') }}</span><input type="search" wire:model.debounce.350ms="search" placeholder="{{ __('Find a guide…') }}" maxlength="150"></label>
+    </div>
+    <div class="journal-results-row"><span role="status" aria-live="polite">{{ $pageTrans->total() }} {{ __('articles') }} @if ($search !== '') {{ __('matching') }} “{{ $search }}” @endif</span><label>{{ __('Sort by') }} <select wire:model="sort" aria-label="{{ __('Sort articles') }}"><option value="newest">{{ __('Newest first') }}</option><option value="oldest">{{ __('Oldest first') }}</option></select></label></div>
+    <div class="journal-grid" wire:loading.class="journal-is-loading" wire:target="search,topic,sort,gotoPage,nextPage,previousPage">
+      @forelse ($pageTrans as $post)
+        @php
+          $minutes = max(1, (int) ceil(str_word_count(strip_tags($post->description ?? '')) / 200));
+          $postTopic = \App\Http\Livewire\Public\Blog::topicFor($post->slug);
+        @endphp
+        <article class="journal-card" wire:key="journal-post-{{ $post->id }}">
+          <a class="journal-card-image" href="{{ url('/blog/'.$post->slug) }}" aria-label="{{ $post->title }}"><img src="{{ $post->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $post->title }}" loading="lazy" decoding="async" width="1200" height="675"></a>
+          <div class="journal-meta"><span>{{ __($postTopic) }}</span><span aria-hidden="true">·</span><span>{{ $minutes }} {{ __('min read') }}</span></div>
+          <h3><a href="{{ url('/blog/'.$post->slug) }}">{{ $post->title }}</a></h3>
+          <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->short_description ?: $post->subtitle), 135) }}</p>
+          <div class="journal-card-bottom"><time datetime="{{ $post->created_at->toDateString() }}">{{ $post->created_at->format('M j, Y') }}</time><a href="{{ url('/blog/'.$post->slug) }}" aria-label="{{ __('Read') }}: {{ $post->title }}">{{ __('Read article') }}</a></div>
         </article>
-      </div>
-    @endif
-  @endforeach
+      @empty
+        <div class="journal-empty"><span aria-hidden="true">⌕</span><h3>{{ __('A fresh search might help.') }}</h3><p>{{ __('Try a broader phrase or explore all our articles.') }}</p><button type="button" wire:click="clearFilters">{{ __('Show all articles') }}</button></div>
+      @endforelse
+    </div>
+    @if ($pageTrans->hasPages())<div class="journal-pagination">{{ $pageTrans->links() }}</div>@endif
+  </section>
 
-  <!-- Modern Pagination Container -->
-  <div class="col-12 d-flex justify-content-center mt-3 mb-5">
-    {{ $pageTrans->links() }}
-  </div>
+  <section class="journal-toolbox journal-shell"><div class="journal-toolbox-inner"><div><h2>{{ __('Good advice. Useful tools.') }}</h2><p>{{ __('Put your next idea into practice with our free SEO toolkit.') }}</p></div><a href="{{ route('tools') }}">{{ __('Explore the tools') }}</a></div></section>
 </div>

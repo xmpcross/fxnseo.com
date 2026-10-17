@@ -28,22 +28,21 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
+        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="{{ (Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light') === 'theme-dark') ? 'dark' : 'light' }}">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/favicon.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.svg') ?: '1' }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/img/favicon.png') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.png') ?: '1' }}">
 
         @include('partials.meta-manager')
 
         @include('partials.seo-structured-data')
 
-        @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
-          <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
-        @endforeach
+        @include('partials.hreflang')
 
-        @if ( $general->page_load )
-            <!-- Pace -->
-            <script src="{{ asset('assets/js/pace.min.js') }}" defer></script>
-        @endif
 
         @if ( $general->adblock_detection )
           <!-- Sweet Alert 2 -->
@@ -55,12 +54,7 @@
         <link rel="preload" href="{{ asset('assets/css/fontawesome.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}"></noscript>
 
-        <!-- Nucleo Icons -->
-        <link rel="preload" href="{{ asset('assets/css/nucleo-icons.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-icons.css') }}"></noscript>
         
-        <link rel="preload" href="{{ asset('assets/css/nucleo-svg.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-svg.css') }}"></noscript>
 
         <!-- jQuery -->
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -71,11 +65,7 @@
         <!-- Bootstrap -->
         <script src="{{ asset('assets/js/bootstrap.min.js') }}" defer></script>
 
-        <!-- Perfect Scrollbar -->
-        <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" defer></script>
 
-        <!-- Smooth Scrollbar -->
-        <script src="{{ asset('assets/js/smooth-scrollbar.min.js') }}" defer></script>
 
         <!-- Theme CSS -->
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
@@ -88,6 +78,14 @@
         <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
         @if (isset($page) && (in_array($page->slug ?? '', ['about-us', 'faqs', 'contact', 'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide', 'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure', 'report']) || ($page->type ?? '') === 'post'))
           <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        @endif
+
+        @if (isset($page) && ($page->slug ?? '') === 'faqs')
+          <link type="text/css" href="{{ asset('assets/css/page-faqs.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/page-faqs.css') ?: '1' }}" rel="stylesheet">
+        @endif
+
+        @if (isset($page) && in_array($page->slug ?? '', ['backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide']))
+          <link type="text/css" href="{{ asset('assets/css/page-pillar.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/page-pillar.css') ?: '1' }}" rel="stylesheet">
         @endif
 
         @if (Route::is('home'))
@@ -108,7 +106,11 @@
 
         @livewireStyles
 
-    </head>
+      <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/page-templates.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/page-templates.css') ?: '1' }}">
+</head>
     <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ Route::is('home') ? 'route-home' : '' }} {{ Route::is('tools') ? 'route-tools' : '' }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }} {{ (isset($page) && isset($page->slug)) ? 'page-slug-'.$page->slug : '' }}">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
@@ -146,7 +148,7 @@
                           <header class="post-editorial-hero">
                             <div class="post-editorial-shell">
                               <nav class="post-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a><span aria-hidden="true">›</span>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a><span aria-hidden="true">›</span>
                                 <a href="{{ url('/blog') }}">{{ $__postCategoryName }}</a><span aria-hidden="true">›</span>
                                 <span>{{ __($pageTrans->title) }}</span>
                               </nav>
@@ -198,13 +200,13 @@
                           @endphp
                           <section class="pillar-hero">
                             <div class="pillar-hero-shell">
-                              <nav aria-label="{{ __('Breadcrumb') }}"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>›</span><span>{{ __('Backlink Monitoring Guide') }}</span></nav>
+                              <nav aria-label="{{ __('Breadcrumb') }}"><a href="{{ url('/') }}">{{ __('Home') }}</a><span>›</span><span>{{ __($pageTrans->title) }}</span></nav>
                               <span class="pillar-hero-kicker">{{ $__pillarConfig['label'] }}</span>
                               <h1 class="hero-title">{{ __($pageTrans->title) }}</h1>
                               <p>{{ __($pageTrans->subtitle) }}</p>
                               <div class="pillar-hero-actions">
-                                <a href="{{ $__pillarConfig['anchor'] }}">{{ $__pillarConfig['primary'] }} <span>↓</span></a>
-                                <a href="{{ $__pillarConfig['tool_url'] }}">{{ $__pillarConfig['tool_label'] }} <span>→</span></a>
+                                <a href="{{ $__pillarConfig['anchor'] }}">{{ $__pillarConfig['primary'] }}</a>
+                                <a href="{{ $__pillarConfig['tool_url'] }}">{{ $__pillarConfig['tool_label'] }}</a>
                               </div>
                               <div class="pillar-hero-proof">@foreach ($__pillarConfig['proof'] as $__proof)<span>{{ $__proof }}</span>@endforeach</div>
                             </div>
@@ -213,75 +215,43 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-compass text-emerald me-1"></i> {{ __('Built for Clearer Decisions • Free Web Tools') }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __('About') }} <span class="gradient-text">fxnSEOTools</span></h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('We build fast, browser-first tools that help creators, marketers, developers, and businesses make smarter search decisions without subscriptions or paywalls.')) }}</p>
 
-                              <div class="tool-editorial-chips">
-                                <div class="tool-chip"><i class="fas fa-bolt"></i> <span>{{ __('60+ Focused Web Utilities') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('Browser-First Processing') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('100% Free · No Sign-Up Needed') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-award"></i> <span>{{ __('Engineered for Modern Web Teams') }}</span></div>
-                              </div>
                             </div>
                           </section>
                       @elseif (($page->slug ?? '') === 'faqs')
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-question-circle text-emerald me-1"></i> {{ __('Knowledge Hub • The Answer Library') }}</span>
-                              </div>
-
                               <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
-
-                              <div class="tool-editorial-chips">
-                                <div class="tool-chip"><i class="fas fa-book-open"></i> <span>{{ __('Answers for 60+ Tools') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-check-double"></i> <span>{{ __('Clear Workflow Solutions') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('100% Free · No Account Required') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-tachometer-alt"></i> <span>{{ __('Direct Results Explained') }}</span></div>
-                              </div>
                             </div>
                           </section>
                       @elseif (($page->slug ?? '') === 'contact')
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-headset text-emerald me-1"></i> {{ __('Start a Conversation • Direct Support') }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __('Get in Touch with') }} <span class="gradient-text">fxnSEO</span></h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('Have questions, tool feedback, or bug reports? Reach out anytime — we are here to help.')) }}</p>
 
-                              <div class="tool-editorial-chips">
-                                <div class="tool-chip"><i class="fas fa-clock"></i> <span>{{ __('1–2 Business Days Response') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-envelope-open-text"></i> <span>{{ __('Direct Team Inboxes') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-lightbulb"></i> <span>{{ __('Feature Suggestions Welcome') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-user-shield"></i> <span>{{ __('100% Human Support') }}</span></div>
-                              </div>
                             </div>
                           </section>
                       @elseif (($page->type ?? '') === 'tool')
@@ -341,26 +311,16 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <a href="{{ route('tools') }}">{{ __('SEO Tools') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="{{ $__kickerIcon }} me-1"></i> {{ $__kickerText }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
-
-                              <div class="tool-editorial-chips">
-                                @foreach ($__chips as $__chip)
-                                  <div class="tool-chip"><i class="{{ $__chip['icon'] }}"></i> <span>{{ $__chip['text'] }}</span></div>
-                                @endforeach
-                              </div>
 
                               @if ( $page->ads_status == true && $advertisement->area1_status == true && $advertisement->area1 != null )
                                 <div class="tool-hero-ad mt-3">
@@ -373,66 +333,43 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span>{{ __('Trust & Legal') }}</span>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-shield-alt text-emerald me-1"></i> {{ __('Trust & Compliance • Transparent Terms') }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('Read our official service terms, data privacy practices, and compliance commitments.')) }}</p>
 
-                              <div class="tool-editorial-chips">
-                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('Clear & Accessible Terms') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-user-shield"></i> <span>{{ __('Zero Unnecessary Data Tracking') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-lock"></i> <span>{{ __('SSL 256-bit Encryption') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-balance-scale"></i> <span>{{ __('GDPR & AdSense Compliant') }}</span></div>
-                              </div>
                             </div>
                           </section>
                       @elseif (($page->type ?? '') === 'report' || ($page->slug ?? '') === 'report')
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-flag text-danger me-1"></i> {{ __('Quality Assurance • Bug & Tool Report') }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle) }}</p>
 
-                              <div class="tool-editorial-chips">
-                                <div class="tool-chip"><i class="fas fa-check-circle"></i> <span>{{ __('Direct Technical Review') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-shield-alt"></i> <span>{{ __('Continuous Uptime Monitoring') }}</span></div>
-                                <div class="tool-chip"><i class="fas fa-heart"></i> <span>{{ __('Community Driven Improvements') }}</span></div>
-                              </div>
                             </div>
                           </section>
                       @elseif (($page->type ?? '') === 'page')
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
+                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
-                              <div class="tool-editorial-badge">
-                                <span class="pulse-indicator"></span>
-                                <span class="badge-label"><i class="fas fa-file-alt text-emerald me-1"></i> {{ __('Information & Resources') }}</span>
-                              </div>
 
                               <h1 class="tool-editorial-title hero-title">{{ __($pageTrans->title) }}</h1>
                               @if (!empty($pageTrans->subtitle))
@@ -629,11 +566,6 @@
 
                           @if (($page->slug ?? '') === 'faqs')
                             <section class="faq-search-panel" aria-label="Search frequently asked questions">
-                              <div class="faq-search-copy">
-                                <span>{{ __('Quick answers') }}</span>
-                                <h2>{{ __('What can we help you find?') }}</h2>
-                                <p>{{ __('Use this guide to understand what each fxnSEO tool does, what information it needs, and how its results can support your SEO, content, website, or YouTube workflow.') }}</p>
-                              </div>
                               <label class="faq-search-box" for="faq-search-input">
                                 <i class="fas fa-search" aria-hidden="true"></i>
                                 <span class="visually-hidden">{{ __('Search questions') }}</span>
@@ -1049,8 +981,8 @@
                                   @if ($__isPillar && !empty($related_pillar_posts))
                                     <section class="pillar-related" aria-labelledby="pillarRelatedTitle">
                                       <div class="pillar-related-head">
-                                        <div><span>{{ __('Continue learning') }}</span><h2 id="pillarRelatedTitle">{{ __('Related guides and articles') }}</h2></div>
-                                        <a href="{{ url('/blog') }}">{{ __('View all articles') }} <span>→</span></a>
+                                        <div><h2 id="pillarRelatedTitle">{{ __('Related guides and articles') }}</h2></div>
+                                        <a href="{{ url('/blog') }}">{{ __('View all articles') }}</a>
                                       </div>
                                       <div class="pillar-related-grid">
                                         @foreach ($related_pillar_posts as $relatedPillarPost)
@@ -1068,6 +1000,49 @@
                                         @endforeach
                                       </div>
                                     </section>
+                                  @endif
+
+                                  @if ($__isPillar)
+                                    <script>
+                                      (function () {
+                                        var links = Array.prototype.slice.call(document.querySelectorAll('.pillar-toc a[href^="#"]'));
+                                        if (!links.length) return;
+                                        var markCurrent = function (current) {
+                                          links.forEach(function (a) { a.setAttribute('aria-current', a === current ? 'true' : 'false'); });
+                                        };
+                                        if (window.CSS && CSS.supports('scroll-target-group: auto')) {
+                                          /* Native scrollspy: the browser tracks :target-current; this only mirrors it to aria-current. */
+                                          var sync = function () {
+                                            /* :target-current updates just after scrollend, so read it two frames later. */
+                                            requestAnimationFrame(function () {
+                                              requestAnimationFrame(function () { markCurrent(document.querySelector('.pillar-toc a:target-current')); });
+                                            });
+                                          };
+                                          sync();
+                                          document.addEventListener('scrollend', sync);
+                                          return;
+                                        }
+                                        if (!('IntersectionObserver' in window)) return;
+                                        var byId = {};
+                                        links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+                                        var observer = new IntersectionObserver(function (entries) {
+                                          entries.forEach(function (entry) {
+                                            if (entry.isIntersecting && byId[entry.target.id]) markCurrent(byId[entry.target.id]);
+                                          });
+                                        }, { rootMargin: '-20% 0px -70% 0px' });
+                                        Object.keys(byId).forEach(function (id) {
+                                          var section = document.getElementById(id);
+                                          if (section) observer.observe(section);
+                                        });
+                                      })();
+
+                                      /* Stacked tables on narrow containers: copy each column heading into a CSS variable. */
+                                      document.querySelectorAll('.pillar-table-wrap table').forEach(function (table) {
+                                        table.querySelectorAll('thead th').forEach(function (th, i) {
+                                          table.style.setProperty('--label-' + (i + 1), JSON.stringify(th.textContent.trim()));
+                                        });
+                                      });
+                                    </script>
                                   @endif
 
                                   @if (($page->slug ?? '') === 'faqs')
@@ -1232,23 +1207,25 @@
                 const searchIcon = document.getElementById('search-icon');
                 const searchBox = document.getElementById('search-box');
 
-                // Show/hide search box
-                searchIcon.addEventListener('click', function () {
-                  if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-                    searchBox.style.display = 'block';
-                  } else {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                if (searchIcon && searchBox) {
+                  // Show/hide search box
+                  searchIcon.addEventListener('click', function () {
+                    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                      searchBox.style.display = 'block';
+                    } else {
+                      searchBox.style.display = 'none';
+                    }
+                  });
 
-                // Hide search box when user clicks outside of it
-                document.addEventListener('click', function (event) {
-                  const isClickInsideSearchBox = searchBox.contains(event.target);
-                  const isClickInsideSearchIcon = searchIcon.contains(event.target);
-                  if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                  // Hide search box when user clicks outside of it
+                  document.addEventListener('click', function (event) {
+                    const isClickInsideSearchBox = searchBox.contains(event.target);
+                    const isClickInsideSearchIcon = searchIcon.contains(event.target);
+                    if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
+                      searchBox.style.display = 'none';
+                    }
+                  });
+                }
               </script>
             @endif
 

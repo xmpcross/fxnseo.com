@@ -28,7 +28,17 @@
         $__metaType = 'website';
     }
 
-    if (request()->routeIs('login', 'register', 'password.*', 'verify.email', 'verification.verify', 'user.profile')) {
+    if (Route::is('blog')) {
+        $blogPageNumber = max(1, (int) ($blogPageNumber ?? request('page', 1)));
+        $__metaCanonical = route('blog') . ($blogPageNumber > 1 ? '?page=' . $blogPageNumber : '');
+        if (trim((string) ($blogSearch ?? request('search', ''))) !== ''
+            || (string) ($blogTopic ?? request('topic', '')) !== ''
+            || (string) ($blogSort ?? request('sort', 'newest')) !== 'newest') {
+            $__metaRobots = 'noindex, follow';
+        }
+    }
+
+    if (request()->routeIs('login', 'admin.login', 'register', 'password.*', 'verify.email', 'verification.verify', 'user.profile')) {
         $__metaCanonical = url()->current();
         $__metaRobots = 'noindex, nofollow';
     }

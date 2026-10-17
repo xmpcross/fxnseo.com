@@ -50,10 +50,10 @@
         @case('home')
 
             @foreach($page['translations'] as $key => $value)
-                @if ( $value['robots_meta'] )
+                @if ( $value['robots_meta'] && $value['locale'] === 'en' )
                     @php
                         try {
-                            $url = localization()->getLocalizedURL($value['locale'], route('home'), [], false);
+                            $url = localization()->getLocalizedURL($value['locale'], url('/'), [], false);
                         } catch (\Exception $e) {
                             continue;
                         }
@@ -71,4 +71,6 @@
     @endswitch
 
 @endforeach
+<url><loc>{{ url('/tools') }}</loc></url>
+<url><loc>{{ url('/blog') }}</loc></url>
 </urlset>

@@ -176,7 +176,7 @@ Route::group(['middleware' => 'swinstall', 'prefix' => 'install'], function () {
 // remains untouched until the preview is explicitly approved.
 Route::get('/homepage-preview', function () {
     $locale = app()->getLocale();
-    $resources = \App\Models\Admin\Page::where('type', 'post')
+    $resources = \App\Models\Admin\Page::with('translations')->where('type', 'post')
         ->where('post_status', true)
         ->orderBy('id', 'desc')
         ->take(4)
@@ -194,7 +194,7 @@ Route::get('/homepage-preview', function () {
         ->toArray();
 
     $categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
-        $q->where('tool_status', true)->withTranslation($locale);
+        $q->where('type', 'tool')->where('tool_status', true)->withTranslation($locale);
     }])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
         $tools = $cat->pages->map(function ($p) use ($locale) {
             $t = $p->translate($locale) ?: $p->translate('en');
@@ -313,7 +313,12 @@ Route::localizedGroup(function () {
 	//Home
 	Route::get('/', function () {
 		$locale = app()->getLocale();
-		$resources = \App\Models\Admin\Page::where('type', 'post')
+        if ($locale !== 'en') {
+            $query = request()->getQueryString();
+            return redirect()->to(url('/') . ($query ? '?' . $query : ''), 301);
+        }
+        $homePage = \App\Models\Admin\Page::with('translations')->where('type', 'home')->first();
+		$resources = \App\Models\Admin\Page::with('translations')->where('type', 'post')
 			->where('post_status', true)
 			->orderBy('id', 'desc')
 			->take(4)
@@ -331,7 +336,7 @@ Route::localizedGroup(function () {
 			->toArray();
 
 		$categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
-			$q->where('tool_status', true)->withTranslation($locale);
+			$q->where('type', 'tool')->where('tool_status', true)->withTranslation($locale);
 		}])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
 			$tools = $cat->pages->map(function ($p) use ($locale) {
 				$t = $p->translate($locale) ?: $p->translate('en');
@@ -365,6 +370,8 @@ Route::localizedGroup(function () {
 		})->values()->toArray();
 
 		return view('livewire.public.home-live', [
+            'page' => $homePage,
+            'pageTrans' => $homePage ? $homePage->translate('en') : null,
 			'resources'    => $resources,
 			'categories'   => $categories,
 			'allTools'     => $allTools,
@@ -407,12 +414,16 @@ Route::localizedGroup(function () {
 	Route::get('/resources', function() {
 		return redirect('/blog', 301);
 	})->name('public.resources');
+	Route::get('/resources/welcome-to-fxnseotools-resources', function () {
+        return redirect('/about-us', 301);
+    });
 	Route::get('/resources/{slug}', function($slug) {
 		return redirect('/blog/' . $slug, 301);
 	})->where('slug', '^((?!admin.*).)*$')->name('public.resource');
 
 	//Page
-	Route::get('/{slug}', PublicPage::class)->where('slug', '^((?!admin.*).)*$')->name('public.page');
+	Route::get('/{slug}', PublicPage::class)->where('slug', '^((?!admin.*).)*$')
+        ->middleware(\App\Http\Middleware\RedirectLegacyPost::class)->name('public.page');
 	
 	//Admin Login
 	Route::group(['middleware' => ['guest', 'localized-auth']], function() {
