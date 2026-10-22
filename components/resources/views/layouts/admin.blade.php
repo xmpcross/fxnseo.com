@@ -11,6 +11,8 @@
 
     @livewireStyles
 
+  <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-local.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
 </head>
 <body class="g-sidenav-show antialiased bg-gray-100 {{ Cookie::get('theme_mode') }}">
 

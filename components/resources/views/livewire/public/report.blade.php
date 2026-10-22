@@ -10,7 +10,7 @@
      
     <div class="form-group mb-3">
       <label for="report-links" class="col-form-label d-flex">{{ __('Enter URL to report') }}</label>
-      <textarea id="report-links" wire:model.defer="links" class="form-control @error('links') is-invalid @enderror" rows="10" placeholder="Enter one URL per line then Submit" required></textarea>
+      <textarea id="report-links" wire:model.defer="links" class="form-control @error('links') is-invalid @enderror" rows="10" placeholder="{{ __('Enter one URL per line then Submit') }}" required></textarea>
     </div>
 
     @if ( \App\Models\Admin\General::first()->captcha_status )

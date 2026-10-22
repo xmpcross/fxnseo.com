@@ -23,7 +23,7 @@ class YoutubeTrendClass {
 
                 $youtube = new YouTube($client);
 
-                $value = $youtube->videos->listVideos('snippet', array(
+                $value = $youtube->videos->listVideos(['snippet', 'statistics'], array(
                     'chart'      => 'mostPopular',
                     'maxResults' => $result,
                     'regionCode' => $country,
@@ -36,18 +36,23 @@ class YoutubeTrendClass {
                     $data = array();
 
                     for( $i = 0; $i < count($value['items']); $i++ ){  
+                        $snippet = $value['items'][$i]['snippet'] ?? [];
+                        $statistics = $value['items'][$i]['statistics'] ?? [];
+                        $thumbs = $snippet['thumbnails'] ?? [];
 
-                        
-                        $data[$i]['thumbnail'] = $value['items'][$i]['snippet']['thumbnails']['default']['url'];
+                        // Prefer sharp medium or high thumbnail over blurry default (120x90)
+                        $thumbnail = $thumbs['high']['url'] ?? $thumbs['medium']['url'] ?? $thumbs['standard']['url'] ?? $thumbs['default']['url'] ?? '';
 
-                        $data[$i]['title'] = $value['items'][$i]['snippet']['title'];
-
-                        $data[$i]['link']    = 'https://youtu.be/' . $value['items'][$i]['id'];
+                        $data[$i]['thumbnail']    = $thumbnail;
+                        $data[$i]['title']        = $snippet['title'] ?? '';
+                        $data[$i]['link']         = 'https://youtu.be/' . ($value['items'][$i]['id'] ?? '');
+                        $data[$i]['channelTitle'] = $snippet['channelTitle'] ?? '';
+                        $data[$i]['publishedAt']  = $snippet['publishedAt'] ?? '';
+                        $data[$i]['viewCount']    = isset($statistics['viewCount']) ? (int) $statistics['viewCount'] : null;
+                        $data[$i]['likeCount']    = isset($statistics['likeCount']) ? (int) $statistics['likeCount'] : null;
 
                         $data[$i]['tags'] = array();
-
-                        array_push($data[$i]['tags'], $value['items'][$i]['snippet']['tags']);
-
+                        array_push($data[$i]['tags'], $snippet['tags'] ?? []);
                     }
                     return $data;
                 } 

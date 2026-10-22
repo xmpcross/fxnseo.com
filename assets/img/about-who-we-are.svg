@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Our story — growth journey">
+  <style>
+    .bar { transform-box: fill-box; transform-origin: bottom; animation: grow 3.2s ease-in-out infinite; }
+    .b1 { animation-delay: 0s; }
+    .b2 { animation-delay: .18s; }
+    .b3 { animation-delay: .36s; }
+    .b4 { animation-delay: .54s; }
+    @keyframes grow {
+      0%   { transform: scaleY(.18); }
+      45%  { transform: scaleY(1); }
+      80%  { transform: scaleY(1); }
+      100% { transform: scaleY(.18); }
+    }
+    .trend { stroke-dasharray: 340; stroke-dashoffset: 340; animation: draw 3.2s ease-in-out infinite; }
+    @keyframes draw {
+      0%   { stroke-dashoffset: 340; }
+      50%  { stroke-dashoffset: 0; }
+      90%  { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 340; }
+    }
+    .tip { animation: pop 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+    @keyframes pop { 0%,48% { opacity: 0; transform: scale(.4); } 56%,90% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(.4); } }
+  </style>
+
+  <!-- baseline -->
+  <line x1="104" y1="224" x2="300" y2="224" stroke="#c2d6ff" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- growth bars -->
+  <rect class="bar b1" x="116" y="152" width="34" height="72"  rx="5" fill="#5b8bff"/>
+  <rect class="bar b2" x="162" y="120" width="34" height="104" rx="5" fill="#2b5df5"/>
+  <rect class="bar b3" x="208" y="92"  width="34" height="132" rx="5" fill="#0046be"/>
+  <rect class="bar b4" x="254" y="62"  width="34" height="162" rx="5" fill="#0046be"/>
+
+  <!-- rising trend line -->
+  <path class="trend" d="M120 176 L165 150 L211 118 L292 74" fill="none" stroke="#001e73" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- endpoint marker -->
+  <circle class="tip" cx="292" cy="74" r="8" fill="#001e73"/>
+</svg>

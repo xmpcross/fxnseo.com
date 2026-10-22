@@ -15,7 +15,7 @@
                 <label class="form-label">{{ __('Credit Card Number') }}</label>
                 <div class="col">
                     <div class="input-group input-group-flat">
-                        <input type="text" id="input" class="form-control" wire:model.defer="code" placeholder="Add credit card number here" required />
+                        <input type="text" id="input" class="form-control" wire:model.defer="code" placeholder="{{ __('Add credit card number here') }}" required />
                         <span class="input-group-text">
                             <div id="paste" class="cursor-pointer" title="{{ __('Paste') }}" data-bs-original-title="{{ __('Paste') }}" data-bs-toggle="tooltip" wire:ignore>
                               <i class="far fa-clipboard fa-fw"></i>

@@ -21,6 +21,7 @@ use App\Models\Admin\Advertisement;
 use App\Models\Admin\FooterTranslation;
 use App\Models\Admin\Redirect;
 use App\Models\Admin\Sidebar;
+use App\Models\Admin\PageCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Pages extends Component
@@ -158,6 +159,55 @@ class Pages extends Component
                                     return null;
                                 })->filter()->take( General::first()->related_tools_count )->toArray();
 
+            $pillarKeywords = [
+                'backlink-monitoring-guide' => ['backlink', 'monitor', 'lost link', 'referring domain', 'link tracking'],
+                'link-opportunity-guide' => ['link building', 'link opportunity', 'prospect', 'outreach', 'backlink'],
+                'seo-audit-guide' => ['seo audit', 'report', 'technical seo', 'backlink', 'website'],
+            ];
+            $relatedPillarPosts = [];
+            if (isset($pillarKeywords[$page->slug])) {
+                $keywords = $pillarKeywords[$page->slug];
+                $relatedPillarPosts = PublicPage::where('type', 'post')
+                    ->where('post_status', true)
+                    ->orderBy('id', 'DESC')
+                    ->get()
+                    ->map(function ($post) use ($keywords) {
+                        $translation = $post->translate(app()->getLocale());
+                        if (!$translation) {
+                            return null;
+                        }
+
+                        $haystack = mb_strtolower(implode(' ', [
+                            $post->slug,
+                            $translation->title,
+                            $translation->short_description,
+                            strip_tags($translation->description),
+                        ]));
+                        $score = collect($keywords)->sum(function ($keyword) use ($haystack) {
+                            return substr_count($haystack, mb_strtolower($keyword));
+                        });
+                        $category = $post->category_id ? PageCategory::find($post->category_id) : null;
+
+                        return [
+                            'slug' => $post->slug,
+                            'title' => $translation->title,
+                            'short_description' => $translation->short_description,
+                            'featured_image' => $post->featured_image,
+                            'published_at' => $post->created_at,
+                            'category' => $category->title ?? __('Blog'),
+                            'score' => $score,
+                            'id' => $post->id,
+                        ];
+                    })
+                    ->filter(function ($post) { return $post && $post['score'] > 0; })
+                    ->sort(function ($left, $right) {
+                        return [$right['score'], $right['id']] <=> [$left['score'], $left['id']];
+                    })
+                    ->take(4)
+                    ->values()
+                    ->toArray();
+            }
+
         return view('livewire.public.pages', [
             'page'          => $page,
             'general'       => $general,
@@ -172,6 +222,7 @@ class Pages extends Component
             'sidebar'       => Sidebar::first(),
             'recent_posts'  => $recent_posts,
             'popular_tools' => $popular_tools,
+            'related_pillar_posts' => $relatedPillarPosts,
             'siteTitle'     => env('APP_NAME'),
             'menus'         => Menu::with('children')->where(['parent_id' => 'id'])->orderBy('sort','ASC')->get()->toArray(),
             'header'        => Header::first(),

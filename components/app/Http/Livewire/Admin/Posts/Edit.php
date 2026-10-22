@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Admin\Posts;
 use Livewire\Component;
 use DateTime;
 use App\Models\Admin\Page;
+use App\Models\Admin\PageCategory;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use GrahamCampbell\Security\Facades\Security;
 
@@ -13,8 +14,16 @@ class Edit extends Component
     public $page_id;
     public $slug;
     public $featured_image;
+    public $target;
+    public $category_id;
+    public $categories = [];
 
     protected $listeners = ['onSetFeaturedImage', 'sendDataEditPost' => 'onDataEditPost'];
+
+    public function mount()
+    {
+        $this->categories = PageCategory::orderBy('title', 'ASC')->get()->toArray();
+    }
 
     public function render()
     {
@@ -32,6 +41,7 @@ class Edit extends Component
         $this->slug           = $page->slug;
         $this->featured_image = $page->featured_image;
         $this->target         = $page->target;
+        $this->category_id    = $page->category_id;
     }
 
     /**
@@ -55,7 +65,7 @@ class Edit extends Component
     **/
     private function resetInputFields()
     {
-        $this->reset(['page_id', 'slug', 'featured_image']);
+        $this->reset(['page_id', 'slug', 'featured_image', 'category_id']);
     }
 
     /**
@@ -86,6 +96,7 @@ class Edit extends Component
             $page->type           = 'post';
             $page->featured_image = strip_tags($this->featured_image);
             $page->target         = Security::clean( strip_tags($this->target) );
+            $page->category_id    = $this->category_id ?: null;
             $page->updated_at     = new DateTime();
             $page->save();
                    

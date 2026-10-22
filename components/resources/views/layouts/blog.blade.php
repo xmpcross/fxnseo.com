@@ -1,20 +1,47 @@
+@php
+  $__themeCookie = Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light');
+  $__isThemeDark = ($__themeCookie === 'theme-dark');
+@endphp
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ localization()->getCurrentLocaleDirection() }}" class="{{ $__isThemeDark ? 'dark theme-dark' : 'light theme-light' }}" id="html-root">
     <head>
+        <script>
+          (function(){
+            try {
+              var s = localStorage.getItem('site_theme');
+              if (s === 'dark' || (!s && {{ $__isThemeDark ? 'true' : 'false' }})) {
+                document.documentElement.classList.add('dark', 'theme-dark');
+                document.documentElement.classList.remove('light', 'theme-light');
+              } else if (s === 'light') {
+                document.documentElement.classList.add('light', 'theme-light');
+                document.documentElement.classList.remove('dark', 'theme-dark');
+              }
+            } catch(e) {}
+          })();
+        </script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JGE2B6YCEW"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-JGE2B6YCEW');
+        </script>
+        <link rel="preload" href="{{ asset('assets/fonts/google/inter-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="color-scheme" content="{{ (Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light') === 'theme-dark') ? 'dark' : 'light' }}">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
+        <link rel="icon" type="image/svg+xml" href="{{ asset('assets/img/favicon.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.svg') ?: '1' }}">
+        <link rel="apple-touch-icon" href="{{ asset('assets/img/favicon.png') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/favicon.png') ?: '1' }}">
 
-        {!! SEO::generate() !!}
+        @include('partials.meta-manager')
 
-        @foreach(localization()->getSupportedLocales() as $localeCode => $properties)
-          <link rel="alternate" hreflang="{{ $properties->key() }}" href="{{ localization()->getLocalizedURL($properties->key(), null, [], false) }}">
-        @endforeach
+        @include('partials.seo-structured-data')
 
-        @if ( $general->page_load )
-            <!-- Pace -->
-            <script src="{{ asset('assets/js/pace.min.js') }}" defer></script>
-        @endif
+        @include('partials.hreflang')
+
 
         @if ( $general->adblock_detection )
           <!-- Sweet Alert 2 -->
@@ -26,12 +53,7 @@
         <link rel="preload" href="{{ asset('assets/css/fontawesome.min.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}"></noscript>
 
-        <!-- Nucleo Icons -->
-        <link rel="preload" href="{{ asset('assets/css/nucleo-icons.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-icons.css') }}"></noscript>
         
-        <link rel="preload" href="{{ asset('assets/css/nucleo-svg.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="{{ asset('assets/css/nucleo-svg.css') }}"></noscript>
 
         <!-- jQuery -->
         <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -42,30 +64,20 @@
         <!-- Bootstrap -->
         <script src="{{ asset('assets/js/bootstrap.min.js') }}" defer></script>
 
-        <!-- Perfect Scrollbar -->
-        <script src="{{ asset('assets/js/perfect-scrollbar.min.js') }}" defer></script>
 
-        <!-- Smooth Scrollbar -->
-        <script src="{{ asset('assets/js/smooth-scrollbar.min.js') }}" defer></script>
 
         <!-- Theme CSS -->
         <link type="text/css" href="{{ asset('assets/css/main.'.localization()->getCurrentLocaleDirection().'.min.css') }}" rel="stylesheet">
 
         <!-- Custom CSS -->
         @php $customCssPath = dirname(base_path()).'/assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css'; @endphp
+        <link type="text/css" href="{{ asset('assets/css/google-fonts-local.css') }}" rel="stylesheet">
         <link type="text/css" href="{{ asset('assets/css/custom.'.localization()->getCurrentLocaleDirection().'.css') }}?v={{ file_exists($customCssPath) ? filemtime($customCssPath) : '1' }}" rel="stylesheet">
         
-        @if ( !empty($general->font_family) )
-
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family={{ urlencode($general->font_family) }}&display=swap">
-
-          <style>
-            body, .card .card-body {
-              font-family: {{ $general->font_family }} !important;
-            }
-          </style>
-
-        @endif
+        <link type="text/css" href="{{ asset('assets/css/shared-public-components.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/shared-public-components.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/content-pages.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/content-pages.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/tool-template.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/tool-template.css') ?: '1' }}" rel="stylesheet">
+        <link type="text/css" href="{{ asset('assets/css/recap-color-scheme.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/recap-color-scheme.css') ?: '1' }}" rel="stylesheet">
 
         @if ( $advanced->header_status && $advanced->insert_header != null )
           {!! $advanced->insert_header !!}
@@ -73,8 +85,14 @@
 
         @livewireStyles
 
-    </head>
-    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }}">
+      <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/journal-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/journal-redesign.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/blog-listing.css') }}?v={{ filemtime(dirname(base_path()).'/assets/css/blog-listing.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
+</head>
+    <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} page-blog-listing">
 
         @if ( $advanced->body_status && $advanced->insert_body != null )
           {!! $advanced->insert_body !!}
@@ -101,91 +119,19 @@
                           </div>
                       @endif
 
-                      @if ($general->parallax_status)
-                          <section id="parallax" class="text-white">
-                              <div class="position-relative overflow-hidden text-center bg-light">
-                                <span class="mask" style="
-                                      @if ( $general->overlay_type == 'solid' )
+                      <main id="blog-content">
+                        @if ($page->ads_status && $advertisement->area3_status && $advertisement->area3 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area3 :advertisement="$advertisement" /></div>
+                        @endif
+                        @if ($page->ads_status && $advertisement->area4_status && $advertisement->area4 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area4 :advertisement="$advertisement" /></div>
+                        @endif
+                        {{ $slot }}
+                        @if ($page->ads_status && $advertisement->area5_status && $advertisement->area5 != null)
+                          <div class="wrap my-4"><x-public.advertisement.area5 :advertisement="$advertisement" /></div>
+                        @endif
+                      </main>
 
-                                      background: {{ $general->solid_color }};opacity: {{ $general->opacity }};
-
-                                      @elseif( $general->overlay_type == 'gradient' )
-
-                                      background: {{ $general->gradient_first_color }};
-                                      background: -moz-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }}  );
-                                      background: -webkit-linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      background: linear-gradient( {{ $general->gradient_position }}, {{ $general->gradient_first_color }}, {{ $general->gradient_second_color }} );
-                                      opacity: {{ $general->opacity }};
-
-                                      @endif
-
-                                "></span>
-
-                                @if ( !empty($general->parallax_image) )
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ $general->parallax_image }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ $general->parallax_image }}); @endif"></div>
-                                @else
-                                  <div class="position-absolute start-0 top-0 w-100 parallax-image {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-bg="{{ asset('assets/img/parallax.jpg') }}" style="filter: blur({{ $general->blur }}px);@if ($general->lazy_loading == false) background-image:url({{ asset('assets/img/parallax.jpg') }}); @endif"></div>
-                                @endif
-
-                                <div class="container position-relative zindex-1">
-                                    <div class="col text-center p-lg-5 mx-auto my-5">
-
-                                        @if ( $page->ads_status && $advertisement->area1_status && $advertisement->area1 != null )
-                                          <x-public.advertisement.area1 :advertisement="$advertisement" />
-                                        @endif
-
-                                        <h1 class="text-white">{{ __('Our Blog') }}</h1>
-                                        <p class="lead text-white letter-normal my-3">{{ __('Stay up to date with the latest news') }}</p>
-
-                                        @if ( $page->ads_status && $advertisement->area2_status && $advertisement->area2 != null )
-                                          <x-public.advertisement.area2 :advertisement="$advertisement" />
-                                        @endif
-                                    </div>
-                                </div>
-
-                              </div>
-                          </section>
-                      @endif
-
-                      <div class="container py-4">
-
-                          <div class="row">
-                              <div class="{{ ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status ) ? 'col-lg-9' : 'col' }}">
-
-                                <section id="blog-content">
-                                  <div class="row row-cards">
-                                    @if ( $page->ads_status && $advertisement->area3_status && $advertisement->area3 != null )
-                                      <x-public.advertisement.area3 :advertisement="$advertisement" />
-                                    @endif
-                                    
-                                    @if ( !$general->parallax_status )
-                                      <div class="card card-body d-block mb-3">
-                                            <h1 class="text-default h4">{{ __('Our Blog') }}</h1>
-                                            <p class="text-default">{{ __('Stay up to date with the latest news') }}</p>
-                                      </div>
-                                    @endif
-
-                                    @if ( $page->ads_status && $advertisement->area4_status && $advertisement->area4 != null )
-                                      <x-public.advertisement.area4 :advertisement="$advertisement" />
-                                    @endif
-
-                                    {{ $slot }}
-                                  </div>
-
-                                  @if ( $page->ads_status && $advertisement->area5_status && $advertisement->area5 != null )
-                                    <x-public.advertisement.area5 :advertisement="$advertisement" />
-                                  @endif
-
-                                </section>
-                              </div>
-
-                              @if ( $page->ads_status && ( ( $advertisement->sidebar_top_status && $advertisement->sidebar_top != null ) || ( $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null ) || ( $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null ) ) || $sidebar->tool_status || $sidebar->post_status)
-                                <div class="col-lg-3 ml-auto sidebars">
-                                    <x-public.sidebar :page="$page" :general="$general" :advertisement="$advertisement" :sidebar="$sidebar" :recentPosts="$recent_posts" :popularTools="$popular_tools" :advanced="$advanced" />
-                                </div>
-                              @endif
-                          </div>
-                      </div>
                   </div>
                   <!-- End::page-content -->
             </div>
@@ -206,23 +152,25 @@
                 const searchIcon = document.getElementById('search-icon');
                 const searchBox = document.getElementById('search-box');
 
-                // Show/hide search box
-                searchIcon.addEventListener('click', function () {
-                  if (searchBox.style.display === 'none' || searchBox.style.display === '') {
-                    searchBox.style.display = 'block';
-                  } else {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                if (searchIcon && searchBox) {
+                  // Show/hide search box
+                  searchIcon.addEventListener('click', function () {
+                    if (searchBox.style.display === 'none' || searchBox.style.display === '') {
+                      searchBox.style.display = 'block';
+                    } else {
+                      searchBox.style.display = 'none';
+                    }
+                  });
 
-                // Hide search box when user clicks outside of it
-                document.addEventListener('click', function (event) {
-                  const isClickInsideSearchBox = searchBox.contains(event.target);
-                  const isClickInsideSearchIcon = searchIcon.contains(event.target);
-                  if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
-                    searchBox.style.display = 'none';
-                  }
-                });
+                  // Hide search box when user clicks outside of it
+                  document.addEventListener('click', function (event) {
+                    const isClickInsideSearchBox = searchBox.contains(event.target);
+                    const isClickInsideSearchIcon = searchIcon.contains(event.target);
+                    if (!isClickInsideSearchBox && !isClickInsideSearchIcon) {
+                      searchBox.style.display = 'none';
+                    }
+                  });
+                }
               </script>
             @endif
 
@@ -290,7 +238,9 @@
 
             @if (Cookie::get('cookies') == null)
 
-              @if ( $notice->status )
+              <x-public.cookie-banner />
+
+              @if ( false && $notice->status )
 
                       <div class="row cookies-wrapper alert {{ $notice->background }}" role="alert">
                         <div class="col-md-12 col-lg-{{ ($notice->button) ? '10' : '12'}} my-auto {{ $notice->align }}">
@@ -302,7 +252,7 @@
                               <button id="acceptCookies" target="_blank" class="btn btn-sm bg-white mb-0 text-capitalize"> {{ __('Accept all cookies') }} </button>
                           </div>
                         @endif
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">x</button>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">{{ __('x') }}</button>
                       </div>
 
                   <script>
@@ -344,10 +294,6 @@
               </script>
             @endif
             
-            @if ( $advanced->footer_status && $advanced->insert_footer != null )
-              {!! $advanced->insert_footer !!}
-            @endif
-
           </div>
 
           @livewireScripts

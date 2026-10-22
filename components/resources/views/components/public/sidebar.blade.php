@@ -1,66 +1,140 @@
+@php
+    $__isTool = isset($page) && (($page->type ?? '') === 'tool');
+    $__curSlug = $page->slug ?? '';
+    $__isYtTool = str_contains($__curSlug, 'youtube');
+@endphp
+
+<!-- Top Advertisement Slot -->
 @if ( $page->ads_status && $advertisement->sidebar_top_status && $advertisement->sidebar_top != null )
     <div class="mb-3 {{ $advertisement->sidebar_top_sticky ? 'sticky-top' : '' }}">
         <x-public.advertisement.sidebar-top :advertisement="$advertisement" /> 
     </div>
 @endif
 
-@if ( $sidebar->tool_status )
-    <div class="card mb-3 {{ $sidebar->tool_sticky ? 'sticky-top' : '' }}">
-        <div class="card-header d-block text-{{ $sidebar->tool_align }} {{ ($sidebar->tool_background !== 'bg-white') ? $sidebar->tool_background : 'bg-transparent' }}">
-            <h3 class="card-title mb-0 h6 {{ ($sidebar->tool_background !== 'bg-white') ? 'text-white' : '' }}">{{ __('Popular Tools') }}</h3>
+<!-- Tool Engine Status (Tool Pages Only) -->
+@if ( $__isTool )
+    <div class="yt-sidebar-card mb-3">
+        <div class="yt-sidebar-card-header">
+            <span class="yt-status-pulse"></span>
+            <h3 class="yt-sidebar-card-title">{{ __('Tool Engine Status') }}</h3>
         </div>
-        <div class="list-group list-group-flush list-group-hoverable">
-
-            @foreach ($popularTools  as $key => $value)
-                <div class="list-group-item">
-                    <div class="row">
-                        <div class="col d-flex align-items-center">
-                            <div class="col-auto">
-                                <svg class="me-2" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path fill="#2fb344" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
-                            </div>
-                            <a href="{{ ( empty( $value['custom_tool_link'] ) ) ? route('home') . '/' . $value['slug'] : $value['custom_tool_link'] }}" title="{{ $value['title'] }}" target="{{ $value['target'] }}" class="text-body d-block text-nowrap">{{ $value['title'] }}</a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-
+        <div class="yt-sidebar-card-body">
+            <div class="yt-status-row">
+                <span class="yt-status-label">{{ __('Engine:') }}</span>
+                <span class="yt-status-value">{{ $__isYtTool ? 'YouTube Data v3' : 'Cloud Diagnostics v2' }}</span>
+            </div>
+            <div class="yt-status-row">
+                <span class="yt-status-label">{{ __('Speed / Latency:') }}</span>
+                <span class="yt-status-value text-emerald">{{ __('< 0.25s Instant') }}</span>
+            </div>
+            <div class="yt-status-row">
+                <span class="yt-status-label">{{ __('Privacy:') }}</span>
+                <span class="yt-status-value text-emerald">{{ __('Browser First · No Logs') }}</span>
+            </div>
+            <div class="yt-status-row">
+                <span class="yt-status-label">{{ __('Cost:') }}</span>
+                <span class="yt-status-value text-emerald">{{ __('100% Free · No Sign-Up') }}</span>
+            </div>
         </div>
     </div>
 @endif
 
+<!-- Popular Tools Widget -->
+@if ( $sidebar->tool_status && !empty($popularTools) )
+    <div class="yt-sidebar-card mb-3 {{ $sidebar->tool_sticky ? 'sticky-top' : '' }}">
+        <div class="yt-sidebar-card-header">
+            <i class="fas fa-fire text-danger me-2" style="font-size: 1rem;"></i>
+            <h3 class="yt-sidebar-card-title">{{ __('Popular Tools') }}</h3>
+        </div>
+        <div class="yt-sidebar-card-body p-0">
+            <div class="yt-suite-list">
+                @foreach ($popularTools as $key => $value)
+                    @php
+                        $toolSlug = $value['slug'] ?? '';
+                        $isYtItem = str_contains($toolSlug, 'youtube');
+                        $toolIconClass = $isYtItem ? 'fab fa-youtube text-danger' : 'fas fa-bolt text-emerald';
+                        $toolBgClass = $isYtItem ? '#fee2e2' : '#eef2ff';
+                    @endphp
+                    <a href="{{ ( empty( $value['custom_tool_link'] ) ) ? route('home') . '/' . $value['slug'] : $value['custom_tool_link'] }}" title="{{ $value['title'] }}" target="{{ $value['target'] }}" class="yt-suite-item">
+                        <div class="yt-suite-icon" style="background: {{ $toolBgClass }};">
+                            <i class="{{ $toolIconClass }}" style="font-size: 0.95rem;"></i>
+                        </div>
+                        <div class="yt-suite-info">
+                            <span class="yt-suite-name">{{ $value['title'] }}</span>
+                        </div>
+                        <i class="fas fa-chevron-right yt-suite-arrow"></i>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+<!-- Middle Advertisement Slot -->
 @if ( $page->ads_status && $advertisement->sidebar_middle_status && $advertisement->sidebar_middle != null )
     <div class="mb-3 {{ $advertisement->sidebar_middle_sticky ? 'sticky-top' : '' }}">
         <x-public.advertisement.sidebar-middle :advertisement="$advertisement" />
     </div>
 @endif
 
-@if ( $sidebar->post_status )
-    <div class="card mb-3 {{ $sidebar->post_sticky ? 'sticky-top' : '' }}">
-        <div class="card-header d-block text-{{ $sidebar->post_align }} {{ ($sidebar->post_background !== 'bg-white') ? $sidebar->post_background : 'bg-transparent' }}">
-            <h3 class="card-title mb-0 h6 {{ ($sidebar->post_background !== 'bg-white') ? 'text-white' : '' }}">{{ __('Recent Posts') }}</h3>
+<!-- Contextual Best Practices Checklist (Tool Pages Only) -->
+@if ( $__isTool )
+    <div class="yt-sidebar-card mb-3">
+        <div class="yt-sidebar-card-header">
+            <i class="fas fa-check-double text-emerald me-2" style="font-size: 1.05rem;"></i>
+            <h3 class="yt-sidebar-card-title">{{ $__isYtTool ? __('Video SEO Checklist') : __('SEO Best Practices') }}</h3>
         </div>
-        <div class="list-group list-group-flush list-group-hoverable">
-            @foreach ($recentPosts as $key => $value)
-                    <div class="list-group-item">
-                        <div class="row align-items-center">
-                            @if ( $general->featured_images_in_sidebar_status )
-                                <div class="col-auto">
-                                    <a href="{{ route('home') . '/blog/' . $value['slug'] }}" title="{{ $value['title'] }}" target="{{ $value['target'] }}">
-                                        <img class="avatar {{ ($general->lazy_loading) ? 'lazyload' : '' }}" data-src="{{ $value['featured_image'] }}" @if (!$general->lazy_loading) src="{{ $value['featured_image'] }}" @endif alt="{{ $value['title'] }}"></span>
-                                    </a>
-                                </div>
-                            @endif
-                            <div class="col text-truncate">
-                                <a href="{{ route('home') . '/blog/' . $value['slug'] }}" class="text-body d-block text-nowrap" title="{{ $value['title'] }}" target="{{ $value['target'] }}">{{ $value['title'] }}</a>
-                                <small class="d-block text-muted text-truncate mt-n1">{{ \Carbon\Carbon::parse( ($value['updated_at']) ? $value['updated_at'] : $value['created_at'] )->format('F j, Y') }}</small>
-                            </div>
-                        </div>
-                    </div>
-            @endforeach
+        <div class="yt-sidebar-card-body">
+            <ul class="yt-checklist">
+                @if ($__isYtTool)
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Target keyword in first 40 title chars') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('High-contrast thumbnail focal point') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Timestamp chapters in description') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Relevant semantic tags matching intent') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Pinned comment with engagement hook') }}</span></li>
+                @else
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Target keyword in meta title & H1') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Compelling meta description (< 160 chars)') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Mobile-responsive & fast page load') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('HTTPS / SSL encryption enabled') }}</span></li>
+                    <li><i class="fas fa-check-circle text-emerald"></i><span>{{ __('Clean URL structure with canonical link') }}</span></li>
+                @endif
+            </ul>
         </div>
     </div>
 @endif
 
+<!-- Recent Posts Widget -->
+@if ( $sidebar->post_status && !empty($recentPosts) )
+    <div class="yt-sidebar-card mb-3 {{ $sidebar->post_sticky ? 'sticky-top' : '' }}">
+        <div class="yt-sidebar-card-header">
+            <i class="fas fa-newspaper text-emerald me-2" style="font-size: 1rem;"></i>
+            <h3 class="yt-sidebar-card-title">{{ __('Recent Guides & Insights') }}</h3>
+        </div>
+        <div class="yt-sidebar-card-body p-0">
+            <div class="yt-suite-list">
+                @foreach ($recentPosts as $key => $value)
+                    <a href="{{ route('home') . '/blog/' . $value['slug'] }}" class="yt-suite-item" title="{{ $value['title'] }}" target="{{ $value['target'] }}">
+                        @if ( $general->featured_images_in_sidebar_status && !empty($value['featured_image']) )
+                            <img class="post-featured-image rounded-2 {{ ($general->lazy_loading) ? 'lazyload' : '' }}" style="width: 44px; height: 44px; object-fit: cover; flex-shrink: 0;" data-src="{{ $value['featured_image'] }}" @if (!$general->lazy_loading) src="{{ $value['featured_image'] }}" @endif alt="{{ $value['title'] }}">
+                        @else
+                            <div class="yt-suite-icon" style="background: #f1f5f9; color: #64748b;">
+                                <i class="far fa-file-alt"></i>
+                            </div>
+                        @endif
+                        <div class="yt-suite-info">
+                            <span class="yt-suite-name" style="font-size: 0.84rem; line-height: 1.35;">{{ $value['title'] }}</span>
+                            <span class="yt-suite-desc mt-1">{{ \Carbon\Carbon::parse( ($value['updated_at']) ? $value['updated_at'] : $value['created_at'] )->format('M j, Y') }}</span>
+                        </div>
+                        <i class="fas fa-chevron-right yt-suite-arrow"></i>
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    </div>
+@endif
+
+<!-- Bottom Advertisement Slot -->
 @if ( $page->ads_status && $advertisement->sidebar_bottom_status && $advertisement->sidebar_bottom != null )
     <div class="mb-3 {{ $advertisement->sidebar_bottom_sticky ? 'sticky-top' : '' }}">
         <x-public.advertisement.sidebar-bottom :advertisement="$advertisement" />

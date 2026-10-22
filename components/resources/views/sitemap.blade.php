@@ -53,7 +53,7 @@
                 @if ( $value['robots_meta'] )
                     @php
                         try {
-                            $url = localization()->getLocalizedURL($value['locale'], route('home'), [], false);
+                            $url = localization()->getLocalizedURL($value['locale'], url('/'), [], false);
                         } catch (\Exception $e) {
                             continue;
                         }
@@ -70,5 +70,9 @@
         @default
     @endswitch
 
+@endforeach
+@foreach (localization()->getSupportedLocales() as $code => $language)
+<url><loc>{{ localization()->getLocalizedURL($code, url('/tools'), [], false) }}</loc></url>
+<url><loc>{{ localization()->getLocalizedURL($code, url('/blog'), [], false) }}</loc></url>
 @endforeach
 </urlset>

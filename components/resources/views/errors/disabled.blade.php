@@ -6,7 +6,7 @@
           </div>
             <p class="my-3">{{ __('User') }} {{ __($message) }} {{ __('is currently not allowed') }}. </p>
             <div class="empty-action">
-                <a href="{{ route('home') }}" class="btn bg-gradient-primary">
+                <a href="{{ url('/') }}" class="btn bg-gradient-primary">
                     <i class="fas fa-arrow-left icon"></i>
                     {{ __('Go to Homepage') }}
                 </a>

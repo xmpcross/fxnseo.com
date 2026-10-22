@@ -97,18 +97,24 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link {{ Route::is('admin.general.index', 'admin.menus.index', 'admin.header.index', 'admin.footer.index', 'admin.footer.translations.create', 'admin.footer.translations.edit', 'admin.apikeys.index', 'admin.proxy.index', 'admin.captcha.index', 'admin.sociallogin.index', 'admin.sidebars.index', 'admin.gdpr.index', 'admin.advertisements.index', 'admin.smtp.index', 'admin.languages.index', 'admin.languages.translations.edit', 'admin.redirects.index', 'admin.advanced.index') ? 'active' : '' }}" data-bs-toggle="collapse" href="#theme-settings" role="button" aria-expanded="false" aria-controls="theme-settings">
+                    <a class="nav-link {{ Route::is('admin.general.index', 'admin.seo.index', 'admin.menus.index', 'admin.header.index', 'admin.footer.index', 'admin.footer.translations.create', 'admin.footer.translations.edit', 'admin.apikeys.index', 'admin.proxy.index', 'admin.captcha.index', 'admin.sociallogin.index', 'admin.sidebars.index', 'admin.gdpr.index', 'admin.advertisements.index', 'admin.smtp.index', 'admin.languages.index', 'admin.languages.translations.edit', 'admin.redirects.index', 'admin.advanced.index') ? 'active' : '' }}" data-bs-toggle="collapse" href="#theme-settings" role="button" aria-expanded="false" aria-controls="theme-settings">
                         <div class="icon icon-shape icon-sm text-center d-flex align-items-center justify-content-center">
                             <i class="fas fa-cogs text-dark text-sm opacity-10 top-0"></i>
                         </div>
                         <span class="nav-link-text ms-1">{{ __('Settings') }}</span>
                     </a>
 
-                    <div id="theme-settings" class="multi-collapse collapse {{ Route::is('admin.general.index', 'admin.menus.index', 'admin.header.index', 'admin.footer.index', 'admin.footer.translations.create', 'admin.footer.translations.edit', 'admin.apikeys.index', 'admin.proxy.index', 'admin.captcha.index', 'admin.sociallogin.index', 'admin.sidebars.index', 'admin.gdpr.index', 'admin.advertisements.index', 'admin.smtp.index', 'admin.languages.index', 'admin.languages.translations.edit', 'admin.redirects.index', 'admin.advanced.index') ? 'show' : '' }}">
+                    <div id="theme-settings" class="multi-collapse collapse {{ Route::is('admin.general.index', 'admin.seo.index', 'admin.menus.index', 'admin.header.index', 'admin.footer.index', 'admin.footer.translations.create', 'admin.footer.translations.edit', 'admin.apikeys.index', 'admin.proxy.index', 'admin.captcha.index', 'admin.sociallogin.index', 'admin.sidebars.index', 'admin.gdpr.index', 'admin.advertisements.index', 'admin.smtp.index', 'admin.languages.index', 'admin.languages.translations.edit', 'admin.redirects.index', 'admin.advanced.index') ? 'show' : '' }}">
                         <ul class="nav ms-4">
                           <li class="nav-item">
                             <a class="nav-link {{ Route::is('admin.general.index') ? 'active' : '' }}" href="{{ route('admin.general.index') }}">
                                 {{ __('General') }}
+                            </a>
+                          </li>
+
+                          <li class="nav-item">
+                            <a class="nav-link {{ Route::is('admin.seo.index') ? 'active' : '' }}" href="{{ route('admin.seo.index') }}">
+                                {{ __('SEO') }}
                             </a>
                           </li>
                           

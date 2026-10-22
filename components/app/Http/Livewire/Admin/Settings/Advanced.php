@@ -18,9 +18,6 @@ class Advanced extends Component
 	public $insert_body;
 	public $body_status;
 
-	public $insert_footer;
-	public $footer_status;
-
 	public $remote_libreoffice;
 
     public function mount()
@@ -30,9 +27,6 @@ class Advanced extends Component
 		$this->header_status                     = $insert->header_status;
 		$this->insert_body                       = $insert->insert_body;
 		$this->body_status                       = $insert->body_status;
-		$this->insert_footer                     = $insert->insert_footer;
-		$this->footer_status                     = $insert->footer_status;
-
 		$env                                     = new DotenvEditor();
 		$this->remote_libreoffice                = $env->getValue("USE_REMOTE_LIBREOFFICE");
     }
@@ -66,9 +60,6 @@ class Advanced extends Component
 			$insert->header_status                     = $this->header_status;
 			$insert->insert_body                       = $this->insert_body;
 			$insert->body_status                       = $this->body_status;
-			$insert->insert_footer                     = $this->insert_footer;
-			$insert->footer_status                     = $this->footer_status;
-
 			$insert->updated_at                        = new DateTime();
 			$insert->save();
 

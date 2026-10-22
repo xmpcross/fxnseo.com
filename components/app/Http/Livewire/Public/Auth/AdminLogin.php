@@ -100,9 +100,11 @@ class AdminLogin extends Component
 
         $this->validate($validationRules);
 
-        if (auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember_me)) {
+        if (auth()->attempt(['email' => $this->email, 'password' => $this->password, 'is_admin' => 1], $this->remember_me)) {
 
-            return redirect('/');
+            session()->regenerate();
+
+            return redirect()->route('admin.dashboard.index');
             
         }
         else {

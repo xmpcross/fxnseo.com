@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Why choose fxnSEOTools">
+  <defs>
+    <clipPath id="c1"><rect x="0" y="0" width="400" height="300" rx="16"/></clipPath>
+    <radialGradient id="v1" cx="50%" cy="48%" r="72%"><stop offset="55%" stop-color="#040c13" stop-opacity="0"/><stop offset="100%" stop-color="#040c13" stop-opacity="0.22"/></radialGradient>
+  </defs>
+  <rect x="0" y="0" width="400" height="300" rx="16" fill="none"/>
+  <g clip-path="url(#c1)">
+    <circle cx="200" cy="150" r="120" fill="#e3ecff"/>
+    <!-- shield -->
+    <path d="M200 78 L256 98 V162 C256 205 230 228 200 240 C170 228 144 205 144 162 V98 Z" fill="#0046be"/>
+    <path d="M200 78 L256 98 V162 C256 205 230 228 200 240 C170 228 144 205 144 162 V98 Z" fill="#2b5df5" opacity="0.0"/>
+    <!-- checkmark -->
+    <path d="M176 156 L194 174 L228 132" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- sparkles -->
+    <circle cx="120" cy="100" r="5" fill="#5b8bff"/>
+    <circle cx="288" cy="118" r="6" fill="#5b8bff"/>
+    <circle cx="300" cy="200" r="4" fill="#2b5df5"/>
+  </g>
+</svg>

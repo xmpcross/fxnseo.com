@@ -1,0 +1,475 @@
+/*
+ * Shared page templates: the editorial hero (tool pages, About, Contact,
+ * legal pages), the tool page itself, sidebar widgets and long-form content.
+ * Loads after site-redesign.css on the public layout.
+ */
+
+/* ---------- Editorial hero ---------- */
+html#html-root body .tool-editorial-hero {
+  background: var(--rd-bg) !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: clamp(32px, 5vw, 64px) 0 clamp(20px, 3vw, 32px);
+  text-align: left;
+}
+html#html-root body .tool-editorial-hero::before,
+html#html-root body .tool-editorial-hero::after { display: none; }
+html#html-root body .tool-editorial-shell {
+  width: min(1280px, calc(100% - 48px));
+  max-width: none;
+  margin: 0 auto;
+  padding: 0;
+  text-align: left;
+  align-items: flex-start;
+}
+html#html-root body .tool-editorial-breadcrumb {
+  justify-content: flex-start;
+  margin: 0 0 20px;
+  padding: 0;
+  background: none;
+  border: 0;
+  font-size: 0.9375rem;
+  color: var(--rd-subtle);
+}
+html#html-root body .tool-editorial-breadcrumb a { color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root body .tool-editorial-breadcrumb .active { background: none; color: var(--rd-muted) !important; }
+html#html-root body .tool-editorial-title {
+  margin: 0 0 14px;
+  font-family: var(--rd-font-display) !important;
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  font-weight: 800 !important;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  color: var(--rd-ink) !important;
+  text-align: left;
+}
+html#html-root body .tool-editorial-title .gradient-text {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: inherit;
+}
+html#html-root body .tool-editorial-lead {
+  max-width: 56ch;
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: var(--rd-muted) !important;
+  text-align: left;
+}
+html#html-root body .tool-editorial-badge,
+html#html-root body .tool-editorial-chips { display: none; }
+
+/* ---------- Page frame ---------- */
+html#html-root body .page-content > .container {
+  width: min(1280px, calc(100% - 48px));
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ---------- Tool page ---------- */
+/* Bootstrap cards on tool pages become ruled sections */
+html#html-root body.page-type-tool .page-content .card,
+html#html-root body.page-type-tool #tool-box > .card {
+  background: none !important;
+  border: 0 !important;
+  border-top: 2px solid var(--rd-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html#html-root body.page-type-tool .page-content .card > .card-body { padding-left: 0; padding-right: 0; background: none; }
+
+/* The tool form: same single-bar treatment as the home launcher */
+html#html-root body.page-type-tool .form-label { font-weight: 700; color: var(--rd-ink); }
+html#html-root body.page-type-tool .input-group,
+html#html-root body.page-type-tool .input-group-flat { border-radius: var(--rd-radius); }
+html#html-root body.page-type-tool .form-control {
+  min-height: 52px;
+  border: 2px solid var(--rd-line-strong);
+  border-radius: var(--rd-radius);
+  background: var(--rd-surface);
+  color: var(--rd-ink);
+  font-size: 1.0625rem;
+  box-shadow: none;
+}
+html#html-root body.page-type-tool .input-group > .form-control { border-top-right-radius: 0; border-bottom-right-radius: 0; }
+html#html-root body.page-type-tool .input-group > .input-group-text {
+  border: 2px solid var(--rd-line-strong);
+  border-left: 0;
+  border-radius: 0 var(--rd-radius) var(--rd-radius) 0;
+  background: var(--rd-surface);
+  color: var(--rd-muted);
+}
+html#html-root body.page-type-tool .form-control:focus { outline: 3px solid var(--rd-focus); outline-offset: 2px; box-shadow: none; }
+html#html-root body.page-type-tool .form-control::placeholder { color: var(--rd-subtle); }
+/* Secondary buttons: outline; the primary action stays solid (global rule) */
+html#html-root body.page-type-tool .btn:not(.btn-primary):not(.bg-gradient-primary):not(.btn-icon-only):not([class*="btn-facebook"]):not([class*="btn-twitter"]):not([class*="btn-pinterest"]):not([class*="btn-linkedin"]):not([class*="btn-reddit"]):not([class*="btn-tumblr"]) {
+  background: none;
+  border: 2px solid var(--rd-brand);
+  border-radius: var(--rd-radius);
+  box-shadow: none;
+  color: var(--rd-brand);
+  font-weight: 700;
+}
+html#html-root body.page-type-tool .btn:not(.btn-primary):not(.bg-gradient-primary):hover { background: var(--rd-brand-soft); color: var(--rd-brand); }
+
+/* Related tools: a ruled list instead of boxed tiles */
+html#html-root body .tool-related-card {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rd-line);
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+  padding: 12px 4px;
+}
+html#html-root body .tool-related-card:hover { background: var(--rd-brand-soft); transform: none; box-shadow: none; }
+html#html-root body .tool-related-title { font-family: var(--rd-font-display); font-weight: 800; color: var(--rd-ink); }
+html#html-root body .tool-related-badge { background: var(--rd-signal); color: var(--rd-on-signal); border-radius: 4px; }
+
+/* ---------- Sidebar widgets ---------- */
+html#html-root body .yt-sidebar-card {
+  background: none !important;
+  border: 0 !important;
+  border-top: 2px solid var(--rd-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  margin-bottom: 28px;
+}
+html#html-root body .yt-sidebar-card-header {
+  padding: 14px 0 10px;
+  background: none !important;
+  border-bottom: 1px solid var(--rd-line);
+}
+html#html-root body .yt-sidebar-card-title {
+  font: 800 1.0625rem/1.3 var(--rd-font-display);
+  letter-spacing: -0.01em;
+  color: var(--rd-ink);
+}
+html#html-root body .yt-sidebar-card-body { padding: 4px 0 0; background: none; }
+html#html-root body .yt-status-row { border-bottom: 1px solid var(--rd-line); border-top: 0; }
+html#html-root body .yt-status-label { color: var(--rd-muted); }
+html#html-root body .yt-status-value { color: var(--rd-ink); font-weight: 700; }
+html#html-root body .yt-suite-item {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rd-line);
+  border-radius: 0;
+  box-shadow: none;
+}
+html#html-root body .yt-suite-item:hover { background: var(--rd-brand-soft); transform: none; }
+html#html-root body .yt-suite-icon { background: none; border: 0; }
+html#html-root body .yt-suite-name { font-family: var(--rd-font-display); font-weight: 800; color: var(--rd-ink); }
+html#html-root body .yt-suite-desc { color: var(--rd-muted); }
+html#html-root body .yt-suite-arrow { color: var(--rd-subtle); }
+html#html-root body .yt-checklist li { color: var(--rd-muted); }
+
+/* ---------- Long-form content ---------- */
+html#html-root body #content-box > .card,
+html#html-root body #content-box > .card > .card-body { background: transparent; }
+html#html-root body.page-type-tool #content-box .card-body > :is(h2, h3, h4),
+html#html-root body.page-type-tool #content-box :is(h2, h3) {
+  margin: 1.8em 0 0.5em;
+  padding: 0 !important;
+  border: 0 !important;
+  font-family: var(--rd-font-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  color: var(--rd-ink) !important;
+}
+html#html-root body.page-type-tool #content-box :is(h2, h3)::before,
+html#html-root body.page-type-tool #content-box :is(h2, h3)::after { display: none; }
+html#html-root body.page-type-tool #content-box h2 { font-size: clamp(1.5rem, 2.6vw, 2rem) !important; }
+html#html-root body.page-type-tool #content-box h3 { font-size: 1.3125rem !important; }
+html#html-root body.page-type-tool #content-box :is(p, li) { max-width: 70ch; font-size: 1.0625rem; line-height: 1.7; color: var(--rd-muted); }
+html#html-root body.page-type-tool #content-box strong { color: var(--rd-ink); }
+html#html-root body.page-type-tool #content-box a { color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+html#html-root body.page-type-tool #content-box code { color: var(--rd-ink); background: var(--rd-brand-soft); border-radius: 4px; padding: 1px 6px; }
+
+/* Share buttons keep network colours but share the site's small radius */
+html#html-root body .share-icons .btn { border-radius: var(--rd-radius); box-shadow: none; }
+
+/* ---------- Corrections over legacy rules ---------- */
+html#html-root body .page-wrapper,
+html#html-root body .page-content { background: var(--rd-bg) !important; }
+
+/* Content aligns to the hero's left edge */
+html#html-root body.page-type-tool .page-content .card > .card-body,
+html#html-root body.page-type-tool #tool-box .card-body,
+html#html-root body.page-type-tool #content-box .card-body { padding-left: 0 !important; padding-right: 0 !important; }
+html#html-root body.page-type-tool #tool-box .card-body > *,
+html#html-root body.page-type-tool #tool-box form { padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; }
+html#html-root body.page-type-tool #tool-box .text-center { text-align: left !important; }
+
+/* Dark mode: strip legacy boxes and fills */
+html#html-root.dark body .tool-editorial-breadcrumb .active { background: none !important; color: var(--rd-muted) !important; }
+html#html-root.dark body .tool-editorial-lead { color: var(--rd-muted) !important; }
+html#html-root.dark body .tool-related-card,
+html#html-root.dark body .yt-suite-item {
+  background: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--rd-line) !important;
+  box-shadow: none !important;
+}
+html#html-root.dark body .tool-related-card:hover,
+html#html-root.dark body .yt-suite-item:hover { background: var(--rd-brand-soft) !important; }
+html#html-root.dark body.page-type-tool .btn:not(.btn-primary):not(.bg-gradient-primary):not(.btn-icon-only):not([class*="btn-facebook"]):not([class*="btn-twitter"]):not([class*="btn-pinterest"]):not([class*="btn-linkedin"]):not([class*="btn-reddit"]):not([class*="btn-tumblr"]) {
+  background: none !important;
+  color: var(--rd-brand) !important;
+  border-color: var(--rd-brand) !important;
+}
+html#html-root.dark body.page-type-tool #content-box :is(p, li) { color: var(--rd-muted) !important; }
+html#html-root.dark body.page-type-tool #content-box :is(h2, h3) { color: var(--rd-ink) !important; }
+html#html-root.dark body .yt-sidebar-card-title,
+html#html-root.dark body .yt-suite-name,
+html#html-root.dark body .tool-related-title { color: var(--rd-ink) !important; }
+
+/* ======================================================================
+   Content pages: About, Contact, legal. Flat sections on the page canvas.
+   ====================================================================== */
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box > .card,
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box > .card > .card-body {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) .page-content .wrap { width: min(1280px, calc(100% - 48px)); max-width: none; padding-top: 0 !important; }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box :is(h2, h3) {
+  padding: 0 !important;
+  border: 0 !important;
+  font-family: var(--rd-font-display) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+  color: var(--rd-ink) !important;
+}
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box :is(h2, h3)::before,
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box :is(h2, h3)::after { display: none; }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box h2 { font-size: clamp(1.5rem, 2.6vw, 2rem) !important; margin: 1.6em 0 0.5em; }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box h3 { font-size: 1.3125rem !important; margin: 1.4em 0 0.4em; }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box :is(p, li) { max-width: 72ch; font-size: 1.0625rem; line-height: 1.7; color: var(--rd-muted) !important; }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box strong { color: var(--rd-ink); }
+html#html-root body:where(:not(.page-type-tool):not(.page-type-post):not(.page-slug-backlink-monitoring-guide):not(.page-slug-link-opportunity-guide):not(.page-slug-seo-audit-guide):not(.page-slug-faqs)) #content-box a:not(.btn):not([class*="btn-"]) { color: var(--rd-brand); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Legal pages: sticky contents list beside the text */
+html#html-root body .legal-toc {
+  top: 92px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+html#html-root body .legal-toc-title {
+  margin: 0 0 10px;
+  padding: 0;
+  font: 800 1.0625rem/1.3 var(--rd-font-display) !important;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--rd-ink) !important;
+}
+html#html-root body .legal-toc-title::before { display: none; }
+html#html-root body .legal-toc ul { margin: 0; padding: 0; list-style: none; }
+html#html-root body .legal-toc li { border-left: 2px solid var(--rd-line); }
+html#html-root body .legal-toc a {
+  display: block;
+  padding: 6px 0 6px 14px;
+  border-radius: 0;
+  background: none;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--rd-muted);
+  text-decoration: none;
+}
+html#html-root body .legal-toc a:hover { background: none; color: var(--rd-ink); }
+html#html-root body .legal-toc a.is-active,
+html#html-root body .legal-toc a[aria-current="true"] { color: var(--rd-ink); font-weight: 700; }
+
+/* Solid action buttons used on About and Contact */
+html#html-root body .btn-emerald-action,
+html#html-root body .btn-emerald-home {
+  background: var(--rd-brand) !important;
+  border: 0 !important;
+  border-radius: var(--rd-radius) !important;
+  box-shadow: none !important;
+  color: var(--rd-on-brand) !important;
+  font-weight: 700;
+}
+html#html-root body .btn-emerald-action:hover,
+html#html-root body .btn-emerald-home:hover { filter: brightness(1.1); transform: none !important; }
+
+/* ---------- About ---------- */
+html#html-root body .about-hero-img,
+html#html-root body .about-img,
+html#html-root body .why-choose-img { border-radius: var(--rd-radius-lg); box-shadow: none; }
+html#html-root body .about-card {
+  background: none;
+  border: 0;
+  border-top: 2px solid var(--rd-line-strong);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 16px 0 0;
+  transform: none;
+}
+html#html-root body .about-card:hover { transform: none; box-shadow: none; }
+html#html-root body .about-card-icon { display: none; }
+html#html-root body .about-img-wrap { background: var(--rd-brand-soft); border: 0; border-radius: var(--rd-radius-lg); }
+html#html-root body .start-today-section {
+  background: var(--rd-brand-soft);
+  border: 0;
+  border-top: 2px solid var(--rd-line-strong);
+  border-radius: 0 0 12px 12px;
+  box-shadow: none;
+  color: var(--rd-ink);
+}
+html#html-root body .about-accordion .accordion-item,
+html#html-root body .accordion-item {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--rd-line);
+  border-radius: 0;
+}
+html#html-root body .accordion-button {
+  padding: 16px 0;
+  background: none !important;
+  box-shadow: none !important;
+  font-family: var(--rd-font-display);
+  font-weight: 800;
+  color: var(--rd-ink) !important;
+}
+html#html-root body .accordion-body { padding: 0 0 18px; color: var(--rd-muted); }
+
+/* ---------- Contact ---------- */
+html#html-root body .contact-card,
+html#html-root body .contact-form-card {
+  background: none;
+  border: 0;
+  border-top: 2px solid var(--rd-line-strong);
+  border-radius: 0;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+html#html-root body .contact-kicker,
+html#html-root body .channels-badge { display: none; }
+html#html-root body .contact-card-title,
+html#html-root body .channels-title { font-family: var(--rd-font-display) !important; font-weight: 800 !important; letter-spacing: -0.02em; }
+html#html-root body .contact-card-title { color: var(--rd-ink) !important; }
+html#html-root body .contact-card-subtitle { color: var(--rd-muted); }
+html#html-root body .contact-form-body { background: none; border: 0; box-shadow: none; padding-left: 0; padding-right: 0; }
+html#html-root body .input-group-modern .form-control,
+html#html-root body .textarea-group-modern .form-control {
+  border: 2px solid var(--rd-line-strong);
+  border-radius: var(--rd-radius);
+  background: var(--rd-surface);
+  color: var(--rd-ink);
+  box-shadow: none;
+}
+html#html-root body .input-group-modern .form-control:focus,
+html#html-root body .textarea-group-modern .form-control:focus { outline: 3px solid var(--rd-focus); outline-offset: 2px; box-shadow: none; }
+html#html-root body .contact-privacy-note { color: var(--rd-muted); }
+/* The channels panel is the page's one bold element: blueprint blue with readable text */
+html#html-root body .contact-channels-card {
+  background: var(--rd-panel) !important;
+  background-image: none !important;
+  border: 0;
+  border-radius: var(--rd-radius-lg);
+  box-shadow: none;
+  color: var(--rd-panel-ink);
+}
+html#html-root body .contact-channels-card .channels-title { color: var(--rd-panel-ink) !important; }
+html#html-root body .contact-channels-card .channels-lead,
+html#html-root body .contact-channels-card .help-box-desc { color: var(--rd-panel-muted) !important; }
+html#html-root body .channel-item,
+html#html-root body .channels-help-box {
+  background: none;
+  border: 0;
+  border-top: 1px solid rgba(234, 240, 255, 0.24);
+  border-radius: 0;
+  box-shadow: none;
+}
+html#html-root body .channel-icon,
+html#html-root body .help-box-icon { background: none; color: var(--rd-panel-ink); }
+html#html-root body .channel-label {
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--rd-panel-muted);
+}
+html#html-root body .channel-link,
+html#html-root body .channel-text,
+html#html-root body .help-box-title { color: var(--rd-panel-ink) !important; }
+html#html-root body .help-box-link {
+  background: none;
+  border: 2px solid var(--rd-panel-ink);
+  border-radius: var(--rd-radius);
+  box-shadow: none;
+  color: var(--rd-panel-ink) !important;
+  font-weight: 700;
+}
+
+/* ---------- About: flatten the sectioned page ---------- */
+html#html-root body.page-slug-about-us .about-section {
+  background: none !important;
+  border: 0 !important;
+  border-top: 2px solid var(--rd-line-strong) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: clamp(24px, 4vw, 40px) 0 0 !important;
+  margin-block: clamp(2rem, 5vw, 3.5rem) !important;
+}
+html#html-root body.page-slug-about-us .about-section::before,
+html#html-root body.page-slug-about-us .about-section::after,
+html#html-root body.page-slug-about-us .about-section :is(h2, h3)::before,
+html#html-root body.page-slug-about-us .about-section :is(h2, h3)::after { content: none !important; display: none !important; }
+html#html-root body.page-slug-about-us .about-section h2 { padding: 0 !important; border: 0 !important; }
+html#html-root body.page-slug-about-us .about-img-wrap { background: var(--rd-brand-soft) !important; border: 0 !important; box-shadow: none !important; }
+html#html-root body.page-slug-about-us .about-hero-wrap { border-radius: var(--rd-radius-lg); overflow: hidden; }
+html#html-root body.page-slug-about-us .about-hero-wrap figcaption,
+html#html-root body.page-slug-about-us .about-hero-wrap .about-hero-caption { background: var(--rd-panel); color: var(--rd-panel-ink); border-radius: 4px; }
+html#html-root body .btn-emerald-home,
+html#html-root body .btn-emerald-action { display: inline-flex !important; align-items: center; gap: 8px; padding: 14px 22px !important; }
+
+/* ---------- Contact: the panel and form card beat the generic content rules ---------- */
+html#html-root body #content-box .contact-channels-card .channels-title,
+html#html-root body #content-box .contact-channels-card h2,
+html#html-root body #content-box .contact-channels-card h3 { color: var(--rd-panel-ink) !important; margin-top: 0; }
+html#html-root body #content-box .contact-channels-card p,
+html#html-root body #content-box .contact-channels-card .channels-lead { color: var(--rd-panel-muted) !important; }
+html#html-root body #content-box .contact-channels-card a { color: var(--rd-panel-ink) !important; }
+html#html-root body #content-box .contact-channels-card .help-box-title { color: var(--rd-panel-ink) !important; font-size: 1.0625rem !important; }
+html#html-root body #content-box .contact-card:not(.contact-channels-card),
+html#html-root body #content-box .contact-form-card,
+html#html-root body #content-box .contact-form-body {
+  background: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+html#html-root body #content-box .contact-form-card { border-top: 2px solid var(--rd-line-strong) !important; }
+html#html-root body #content-box .contact-card-title { margin-top: 0; }
+html#html-root body #content-box .contact-form-body .btn-emerald-action { color: var(--rd-on-brand) !important; }
+
+/* About: remove the generated numbered eyebrows (a ::before on each section) */
+html#html-root body.page-slug-about-us .about-who .col-lg-7::before,
+html#html-root body.page-slug-about-us .about-section:has(.about-offer-grid) .col-12 > h2::before,
+html#html-root body.page-slug-about-us .about-section:has(.why-choose-wrap) h2::before,
+html#html-root body.page-slug-about-us .about-section:has(#whoAccordion) h2::before,
+html#html-root body.page-slug-about-us .about-section:has(> .col-12 > h2):not(.start-today-section) h2::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* Related-tool cards on tool pages: hard-coded near-black text on dark cards */
+html#html-root.dark body :is(.tool-link-grid, .tool-next-steps, .tool-related-grid) a strong,
+html#html-root.dark body #content-box a strong { color: var(--rd-brand) !important; }
+
+/* Backlink checker: related-action cards (hard-coded near-black text in the view's own styles) */
+html#html-root body .backlink-service-grid a strong { color: var(--rd-brand) !important; }
+html#html-root body .backlink-kicker { display: none; }

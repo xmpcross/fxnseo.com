@@ -16,6 +16,52 @@
 
         <button class="btn bg-gradient-info mb-0" data-bs-toggle="modal" data-bs-target="#importAddonPackages"><i class="fas fa-sync me-1 me-1"></i> {{ __('Import Addon Packages') }}</button>
 
+		<div class="card my-4">
+			<div class="card-header pb-0">
+				<div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
+					<div>
+						<h5 class="mb-1">{{ __('Laravel SEO Packages') }}</h5>
+						<p class="text-sm text-muted mb-0">{{ __('Installed SEO packages use separate responsibilities to prevent duplicate metadata: Meta Manager handles standard and social tags, SEOTools handles WebSite JSON-LD, and Laravel-SEO handles Organization and application schema.') }}</p>
+					</div>
+					<span class="badge bg-gradient-success align-self-start align-self-md-center">{{ collect($seo_packages)->where('installed', true)->count() }}/{{ count($seo_packages) }} {{ __('installed') }}</span>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="row g-3">
+					@foreach ($seo_packages as $package)
+						<div class="col-12 col-lg-4">
+							<div class="border rounded p-3 h-100">
+								<div class="d-flex align-items-start justify-content-between gap-3 mb-2">
+									<div class="d-flex align-items-center gap-2">
+										<span class="d-inline-flex align-items-center justify-content-center bg-light text-primary rounded" style="width: 2.5rem; height: 2.5rem;"><i class="fas fa-search"></i></span>
+										<div>
+											<h6 class="mb-0">{{ $package['name'] }}</h6>
+											<code class="text-xs">{{ $package['package'] }}</code>
+										</div>
+									</div>
+									<span class="badge bg-{{ $package['installed'] ? 'success' : ($package['compatible'] ? 'secondary' : 'warning') }}">{{ $package['installed'] ? __('Installed') : ($package['compatible'] ? __('Not installed') : __('Incompatible')) }}</span>
+								</div>
+								<p class="text-sm mb-3">{{ $package['description'] }}</p>
+								<div class="d-flex align-items-center justify-content-between">
+									<span class="text-xs text-muted">{{ $package['version'] ?: __('Unavailable') }}</span>
+									<div class="d-flex align-items-center gap-2">
+										@if ($package['active'])
+											<span class="badge bg-gradient-primary">{{ __('Active') }}</span>
+										@elseif ($package['compatible'] && $package['installed'])
+											<span class="badge bg-light text-dark">{{ __('Standby') }}</span>
+										@else
+											<span class="badge bg-light text-dark">{{ __('Framework upgrade required') }}</span>
+										@endif
+										<a href="{{ $package['url'] }}" target="_blank" rel="noopener noreferrer" class="text-sm" title="{{ __('Package documentation') }}"><i class="fas fa-external-link-alt"></i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					@endforeach
+				</div>
+			</div>
+		</div>
+
 		<!-- begin:Form Search -->
 		<form id="formSearchTool">
 			<div class="input-group mb-3">

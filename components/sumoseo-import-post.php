@@ -1,12 +1,11 @@
 <?php
 /**
- * Import a generated article into the SumoSEO native blog (pages + page_translations)
- * so it appears under /admin/posts and /blog. Called by the ai-writer-cli
- * (generate-fxnseo-post.js) after the article is saved to Strapi.
+ * Import an article directly into the SumoSEO native blog (pages + page_translations)
+ * so it appears under /admin/posts and /blog. Images are automatically saved locally.
  *
  * Usage: php sumoseo-import-post.php <path-to-json>
  * JSON keys: title, slug, excerpt, content (markdown), seoTitle, seoDescription,
- *            featured_image (optional URL)
+ *            featured_image (optional local path or URL)
  * Prints JSON: {"id":<page id>,"slug":"<final slug>"} on success.
  *
  * Run as www-data to keep any framework-written cache files correctly owned:
@@ -18,6 +17,7 @@ $app = require_once __DIR__ . '/bootstrap/app.php';
 $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
 use App\Models\Admin\Page;
+use App\Models\Admin\PageCategory;
 use Illuminate\Support\Str;
 
 function out(array $data, int $code = 0): void
@@ -47,7 +47,8 @@ if (!empty($data['set_featured_image_only'])) {
     if (!$page) {
         out(['error' => 'page not found for slug: ' . $slug], 1);
     }
-    $page->featured_image = $data['featured_image'] ?? null;
+    $rawImage = $data['featured_image'] ?? null;
+    $page->featured_image = $rawImage ? str_replace('strapi.fxnstudio.com', 'cms.fxnstudio.com', $rawImage) : null;
     $page->save();
     out(['id' => $page->id, 'slug' => $slug, 'updated_image' => true]);
 }
@@ -70,9 +71,20 @@ try {
     $page = new Page;
     $page->slug           = $slug;
     $page->type           = 'post';
-    $page->featured_image = $data['featured_image'] ?? null;
+    $rawImage = $data['featured_image'] ?? null;
+    $page->featured_image = $rawImage ? str_replace('strapi.fxnstudio.com', 'cms.fxnstudio.com', $rawImage) : null;
     $page->post_status    = !empty($data['publish']) ? 1 : 0; // draft => hidden from /blog, still in /admin/posts
     $page->page_status    = 1;
+
+    if (!empty($data['category']) || !empty($data['category_slug'])) {
+        $cat = PageCategory::where('slug', $data['category_slug'] ?? '')
+            ->orWhere('title', $data['category'] ?? '')
+            ->first();
+        if ($cat) {
+            $page->category_id = $cat->id;
+        }
+    }
+
     $page->save();
 
     $t = $page->translateOrNew('en');

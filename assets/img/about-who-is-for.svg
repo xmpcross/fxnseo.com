@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Who is fxnSEOTools for">
+  <style>
+    .role { transform-box: fill-box; transform-origin: center; animation: floaty 3s ease-in-out infinite; }
+    .r1 { animation-delay: 0s; }
+    .r2 { animation-delay: .4s; }
+    .r3 { animation-delay: .8s; }
+    .r4 { animation-delay: 1.2s; }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  </style>
+
+  <!-- Marketer / SEO: bar chart -->
+  <g class="role r1">
+    <circle cx="150" cy="108" r="42" fill="#5b8bff"/>
+    <rect x="138" y="112" width="7" height="10" rx="1.5" fill="#ffffff"/>
+    <rect x="148" y="105" width="7" height="17" rx="1.5" fill="#ffffff"/>
+    <rect x="158" y="97" width="7" height="25" rx="1.5" fill="#ffffff"/>
+  </g>
+
+  <!-- Developer / Agency: code brackets -->
+  <g class="role r2">
+    <circle cx="250" cy="108" r="42" fill="#0046be"/>
+    <path d="M244 98 L234 108 L244 118" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M256 98 L266 108 L256 118" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- YouTuber / Video: play -->
+  <g class="role r3">
+    <circle cx="150" cy="196" r="42" fill="#2b5df5"/>
+    <path d="M143 184 L167 196 L143 208 Z" fill="#ffffff"/>
+  </g>
+
+  <!-- Blogger / Content: document -->
+  <g class="role r4">
+    <circle cx="250" cy="196" r="42" fill="#5b8bff"/>
+    <rect x="239" y="182" width="22" height="28" rx="3" fill="#ffffff"/>
+    <rect x="243" y="188" width="14" height="2.4" rx="1.2" fill="#5b8bff"/>
+    <rect x="243" y="194" width="14" height="2.4" rx="1.2" fill="#5b8bff"/>
+    <rect x="243" y="200" width="9" height="2.4" rx="1.2" fill="#5b8bff"/>
+  </g>
+</svg>

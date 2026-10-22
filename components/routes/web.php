@@ -10,11 +10,11 @@ use App\Http\Livewire\Public\Auth\ResetPassword;
 use App\Http\Livewire\Public\Auth\VerifyEmail;
 use App\Http\Livewire\Public\Blog;
 use App\Http\Livewire\Public\Home;
+use App\Http\Livewire\Public\ToolsPage;
 use App\Http\Livewire\Public\Pages as PublicPage;
 use App\Http\Livewire\Public\Posts as PublicPost;
 use App\Http\Livewire\Public\Resources as PublicResources;
 use App\Http\Livewire\Public\ResourceShow as PublicResourceShow;
-use App\Http\Livewire\Public\Tools\ImageCompressor;
 
 use App\Http\Livewire\Public\Install\Welcome as SWWelcome;
 use App\Http\Livewire\Public\Install\Requirements as SWRequirements;
@@ -78,6 +78,7 @@ use App\Http\Livewire\Admin\Settings\Languages\Translations\Edit as AdminLanguag
 
 use App\Http\Livewire\Admin\Settings\Redirects\Index as AdminRedirectsIndex;
 use App\Http\Livewire\Admin\Settings\Advanced as AdminAdvancedIndex;
+use App\Http\Livewire\Admin\Settings\Seo as AdminSeoIndex;
 
 use App\Http\Livewire\Admin\Indexing\Submit as AdminIndexingSubmitIndex;
 use App\Http\Livewire\Admin\Indexing\History as AdminIndexingHistoryIndex;
@@ -171,12 +172,80 @@ Route::group(['middleware' => 'swinstall', 'prefix' => 'install'], function () {
 
 });
 
-//Image Compressor
-Route::post('/image-compressor', [ImageCompressor::class, 'onImageCompressor'])->name('image-compressor');
+// Isolated homepage redesign for stakeholder review. The production home route
+// remains untouched until the preview is explicitly approved.
+Route::get('/homepage-preview', function () {
+    $locale = app()->getLocale();
+    $resources = \App\Models\Admin\Page::with('translations')->where('type', 'post')
+        ->where('post_status', true)
+        ->orderBy('id', 'desc')
+        ->take(4)
+        ->get()
+        ->map(function ($page) use ($locale) {
+            $t = $page->translate($locale) ?: $page->translate('en');
+            return [
+                'slug'           => $page->slug,
+                'title'          => $t ? $t->title : $page->slug,
+                'excerpt'        => $t ? ($t->short_description ?: $t->subtitle) : '',
+                'featured_image' => $page->featured_image,
+                'published_at'   => $page->created_at ? $page->created_at->format('M d, Y') : 'Recent',
+            ];
+        })
+        ->toArray();
+
+    $categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
+        $q->where('type', 'tool')->where('tool_status', true)->withTranslation($locale);
+    }])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
+        $tools = $cat->pages->map(function ($p) use ($locale) {
+            $t = $p->translate($locale) ?: $p->translate('en');
+            return [
+                'id'          => $p->id,
+                'slug'        => $p->slug,
+                'title'       => $t ? $t->title : $p->slug,
+                'description' => $t ? ($t->short_description ?: $t->subtitle) : '',
+                'icon_image'  => $p->icon_image,
+                'popular'     => (bool) $p->popular,
+                'new'         => (bool) $p->new,
+                'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : localization()->getLocalizedURL($locale, '/' . $p->slug),
+            ];
+        })->values();
+
+        return [
+            'id'    => $cat->id,
+            'title' => $cat->title,
+            'tools' => $tools,
+        ];
+    })->filter(function ($cat) {
+        return count($cat['tools']) > 0;
+    })->values()->toArray();
+
+    $allTools = collect($categories)->flatMap(function ($cat) {
+        return $cat['tools'];
+    })->unique('slug')->values()->toArray();
+
+    $popularTools = collect($allTools)->filter(function ($t) {
+        return !empty($t['popular']);
+    })->values()->toArray();
+
+    return view('homepage-preview', [
+        'resources'    => $resources,
+        'categories'   => $categories,
+        'allTools'     => $allTools,
+        'popularTools' => $popularTools,
+        'general'      => \App\Models\Admin\General::first(),
+        'footer'       => \App\Models\Admin\FooterTranslation::where('locale', $locale)->first(),
+        'socials'      => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
+    ]);
+})->name('homepage.preview');
 
 //Cookie
-Route::get('/cookies/accept', function(){
-    Cookie::queue('cookies', time(), 43200);
+Route::post('/cookies/accept', function(){
+    Cookie::queue('cookies', 'accepted', 43200);
+    return response()->noContent();
+});
+Route::post('/cookies/reject', function(){
+    Cookie::queue('cookies', 'necessary', 43200);
+    return response()->noContent();
 });
 
 //Reset License
@@ -242,7 +311,73 @@ Route::localizedGroup(function () {
 	});
 
 	//Home
-	Route::get('/', Home::class)->name('home');
+	Route::get('/', function () {
+		$locale = app()->getLocale();
+        $homePage = \App\Models\Admin\Page::with('translations')->where('type', 'home')->first();
+		$resources = \App\Models\Admin\Page::with('translations')->where('type', 'post')
+			->where('post_status', true)
+			->orderBy('id', 'desc')
+			->take(4)
+			->get()
+			->map(function ($page) use ($locale) {
+				$t = $page->translate($locale) ?: $page->translate('en');
+				return [
+					'slug'           => $page->slug,
+					'title'          => $t ? $t->title : $page->slug,
+					'excerpt'        => $t ? ($t->short_description ?: $t->subtitle) : '',
+					'featured_image' => $page->featured_image,
+					'published_at'   => $page->created_at ? $page->created_at->format('M d, Y') : 'Recent',
+				];
+			})
+			->toArray();
+
+		$categories = \App\Models\Admin\PageCategory::with(['pages' => function ($q) use ($locale) {
+			$q->where('type', 'tool')->where('tool_status', true)->withTranslation($locale);
+		}])->orderBy('sort', 'ASC')->get()->map(function ($cat) use ($locale) {
+			$tools = $cat->pages->map(function ($p) use ($locale) {
+				$t = $p->translate($locale) ?: $p->translate('en');
+				return [
+					'id'          => $p->id,
+					'slug'        => $p->slug,
+					'title'       => $t ? $t->title : $p->slug,
+					'description' => $t ? ($t->short_description ?: $t->subtitle) : '',
+					'icon_image'  => $p->icon_image,
+					'popular'     => (bool) $p->popular,
+					'new'         => (bool) $p->new,
+					'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : localization()->getLocalizedURL($locale, '/' . $p->slug),
+				];
+			})->values();
+
+			return [
+				'id'    => $cat->id,
+				'title' => $cat->title,
+				'tools' => $tools,
+			];
+		})->filter(function ($cat) {
+			return count($cat['tools']) > 0;
+		})->values()->toArray();
+
+		$allTools = collect($categories)->flatMap(function ($cat) {
+			return $cat['tools'];
+		})->unique('slug')->values()->toArray();
+
+		$popularTools = collect($allTools)->filter(function ($t) {
+			return !empty($t['popular']);
+		})->values()->toArray();
+
+		return view('livewire.public.home-live', [
+            'page' => $homePage,
+            'pageTrans' => $homePage ? ($homePage->translate($locale) ?: $homePage->translate('en')) : null,
+			'resources'    => $resources,
+			'categories'   => $categories,
+			'allTools'     => $allTools,
+			'popularTools' => $popularTools,
+			'general'      => \App\Models\Admin\General::first(),
+			'footer'       => \App\Models\Admin\FooterTranslation::where('locale', $locale)->first(),
+			'socials'      => \App\Models\Admin\Social::orderBy('id', 'ASC')->get()->toArray(),
+		]);
+	})->name('home');
+	Route::get('/tools', ToolsPage::class)->name('tools');
 
 	//Blog
 	try {
@@ -271,12 +406,20 @@ Route::localizedGroup(function () {
 
 	})->name('admin.settings.indexing');
 
-	//Strapi-powered Resources (must precede the /{slug} catch-all)
-	Route::get('/resources', PublicResources::class)->name('public.resources');
-	Route::get('/resources/{slug}', PublicResourceShow::class)->where('slug', '^((?!admin.*).)*$')->name('public.resource');
+	//Resources redirected to native local blog
+	Route::get('/resources', function() {
+		return redirect('/blog', 301);
+	})->name('public.resources');
+	Route::get('/resources/welcome-to-fxnseotools-resources', function () {
+        return redirect('/about-us', 301);
+    });
+	Route::get('/resources/{slug}', function($slug) {
+		return redirect('/blog/' . $slug, 301);
+	})->where('slug', '^((?!admin.*).)*$')->name('public.resource');
 
 	//Page
-	Route::get('/{slug}', PublicPage::class)->where('slug', '^((?!admin.*).)*$')->name('public.page');
+	Route::get('/{slug}', PublicPage::class)->where('slug', '^((?!admin.*).)*$')
+        ->middleware(\App\Http\Middleware\RedirectLegacyPost::class)->name('public.page');
 	
 	//Admin Login
 	Route::group(['middleware' => ['guest', 'localized-auth']], function() {
@@ -330,6 +473,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isadmin', 'localize
 		Route::group(['prefix' => 'settings'], function () {
 
 			Route::get('/general', AdminGeneralIndex::class)->name('admin.general.index');
+			Route::get('/seo', AdminSeoIndex::class)->name('admin.seo.index');
 			Route::get('/menus', AdminMenusIndex::class)->name('admin.menus.index');
 			Route::get('/header', AdminHeaderIndex::class)->name('admin.header.index');
 

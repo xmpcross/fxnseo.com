@@ -1,161 +1,99 @@
-      <footer class="footer pt-3 mt-3 pb-0">
-
-       @if ( $general->social_status == true && count($socials) > 0 )
-          <hr class="horizontal dark mb-4">
-          <h4 class="text-center mb-3">{{ __('Follow us') }}</h4>
-          <div class="social-share text-center">
-            <div class="share-icons relative">
-                @foreach ($socials as $key => $social)
-                  <a href="{{ $social['url'] }}" class="btn btn-{{ $social['name'] }} btn-icon" target="_blank">
-                      <span class="btn-inner--icon"><i class="fab fa-{{ $social['name'] }} fa-fw"></i></span>
-                      <span class="btn-inner--text">{{ ucfirst($social['name']) }}</span>
-                  </a>
-                @endforeach
-            </div>
-          </div>
-        @endif
-        
-        @if ( !empty($footer->layout) && $footer->layout != 'none' )
-          <hr class="horizontal dark mb-5">
-        @endif
-
-        <div class="container">
-          <div class="row">
-              @if ( !empty($footer->layout) )
-              
-                @switch( $footer->layout )
-
-                    @case(1)
-
-                        <div class="col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(2)
-
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(3)
-
-                        <div class="col-md-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-3 col-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-6 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(4)
-
-                        <div class="col-md-3 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-                      
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-4 col-12 mb-3">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget4) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @case(5)
-
-                        <div class="col-md-3 mb-3 ftr-col-main">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget1) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget2) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget3) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget4) !!}
-                          </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-6 mb-3 ftr-col me-auto">
-                          <div>
-                            {!! GrahamCampbell\Security\Facades\Security::clean($footer->widget5) !!}
-                          </div>
-                        </div>
-
-                    @break
-
-                    @default
-
-                @endswitch
-              
-              @endif
-
-            @if ( !empty($footer->bottom_text) )
-              <div class="col-12">
-                <div class="text-center">
-                  <p class="my-4 text-sm">
-                    @php
-                        $footer_vars = array('%year%');
-                        $footer_val  = array( date('Y') );
-                        $footer_data  = str_replace( $footer_vars , $footer_val , $footer->bottom_text);
-                        echo htmlspecialchars_decode( $footer_data )
-                    @endphp
-                  </p>
-                </div>
-              </div>
-            @endif
-
-          </div>
+<!-- Modern Site Footer Component (Matches Home Design • Outfit Font • Emerald Accent) -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-columns">
+      <!-- Brand Info -->
+      <div class="footer-col-brand">
+        <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
+          <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
+          <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
+        </a>
+        <p>
+          {{ __('FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.') }}
+        </p>
+        <div class="footer-trust-badges">
+          <span>✓ {{ __('Verified Moz Data') }}</span> • <span>✓ {{ __('YouTube v3 API') }}</span>
         </div>
-      </footer>
+      </div>
+
+      <!-- Col 1: Popular SEO Tools -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Popular Tools') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/domain-authority-checker') }}">{{ __('Domain Authority') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/page-authority-checker') }}">{{ __('Page Authority') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/da-pa-checker') }}">{{ __('DA PA Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-checker') }}">{{ __('Backlink Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/meta-tags-analyzer') }}">{{ __('Meta Tags Analyzer') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/keyword-density-checker') }}">{{ __('Keyword Density') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/google-index-checker') }}">{{ __('Google Index Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/robots-txt-generator') }}">{{ __('Robots.txt Generator') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 2: YouTube Suite -->
+      <div>
+        <h4 class="footer-col-title">{{ __('YouTube Suite') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-title-extractor') }}">{{ __('Title Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-tag-extractor') }}">{{ __('Tag Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-hashtag-extractor') }}">{{ __('Hashtag Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-channel-statistics') }}">{{ __('Channel Statistics') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-video-statistics') }}">{{ __('Video Statistics') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-money-calculator') }}">{{ __('Money Calculator') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-trend') }}">{{ __('Trending Videos') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Knowledge Hub -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Knowledge Hub') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ __('SEO Blog') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-monitoring-guide') }}">{{ __('Backlink Guide') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/link-opportunity-guide') }}">{{ __('Link Building Guide') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/seo-audit-guide') }}">{{ __('SEO Audit Hub') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}">{{ __('Common FAQs') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report Broken Tool') }}</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Trust & Legal -->
+      <div>
+        <h4 class="footer-col-title">{{ __('Trust & Legal') }}</h4>
+        <ul class="footer-col-links">
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/about-us') }}">{{ __('About Us') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact Support') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms of Service') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookie Information') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Compliance & Google AdSense Policy Notice -->
+    <div class="footer-compliance-box">
+      <p>
+        <strong>{{ __('Publisher & Advertising Disclosure:') }}</strong> {{ __('FXN SEO is an independent digital marketing intelligence resource. This platform is supported by digital advertising, including Google AdSense and affiliate partnerships. In accordance with Google Publisher Policies and FTC guidelines, we may receive compensation when visitors interact with sponsored placements or acquire services through external links, at no additional cost to you.') }}
+      </p>
+      <p>
+        <strong>{{ __('Data Privacy & GDPR Commitment:') }}</strong> {{ __('We do not log, retain, or commercialize individual website queries, target domains, or video URLs submitted to our tools. All third-party trademarks and brand logos (including Moz, YouTube, and Google) belong to their respective copyright holders.') }}
+      </p>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom-bar">
+      <div>
+        © {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved.') }}
+      </div>
+      <div class="footer-bottom-links">
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookies') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report') }}</a>
+      </div>
+    </div>
+  </div>
+</footer>

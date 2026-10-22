@@ -1,0 +1,1938 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}" class="light" id="html-root">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>FXN SEO — Free SEO & YouTube Intelligence Suite (Light Preview)</title>
+  <meta name="description" content="Access 60+ free, high-performance SEO and YouTube optimization tools. Check domain authority, audit backlinks, inspect meta tags, generate sitemaps, and optimize content.">
+  <link rel="icon" href="{{ asset('assets/img/favicon.svg') }}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-local.css') }}">
+  <style>
+    /* CSS Variables for Light Mode (Default) */
+    :root, html.light {
+      --font-family: var(--site-font-family);
+      --bg: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-hover: #ffffff;
+      --bg-alt: #f1f5f9;
+      --border: #e2e8f0;
+      --border-light: #edf2f7;
+      --border-focus: rgba(108, 134, 245, 0.4);
+      --text: #0f172a;
+      --text-muted: #475569;
+      --text-subtle: #64748b;
+      --emerald: #2447e0;
+      --emerald-dark: #1b38b8;
+      --emerald-glow: rgba(36, 71, 224, 0.18);
+      --emerald-soft: rgba(36, 71, 224, 0.08);
+      --cyan: #0284c7;
+      --indigo: #4f46e5;
+      --amber: #d97706;
+      --amber-soft: rgba(217, 119, 6, 0.1);
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+      --shadow-lg: 0 20px 35px -8px rgba(15, 23, 42, 0.09), 0 1px 3px rgba(15, 23, 42, 0.05);
+      --shadow-xl: 0 25px 60px -15px rgba(15, 23, 42, 0.12);
+      --nav-bg: rgba(255, 255, 255, 0.92);
+      --orb-opacity: 0.15;
+    }
+
+    /* Dark Mode Overrides (nxtsmarthome.com.au extracted color scheme) */
+    html.dark {
+      --font-family: var(--site-font-family);
+      --bg: #151616;
+      --bg-surface: #222324;
+      --bg-card: rgba(34, 35, 36, 0.85);
+      --bg-card-hover: rgba(41, 42, 44, 0.95);
+      --bg-alt: #1f2937;
+      --border: #313131;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-focus: #8ba2ff;
+      --text: #ffffff;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
+      --emerald: #6c86f5;
+      --emerald-dark: #2447e0;
+      --emerald-glow: rgba(108, 134, 245, 0.22);
+      --emerald-soft: rgba(108, 134, 245, 0.12);
+      --brand: #8ba2ff;
+      --brand-hover: #6c86f5;
+      --cyan: #38bdf8;
+      --indigo: #8ba2ff;
+      --amber: #ff9b1a;
+      --amber-soft: rgba(255, 155, 26, 0.15);
+      --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.55);
+      --shadow-xl: 0 25px 60px rgba(0, 0, 0, 0.65);
+      --nav-bg: rgba(21, 22, 22, 0.92);
+      --footer-bg: #0d0f10;
+      --orb-opacity: 0.18;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: inherit; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-family);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    h1, h2, h3, h4, h5, h6, button, input, select, textarea {
+      font-family: var(--font-family);
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1280px, calc(100% - 48px)); margin: 0 auto; }
+
+    /* Ambient Decorative Gradient Orbs */
+    .ambient-glow {
+      position: absolute;
+      width: 750px;
+      height: 750px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(140px);
+      opacity: var(--orb-opacity);
+      animation: float 18s ease-in-out infinite alternate;
+      transition: opacity 0.3s;
+    }
+    .glow-1 { top: -220px; left: 12%; background: radial-gradient(circle, #6c86f5 0%, transparent 70%); }
+    .glow-2 { top: 380px; right: -120px; background: radial-gradient(circle, #38bdf8 0%, transparent 70%); animation-delay: -6s; }
+    .glow-3 { top: 1300px; left: -140px; background: radial-gradient(circle, #6366f1 0%, transparent 70%); animation-delay: -11s; }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(50px, 35px) scale(1.08); }
+    }
+
+    /* Navigation Header */
+    .nav-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+    .nav-inner {
+      height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo img {
+      height: 38px;
+      width: auto;
+      display: block;
+    }
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text);
+    }
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid rgba(36, 71, 224, 0.25);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .theme-toggle-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all 0.2s;
+    }
+    .theme-toggle-btn:hover {
+      background: var(--bg-surface);
+      border-color: var(--emerald);
+      transform: translateY(-1px);
+    }
+    .mobile-toggle-btn {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 17px;
+      transition: all 0.2s;
+    }
+    .mobile-toggle-btn:hover {
+      background: var(--bg-surface);
+      border-color: var(--emerald);
+    }
+    .nav-item-dropdown {
+      position: relative;
+    }
+    .nav-item-dropdown .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: -20px;
+      min-width: 320px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.25), 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 1070;
+      margin-top: 10px;
+      animation: navDropdownFade 0.2s ease forwards;
+    }
+    .nav-item-dropdown .nav-dropdown-menu::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 0;
+      right: 0;
+      height: 12px;
+    }
+    @keyframes navDropdownFade {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .nav-item-dropdown:hover .nav-dropdown-menu,
+    .nav-item-dropdown:focus-within .nav-dropdown-menu {
+      display: flex;
+    }
+    .nav-dropdown-item {
+      display: flex !important;
+      align-items: center !important;
+      gap: 14px !important;
+      padding: 10px 14px !important;
+      border-radius: 12px !important;
+      color: var(--text) !important;
+      text-decoration: none !important;
+      transition: all 0.2s ease !important;
+    }
+    .nav-dropdown-item:hover {
+      background: var(--bg-alt) !important;
+      color: var(--brand, var(--emerald)) !important;
+      transform: translateX(3px);
+    }
+    .dropdown-icon {
+      font-size: 18px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .nav-drop-title {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .nav-drop-sub {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-top: 2px;
+    }
+    .nav-dropdown-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 6px 8px;
+    }
+    .home-mobile-drawer {
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      padding: 16px 0;
+    }
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+    .mobile-nav-link:hover {
+      background: var(--bg-alt);
+      color: var(--brand, var(--emerald));
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 12px;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+    .btn-ghost {
+      color: var(--text);
+      background: var(--bg-surface);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-ghost:hover {
+      background: var(--bg-alt);
+      border-color: var(--emerald);
+      transform: translateY(-1px);
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6c86f5 0%, #2447e0 100%);
+      color: #ffffff;
+      font-weight: 800;
+      box-shadow: 0 4px 18px var(--emerald-glow);
+    }
+    .btn-primary:hover {
+      box-shadow: 0 8px 25px rgba(108, 134, 245, 0.4);
+      transform: translateY(-2px);
+      filter: brightness(1.04);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      position: relative;
+      padding: 90px 0 100px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: radial-gradient(ellipse at 50% 0%, rgba(108, 134, 245, 0.08) 0%, transparent 65%),
+                  linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, var(--bg) 100%);
+    }
+    .hero-content {
+      text-align: center;
+      max-width: 920px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 18px;
+      border-radius: 999px;
+      background: var(--bg-surface);
+      border: 1px solid rgba(36, 71, 224, 0.3);
+      color: var(--emerald);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px var(--emerald-soft);
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+    .hero-title {
+      font-family: var(--font-family);
+      font-size: clamp(44px, 6.2vw, 76px);
+      font-weight: 800 !important;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+    .hero-gradient-text {
+      background: linear-gradient(135deg, #0f172a 15%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    html.dark .hero-gradient-text {
+      background: linear-gradient(135deg, #ffffff 20%, #94a3b8 60%, var(--emerald) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: clamp(17px, 2vw, 20px);
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 760px;
+      margin: 0 auto 38px;
+    }
+
+    /* Hero Quick Launcher */
+    .hero-launcher {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 10px;
+      max-width: 780px;
+      margin: 0 auto 44px;
+      box-shadow: var(--shadow-xl);
+      transition: all 0.3s;
+    }
+    .launcher-tabs {
+      display: flex;
+      gap: 6px;
+      padding: 6px;
+      border-bottom: 1px solid var(--border-light);
+      overflow-x: auto;
+    }
+    .launcher-tab {
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .launcher-tab.active {
+      background: var(--bg-alt);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .launcher-tab:hover:not(.active) {
+      color: var(--text);
+    }
+    .launcher-form {
+      display: flex;
+      align-items: center;
+      padding: 8px 8px 8px 16px;
+      gap: 12px;
+    }
+    .launcher-icon {
+      color: var(--emerald);
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+    }
+    .launcher-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-size: 16px;
+      font-family: inherit;
+      min-width: 180px;
+    }
+    .launcher-input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    /* Trust Stats */
+    .hero-stats {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+    .stat-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+    .stat-number {
+      font-family: var(--font-family);
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+    .stat-number span { color: var(--emerald); }
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.35;
+      font-weight: 500;
+    }
+
+    /* AdSense Responsive Slot Wrapper */
+    .ad-container-slot {
+      margin: 40px auto;
+      max-width: 970px;
+      padding: 12px;
+      background: var(--bg-surface);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      text-align: center;
+      color: var(--text-subtle);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: var(--shadow-sm);
+    }
+    .ad-container-slot-inner {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      border-radius: 8px;
+      color: var(--text-subtle);
+    }
+
+    /* Tools Explorer Section */
+    .section-tools {
+      padding: 95px 0 60px;
+      position: relative;
+    }
+    .section-head-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 36px;
+      flex-wrap: wrap;
+    }
+    .section-kicker {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-family);
+      font-size: clamp(30px, 3.8vw, 44px);
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.15;
+    }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 580px;
+    }
+
+    /* Filter Bar & Live Search */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .category-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .category-pill {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .category-pill:hover {
+      background: var(--bg-alt);
+      color: var(--text);
+      border-color: var(--emerald);
+    }
+    .category-pill.active {
+      background: var(--emerald);
+      color: #ffffff;
+      border-color: var(--emerald);
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(108, 134, 245, 0.3);
+    }
+    .search-input-box {
+      position: relative;
+      min-width: 280px;
+      max-width: 380px;
+      flex: 1;
+    }
+    .search-input-box input {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 10px 18px 10px 42px;
+      color: var(--text);
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .search-input-box input:focus {
+      border-color: var(--emerald);
+      box-shadow: 0 0 0 3px rgba(108, 134, 245, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-subtle);
+      font-size: 14px;
+      pointer-events: none;
+    }
+
+    /* Tool Cards Grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 20px;
+    }
+    .tool-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .tool-card:hover {
+      border-color: rgba(108, 134, 245, 0.5);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .tool-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(36, 71, 224, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--emerald);
+    }
+    .tool-icon-wrap img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+    }
+    .card-tag {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--bg-alt);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .card-tag.tag-pop {
+      background: #fef3c7;
+      color: #b45309;
+      border-color: #fde68a;
+    }
+    html.dark .card-tag.tag-pop {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+    .card-tag.tag-yt {
+      background: #fee2e2;
+      color: #dc2626;
+      border-color: #fecaca;
+    }
+    html.dark .card-tag.tag-yt {
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    .card-tag.tag-moz {
+      background: #e0f2fe;
+      color: #0369a1;
+      border-color: #bae6fd;
+    }
+    html.dark .card-tag.tag-moz {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--cyan);
+      border-color: rgba(6, 182, 212, 0.3);
+    }
+    .tool-title {
+      font-family: var(--font-family);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .tool-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--emerald);
+    }
+    .card-arrow {
+      transition: transform 0.2s;
+    }
+    .tool-card:hover .card-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Editorial Authority & Search Standards Section (AdSense Crucial) */
+    .section-editorial {
+      padding: 90px 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+    .editorial-header {
+      max-width: 820px;
+      margin: 0 auto 50px;
+      text-align: center;
+    }
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    .editorial-block {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: var(--shadow-sm);
+    }
+    .editorial-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .editorial-block h3 {
+      font-family: var(--font-family);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .editorial-block p {
+      font-size: 14.5px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .editorial-points {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .editorial-points li {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .editorial-points li:before {
+      content: "✓";
+      color: var(--emerald);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    /* Features Section */
+    .section-features {
+      padding: 95px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-alt);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .feature-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.25s;
+    }
+    .feature-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .feature-icon-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 20px;
+      background: var(--emerald-soft);
+      color: var(--emerald);
+      border: 1px solid rgba(36, 71, 224, 0.2);
+    }
+    .feature-card h3 {
+      font-family: var(--font-family);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* 3-Step Process */
+    .section-process {
+      padding: 95px 0;
+    }
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .process-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 30px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    .process-number {
+      font-family: var(--font-family);
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--border);
+      position: absolute;
+      top: 24px;
+      right: 28px;
+    }
+    .process-step-pill {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+    .process-card h3 {
+      font-family: var(--font-family);
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .process-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* FAQ Accordion Section (AdSense Requirement) */
+    .section-faq {
+      padding: 95px 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg);
+    }
+    .faq-container {
+      max-width: 860px;
+      margin: 40px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .faq-item {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 22px 26px;
+      font-family: var(--font-family);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .faq-icon-arrow {
+      color: var(--emerald);
+      font-size: 20px;
+      font-weight: 900;
+      transition: transform 0.25s ease;
+    }
+    .faq-item.active .faq-icon-arrow {
+      transform: rotate(45deg);
+    }
+    .faq-answer {
+      display: none;
+      padding: 0 26px 24px;
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      border-top: 1px solid var(--border-light);
+      margin-top: 4px;
+      padding-top: 18px;
+    }
+    .faq-item.active .faq-answer {
+      display: block;
+    }
+
+    /* Blog & Guides Section */
+    .section-guides {
+      padding: 95px 0;
+      border-top: 1px solid var(--border);
+      background: var(--bg-surface);
+    }
+    .guides-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+    .guide-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .guide-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: rgba(36, 71, 224, 0.4);
+    }
+    .guide-image-wrap {
+      height: 185px;
+      width: 100%;
+      background: #f1f5f9;
+      overflow: hidden;
+      position: relative;
+    }
+    .guide-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .guide-card:hover .guide-image-wrap img {
+      transform: scale(1.04);
+    }
+    .guide-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .guide-meta {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--emerald);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+    .guide-title {
+      font-family: var(--font-family);
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.35;
+      margin-bottom: 10px;
+    }
+    .guide-excerpt {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+    .guide-link {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--emerald);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Bottom High-Impact CTA */
+    .section-cta {
+      padding: 70px 0 100px;
+    }
+    .cta-card {
+      background: linear-gradient(135deg, #0d1b47 0%, #162e96 50%, #0f172a 100%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 28px;
+      padding: 56px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 36px;
+      box-shadow: 0 20px 50px rgba(13, 27, 71, 0.25);
+      flex-wrap: wrap;
+    }
+    .cta-card h2 {
+      font-family: var(--font-family);
+      font-size: clamp(30px, 3.8vw, 44px);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .cta-card p {
+      font-size: 16.5px;
+      color: #d6dffd;
+      max-width: 580px;
+    }
+    .cta-card .btn-primary {
+      background: #ffffff;
+      color: #0d1b47;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    }
+    .cta-card .btn-primary:hover {
+      background: #f2f5ff;
+      transform: translateY(-2px);
+    }
+
+    /* Rich AdSense-Compliant Multi-Column Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 75px 0 45px;
+      background: var(--bg-alt);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .footer-columns {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1.2fr;
+      gap: 40px;
+      margin-bottom: 50px;
+    }
+    .footer-col-brand p {
+      margin: 16px 0 20px;
+      line-height: 1.65;
+      max-width: 320px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .footer-col-title {
+      font-family: var(--font-family);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 18px;
+      letter-spacing: -0.01em;
+    }
+    .footer-col-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+    .footer-col-links a {
+      color: var(--text-muted);
+      transition: color 0.2s;
+      font-size: 13.5px;
+    }
+    .footer-col-links a:hover {
+      color: var(--emerald);
+    }
+    .footer-compliance-box {
+      border-top: 1px solid var(--border);
+      padding-top: 30px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      font-size: 12.5px;
+      color: var(--text-subtle);
+      line-height: 1.6;
+    }
+    .footer-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--text-subtle);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Floating Stakeholder Preview Notice */
+    .floating-preview-banner {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 100;
+      background: var(--bg-surface);
+      border: 1px solid rgba(36, 71, 224, 0.4);
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .preview-badge-pill {
+      background: var(--emerald);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .process-grid, .editorial-grid { grid-template-columns: 1fr; }
+      .footer-columns { grid-template-columns: 1fr 1fr; }
+      .nav-menu { display: none; }
+      .mobile-toggle-btn { display: inline-flex; }
+      .d-none-mobile { display: none !important; }
+    }
+    @media (max-width: 768px) {
+      .hero-launcher { border-radius: 18px; }
+      .launcher-form { flex-direction: column; align-items: stretch; }
+      .launcher-form .btn { width: 100%; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .footer-columns { grid-template-columns: 1fr; }
+      .cta-card { padding: 40px 24px; }
+    }
+  </style>
+  <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-faq.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-faq.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-audience.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-audience.css') ?: '1' }}">
+</head>
+<body>
+
+  <!-- Ambient Light Accents -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header Navigation -->
+  <header class="nav-header">
+    <div class="wrap nav-inner">
+      <a href="{{ route('homepage.preview') }}" class="brand-logo">
+        <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO">
+      </a>
+
+      @php
+        $autoNavPages = \App\Models\Admin\Page::whereIn('type', ['page', 'contact'])
+          ->whereNotIn('slug', [
+            'about-us', 'faqs', 'contact',
+            'terms-conditions', 'privacy-policy', 'cookie-information', 'affiliate-disclosure',
+            'backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide'
+          ])
+          ->get();
+      @endphp
+
+      <nav class="nav-menu">
+        <a href="{{ route('tools') }}" class="nav-link">Tools <span class="nav-badge">{{ count($allTools) }}</span></a>
+        
+        <div class="nav-item-dropdown">
+          <a href="{{ url('/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            <span>Guides</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </a>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🔗</span>
+              <div>
+                <div class="nav-drop-title">Backlink Monitoring Guide</div>
+                <div class="nav-drop-sub">Detect lost links and audit link profiles</div>
+              </div>
+            </a>
+            <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">🎯</span>
+              <div>
+                <div class="nav-drop-title">Link Building Guide</div>
+                <div class="nav-drop-sub">Prospecting & high-impact outreach</div>
+              </div>
+            </a>
+            <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📈</span>
+              <div>
+                <div class="nav-drop-title">SEO Audit & Reporting Hub</div>
+                <div class="nav-drop-sub">Technical health check & diagnostic workflows</div>
+              </div>
+            </a>
+            <div class="nav-dropdown-divider"></div>
+            <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
+              <span class="dropdown-icon">📰</span>
+              <div>
+                <div class="nav-drop-title">All SEO Guides & Tutorials</div>
+                <div class="nav-drop-sub">Explore the full knowledge repository</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
+        <a href="{{ url('/about-us') }}" class="nav-link">About</a>
+        <a href="{{ url('/faqs') }}" class="nav-link">FAQ</a>
+        <a href="{{ url('/contact') }}" class="nav-link">Contact</a>
+
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
+      </nav>
+
+      <div class="nav-actions">
+        <button class="theme-toggle-btn" type="button" onclick="toggleTheme()" title="Toggle Light / Dark mode" aria-label="Toggle Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">Browse {{ count($allTools) }}+ Tools →</a>
+        <button class="mobile-toggle-btn" type="button" onclick="togglePreviewMobileMenu()" aria-label="Toggle Navigation Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer -->
+    <div id="previewMobileDrawer" class="home-mobile-drawer" style="display: none;">
+      <div class="wrap py-3" style="display: flex; flex-direction: column; gap: 4px;">
+        <a href="{{ route('tools') }}" class="mobile-nav-link">
+          <span>Tools</span>
+          <span class="nav-badge">{{ count($allTools) }}</span>
+        </a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Guides & Tutorials</a>
+        <a href="{{ url('/blog') }}" class="mobile-nav-link">Blog</a>
+        <a href="{{ url('/about-us') }}" class="mobile-nav-link">About Us</a>
+        <a href="{{ url('/faqs') }}" class="mobile-nav-link">FAQs</a>
+        <a href="{{ url('/contact') }}" class="mobile-nav-link">Contact</a>
+        @foreach($autoNavPages as $autoPage)
+          @php
+            $autoPageTrans = $autoPage->translate(app()->getLocale());
+            $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
+          @endphp
+          <a href="{{ url('/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
+        @endforeach
+        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">Browse {{ count($allTools) }}+ Tools →</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="wrap hero-content">
+      <div class="hero-pill">
+        <span class="pulse-dot"></span>
+        <span>60+ Free SEO & YouTube Tools • Zero Registration</span>
+      </div>
+
+      <h1 class="hero-title">
+        Dominate Search Rankings with <br>
+        <span class="hero-gradient-text">Instant SEO Intelligence.</span>
+      </h1>
+
+      <p class="hero-desc">
+        Fast, pinpoint accuracy for measuring domain authority, inspecting backlinks, extracting YouTube tags, validating technical tags, and producing content ready to rank.
+      </p>
+
+      <!-- Interactive Quick-Run Launcher -->
+      <div class="hero-launcher">
+        <div class="launcher-tabs">
+          <button class="launcher-tab active" type="button" onclick="switchLauncherTab(this, 'domain-authority-checker', 'Enter domain e.g. fxnseo.com or wikipedia.org', 'domain')">
+            🌐 Domain Authority
+          </button>
+          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'youtube-title-extractor', 'Paste YouTube video URL e.g. https://www.youtube.com/watch?v=...', 'link')">
+            📹 YouTube Extractor
+          </button>
+          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'backlink-checker', 'Enter domain to check live backlinks e.g. github.com', 'domain')">
+            🔗 Backlink Checker
+          </button>
+          <button class="launcher-tab" type="button" onclick="switchLauncherTab(this, 'meta-tags-analyzer', 'Enter website URL to audit meta tags', 'link')">
+            🏷️ Meta Tags Analyzer
+          </button>
+        </div>
+
+        <form class="launcher-form" id="launcher-form" onsubmit="return handleLauncherSubmit(event)">
+          <span class="launcher-icon">⚡</span>
+          <input 
+            type="text" 
+            id="launcher-input" 
+            class="launcher-input" 
+            placeholder="Enter domain e.g. fxnseo.com or wikipedia.org" 
+            aria-label="Quick SEO Check"
+            required
+          >
+          <button type="submit" class="btn btn-primary">
+            Analyze Now →
+          </button>
+        </form>
+      </div>
+
+      <!-- Trust Stats -->
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">60<span>+</span></div>
+          <div class="stat-label">Production Tools<br>Ready to Use</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100<span>%</span></div>
+          <div class="stat-label">Completely Free<br>No Card Needed</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Moz<span>™</span></div>
+          <div class="stat-label">Official DA / PA<br>API Metrics</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">YT<span>v3</span></div>
+          <div class="stat-label">YouTube Data<br>Integration</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tools Explorer Section -->
+  <section class="section-tools" id="tools">
+    <div class="wrap">
+      <div class="section-head-bar">
+        <div>
+          <span class="section-kicker">✦ Complete SEO Toolbox</span>
+          <h2 class="section-title">Explore All 60 Free Tools</h2>
+        </div>
+        <p class="section-subtitle">
+          From deep Moz authority checks to YouTube tag extraction and robots.txt generation — everything is available directly in your browser.
+        </p>
+      </div>
+
+      <!-- Filter Pills & Search -->
+      <div class="filter-bar">
+        <div class="category-pills" id="category-pills">
+          <button class="category-pill active" onclick="filterCategory('all', this)">All Tools ({{ count($allTools) }})</button>
+          <button class="category-pill" onclick="filterCategory('popular', this)">🔥 Most Popular</button>
+          <button class="category-pill" onclick="filterCategory('youtube', this)">📹 YouTube Suite (18)</button>
+          <button class="category-pill" onclick="filterCategory('backlink', this)">🔗 Backlinks & Authority</button>
+          <button class="category-pill" onclick="filterCategory('content', this)">📝 Content & Text</button>
+          <button class="category-pill" onclick="filterCategory('technical', this)">⚙️ Technical & DNS</button>
+        </div>
+
+        <div class="search-input-box">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="tool-search-input" 
+            placeholder="Search tools (e.g. Moz, YouTube, DNS)..." 
+            oninput="handleToolSearch(this.value)"
+          >
+        </div>
+      </div>
+
+      <!-- Dynamic Cards Grid -->
+      <div class="tools-grid" id="tools-grid">
+        @foreach($allTools as $tool)
+          @php
+            $slug = $tool['slug'];
+            $isYt = str_contains($slug, 'youtube');
+            $isMoz = str_contains($slug, 'authority') || str_contains($slug, 'moz') || str_contains($slug, 'backlink');
+            $isContent = str_contains($slug, 'rewriter') || str_contains($slug, 'keyword') || str_contains($slug, 'word') || str_contains($slug, 'text') || str_contains($slug, 'plagiarism');
+            $isTech = str_contains($slug, 'dns') || str_contains($slug, 'whois') || str_contains($slug, 'robots') || str_contains($slug, 'sitemap') || str_contains($slug, 'redirect') || str_contains($slug, 'ping') || str_contains($slug, 'speed') || str_contains($slug, 'server');
+            
+            $catTag = 'tools';
+            if ($isYt) $catTag = 'youtube';
+            elseif ($isMoz) $catTag = 'backlink';
+            elseif ($isContent) $catTag = 'content';
+            elseif ($isTech) $catTag = 'technical';
+          @endphp
+
+          <a 
+            href="{{ $tool['link'] }}" 
+            class="tool-card" 
+            data-slug="{{ $tool['slug'] }}"
+            data-category="{{ $catTag }}"
+            data-popular="{{ !empty($tool['popular']) ? '1' : '0' }}"
+            data-search="{{ strtolower($tool['title'] . ' ' . $tool['description'] . ' ' . $tool['slug']) }}"
+          >
+            <div class="card-top">
+              <div class="tool-icon-wrap">
+                @if(!empty($tool['icon_image']))
+                  <img src="{{ $tool['icon_image'] }}" alt="{{ $tool['title'] }}">
+                @else
+                  ⚡
+                @endif
+              </div>
+
+              @if(!empty($tool['popular']))
+                <span class="card-tag tag-pop">Popular</span>
+              @elseif($isYt)
+                <span class="card-tag tag-yt">YouTube API</span>
+              @elseif($isMoz)
+                <span class="card-tag tag-moz">Moz Engine</span>
+              @else
+                <span class="card-tag">Fast Check</span>
+              @endif
+            </div>
+
+            <h3 class="tool-title">{{ $tool['title'] }}</h3>
+            <p class="tool-desc">{{ \Illuminate\Support\Str::limit($tool['description'] ?: 'Perform instant, reliable SEO data lookups with real-time accuracy.', 110) }}</p>
+
+            <div class="card-bottom">
+              <span>Launch Tool</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </a>
+        @endforeach
+      </div>
+
+      <div id="no-search-results" style="display: none; text-align: center; padding: 60px 20px;">
+        <h3 style="font-size: 22px; color: var(--text); margin-bottom: 8px;">No matching tools found</h3>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">Try searching for "backlink", "youtube", "keyword", or "authority".</p>
+        <button class="btn btn-ghost" onclick="resetToolSearch()">Clear Search Filter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Knowledge & Search Standards Section (AdSense Value-Add Content) -->
+  <section class="section-editorial" id="editorial-insights">
+    <div class="wrap">
+      <div class="editorial-header">
+        <span class="section-kicker" style="justify-content: center;">✦ Educational Search Standards</span>
+        <h2 class="section-title">The Four Pillars of Search Visibility</h2>
+        <p class="section-subtitle" style="margin: 0 auto;">
+          High organic rankings require a balance of technical accessibility, editorial content relevance, domain authority, and multimedia discoverability.
+        </p>
+      </div>
+
+      <div class="editorial-grid">
+        <div class="editorial-block">
+          <span class="editorial-icon">🌐</span>
+          <h3>1. Domain Authority & Backlink Health</h3>
+          <p>
+            Search algorithms rely on inbound hyperlink citations to gauge trustworthiness. Moz's 100-point Domain Authority (DA) and Page Authority (PA) metrics predict ranking capability based on root domain diversity and link equity.
+          </p>
+          <ul class="editorial-points">
+            <li>Assess competitor link velocity and anchor text variation.</li>
+            <li>Detect broken or lost referral pathways before ranking drop-offs.</li>
+            <li>Prioritize relevant editorial links over bulk automated placements.</li>
+          </ul>
+        </div>
+
+        <div class="editorial-block">
+          <span class="editorial-icon">⚙️</span>
+          <h3>2. Technical Crawlability & Indexation</h3>
+          <p>
+            Before a page can rank, search engine crawlers (like Googlebot) must find, render, and index it efficiently. Technical hygiene prevents wasted crawl budget and eliminates indexation barriers.
+          </p>
+          <ul class="editorial-points">
+            <li>Generate explicit crawler permissions with validated robots.txt syntax.</li>
+            <li>Structure clean XML sitemaps to communicate page hierarchy and updates.</li>
+            <li>Diagnose redirect loops, canonical anomalies, and server latency.</li>
+          </ul>
+        </div>
+
+        <div class="editorial-block">
+          <span class="editorial-icon">✍️</span>
+          <h3>3. On-Page Relevance & Entity Optimization</h3>
+          <p>
+            Modern semantic algorithms (like Google BERT and MUM) look for comprehensive answers to search intent rather than repeated keywords. Natural keyword density and high-converting meta tags drive click-throughs.
+          </p>
+          <ul class="editorial-points">
+            <li>Maintain recommended keyword frequency (1–3%) to avoid spam penalties.</li>
+            <li>Write click-worthy meta titles (under 60 chars) and meta descriptions.</li>
+            <li>Refresh outdated passages to maintain topical authority and freshness.</li>
+          </ul>
+        </div>
+
+        <div class="editorial-block">
+          <span class="editorial-icon">📹</span>
+          <h3>4. Video SEO & YouTube Algorithm Signals</h3>
+          <p>
+            YouTube is the world's second-largest search engine. Video discoverability relies on high-CTR thumbnails, matching search tags, informative descriptions, and audience retention metrics.
+          </p>
+          <ul class="editorial-points">
+            <li>Extract trending hashtags and high-ranking competitor video tags.</li>
+            <li>Analyze channel subscriber velocity, view velocity, and engagement ratios.</li>
+            <li>Structure timestamped video descriptions for enhanced Google rich snippets.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section-features" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <div class="features-intro">
+        <div class="section-head">
+          <span class="section-eyebrow">Find your next move</span>
+          <h2 class="section-title" id="features-title">Built for Creators, Webmasters & SEO Teams</h2>
+        </div>
+        <div class="features-intro-copy">
+          <p>From your next video to your next site audit, turn search data into a clear plan of action.</p>
+          <a href="#tools" class="features-explore">Explore all tools <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M10 8L16 12L10 16Z"/></svg></span><span class="audience-label">For creators</span></div>
+          <h3>Make your next upload count.</h3>
+          <p>Shape stronger video titles and descriptions with a focused YouTube toolkit.</p>
+          <ul><li>Discover tags and content ideas</li><li>Review channel and video statistics</li><li>Refine titles, descriptions and keywords</li></ul>
+          <a href="{{ url('/youtube-tag-extractor') }}" class="audience-tool-link">Explore video tags <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M3 9H21M8 14L6 16L8 18M16 14L18 16L16 18M13 13L11 19"/></svg></span><span class="audience-label">For webmasters</span></div>
+          <h3>Keep your website in good shape.</h3>
+          <p>Check the technical details that help search engines reach and understand your pages.</p>
+          <ul><li>Check HTTP responses and redirects</li><li>Build robots.txt files and XML sitemaps</li><li>Inspect DNS records and meta tags</li></ul>
+          <a href="{{ url('/http-status-code-checker') }}" class="audience-tool-link">Check your site status <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20H21M6 16V12M12 16V8M18 16V4M4 9L10 4L14 6L20 2"/></svg></span><span class="audience-label">For SEO teams</span></div>
+          <h3>Give your next audit more clarity.</h3>
+          <p>Bring authority metrics, backlink checks and on-page insights into your review process.</p>
+          <ul><li>Compare Moz Domain and Page Authority</li><li>Review backlink health and opportunities</li><li>Analyze keywords and on-page content</li></ul>
+          <a href="{{ url('/da-pa-checker') }}" class="audience-tool-link">Check domain authority <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <div class="features-bottom-note"><span class="features-note-dot" aria-hidden="true"></span>Free tools. No installation. A clearer place to start.</div>
+    </div>
+  </section>
+
+<!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
+  <section class="section-faq" id="faqs">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="faq-eyebrow">Answers at a glance</span>
+        <h2 class="section-title">Common Questions About Our SEO Suite</h2>
+        <p class="section-subtitle">
+          Learn more about how our tools work, data sources, accuracy, and user privacy commitments.
+        </p>
+      </div>
+
+      <div class="faq-container">
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>What is FXN SEO and how do the free tools work?</span></summary>
+          <div class="faq-answer">FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.</div>
+        </details>
+
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Are the Moz Domain Authority and Page Authority metrics official?</span></summary>
+          <div class="faq-answer">Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.</div>
+        </details>
+
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Do you store my input data, video URLs, or target domains?</span></summary>
+          <div class="faq-answer">No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.</div>
+        </details>
+        </div>
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Why is keyword density important for on-page SEO?</span></summary>
+          <div class="faq-answer">Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.</div>
+        </details>
+
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>How often should webmasters monitor backlinks and technical health?</span></summary>
+          <div class="faq-answer">Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.</div>
+        </details>
+
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Can I use these tools on mobile devices and tablets?</span></summary>
+          <div class="faq-answer">Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.</div>
+        </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest Guides / Blog Section -->
+  <section class="section-guides">
+    <div class="wrap">
+      <div class="section-head-bar">
+        <div>
+          <span class="section-kicker">✦ In-Depth Editorial Hub</span>
+          <h2 class="section-title">Fresh SEO & Backlink Insights</h2>
+        </div>
+        <a href="{{ url('/blog') }}" class="btn btn-ghost">View All Articles →</a>
+      </div>
+
+      <div class="guides-grid">
+        @forelse($resources as $post)
+          <a href="{{ url('/blog/' . $post['slug']) }}" class="guide-card">
+            <div class="guide-image-wrap">
+              <img class="post-featured-image" src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
+            </div>
+            <div class="guide-body">
+              <div class="guide-meta">{{ $post['published_at'] ?? 'Guide' }}</div>
+              <h3 class="guide-title">{{ $post['title'] }}</h3>
+              <p class="guide-excerpt">{{ \Illuminate\Support\Str::limit($post['excerpt'] ?: 'Discover essential strategies and actionable guidance for ranking higher in organic search.', 120) }}</p>
+              <span class="guide-link">Read Guide →</span>
+            </div>
+          </a>
+        @empty
+          <p style="color: var(--text-muted);">Articles are being loaded.</p>
+        @endforelse
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="section-cta">
+    <div class="wrap">
+      <div class="cta-card">
+        <div>
+          <h2>Ready to Audit & Grow Your Traffic?</h2>
+          <p>Join thousands of webmasters, digital marketers, and agencies making smarter SEO decisions every single day.</p>
+        </div>
+        <a href="#tools" class="btn btn-primary" style="padding: 16px 32px; font-size: 16px;">
+          Start Checking Now — 100% Free →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rich AdSense-Compliant Multi-Column Footer -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-columns">
+        <!-- Brand Info -->
+        <div class="footer-col-brand">
+          <a href="{{ route('homepage.preview') }}" class="brand-logo">
+            <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO">
+          </a>
+          <p>
+            FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.
+          </p>
+          <div style="display: flex; gap: 10px; align-items: center; color: var(--emerald); font-weight: 700; font-size: 13px;">
+            <span>✓ Verified Moz Data</span> • <span>✓ YouTube v3 API</span>
+          </div>
+        </div>
+
+        <!-- Col 1: SEO Tools -->
+        <div>
+          <h4 class="footer-col-title">Popular Tools</h4>
+          <ul class="footer-col-links">
+            <li><a href="{{ url('/domain-authority-checker') }}">Domain Authority</a></li>
+            <li><a href="{{ url('/page-authority-checker') }}">Page Authority</a></li>
+            <li><a href="{{ url('/backlink-checker') }}">Backlink Checker</a></li>
+            <li><a href="{{ url('/meta-tags-analyzer') }}">Meta Tags Analyzer</a></li>
+            <li><a href="{{ url('/keyword-density-checker') }}">Keyword Density</a></li>
+            <li><a href="{{ url('/robots-txt-generator') }}">Robots.txt Generator</a></li>
+            <li><a href="{{ url('/blog/xml-sitemap-generator-better-seo') }}">XML Sitemap Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 2: YouTube Suite -->
+        <div>
+          <h4 class="footer-col-title">YouTube Suite</h4>
+          <ul class="footer-col-links">
+            <li><a href="{{ url('/youtube-title-extractor') }}">Title Extractor</a></li>
+            <li><a href="{{ url('/youtube-tag-extractor') }}">Tag Extractor</a></li>
+            <li><a href="{{ url('/youtube-hashtag-extractor') }}">Hashtag Extractor</a></li>
+            <li><a href="{{ url('/youtube-channel-statistics') }}">Channel Statistics</a></li>
+            <li><a href="{{ url('/youtube-video-statistics') }}">Video Statistics</a></li>
+            <li><a href="{{ url('/youtube-money-calculator') }}">Money Calculator</a></li>
+            <li><a href="{{ url('/youtube-trend') }}">Trending Videos</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Knowledge Hub -->
+        <div>
+          <h4 class="footer-col-title">Knowledge Hub</h4>
+          <ul class="footer-col-links">
+            <li><a href="{{ url('/blog') }}">SEO Blog</a></li>
+            <li><a href="{{ url('/backlink-monitoring-guide') }}">Backlink Guide</a></li>
+            <li><a href="{{ url('/link-opportunity-guide') }}">Link Building Guide</a></li>
+            <li><a href="{{ url('/seo-audit-guide') }}">SEO Audit Hub</a></li>
+            <li><a href="{{ url('/faqs') }}">Common FAQs</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Trust & Compliance -->
+        <div>
+          <h4 class="footer-col-title">Trust & Legal</h4>
+          <ul class="footer-col-links">
+            <li><a href="{{ url('/about-us') }}">About Us</a></li>
+            <li><a href="{{ url('/contact') }}">Contact Support</a></li>
+            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
+            <li><a href="{{ url('/terms-conditions') }}">Terms of Service</a></li>
+            <li><a href="{{ url('/cookie-information') }}">Cookie Information</a></li>
+            <li><a href="{{ url('/affiliate-disclosure') }}">Affiliate Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Compliance & AdSense Policy Notice -->
+      <div class="footer-compliance-box">
+        <p>
+          <strong>Publisher & Advertising Disclosure:</strong> FXN SEO is an independent digital marketing intelligence resource. This platform is supported by digital advertising, including Google AdSense and affiliate partnerships. In accordance with Google Publisher Policies and FTC guidelines, we may receive compensation when visitors interact with sponsored placements or acquire services through external links, at no additional cost to you.
+        </p>
+        <p>
+          <strong>Data Privacy & GDPR Commitment:</strong> We do not log, retain, or commercialize individual website queries, target domains, or video URLs submitted to our tools. All third-party trademarks and brand logos (including Moz, YouTube, and Google) belong to their respective copyright holders.
+        </p>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom-bar">
+        <div>
+          © {{ date('Y') }} FXN SEO. All rights reserved.
+        </div>
+        <div style="display: flex; gap: 20px;">
+          <a href="{{ url('/privacy-policy') }}">Privacy</a>
+          <a href="{{ url('/terms-conditions') }}">Terms</a>
+          <a href="{{ url('/cookie-information') }}">Cookies</a>
+          <a href="{{ url('/contact') }}">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Stakeholder Preview Notice -->
+  <div class="floating-preview-banner">
+    <span class="preview-badge-pill">Redesign Preview</span>
+    <span>AdSense-Optimized Layout · fxnseo.com/homepage-preview</span>
+  </div>
+
+  <script>
+    // Mobile menu toggle
+    function togglePreviewMobileMenu() {
+      const drawer = document.getElementById('previewMobileDrawer');
+      if (drawer) {
+        drawer.style.display = (drawer.style.display === 'none' || !drawer.style.display) ? 'block' : 'none';
+      }
+    }
+
+    // Theme toggle logic (Light is default)
+    function toggleTheme() {
+      const html = document.getElementById('html-root');
+      const isDark = html.classList.contains('dark');
+      const newTheme = isDark ? 'light' : 'dark';
+      html.classList.remove('light', 'dark');
+      html.classList.add(newTheme);
+      document.getElementById('theme-icon').textContent = newTheme === 'light' ? '🌙' : '☀️';
+      localStorage.setItem('preview_theme', newTheme);
+    }
+
+    // Check saved theme preference for preview
+    (function() {
+      const saved = localStorage.getItem('preview_theme');
+      if (saved) {
+        document.getElementById('html-root').className = saved;
+        const icon = document.getElementById('theme-icon');
+        if (icon) icon.textContent = saved === 'light' ? '🌙' : '☀️';
+      }
+    })();
+
+    // State for launcher
+    let currentLauncherSlug = 'domain-authority-checker';
+    let currentLauncherParam = 'domain';
+
+    function switchLauncherTab(btn, slug, placeholder, param) {
+      document.querySelectorAll('.launcher-tab').forEach(t => t.classList.remove('active'));
+      btn.classList.add('active');
+      currentLauncherSlug = slug;
+      currentLauncherParam = param;
+      const input = document.getElementById('launcher-input');
+      input.placeholder = placeholder;
+      input.value = '';
+      input.focus();
+    }
+
+    function handleLauncherSubmit(e) {
+      e.preventDefault();
+      const val = document.getElementById('launcher-input').value.trim();
+      if (!val) return false;
+      const targetUrl = '{{ url('/') }}/' + currentLauncherSlug;
+      window.location.href = targetUrl;
+      return false;
+    }
+
+    // Category Filter Pills
+    let activeCategory = 'all';
+    function filterCategory(cat, btn) {
+      activeCategory = cat;
+      document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      applyToolFilters();
+    }
+
+    // Search Tool Cards
+    function handleToolSearch(query) {
+      applyToolFilters();
+    }
+
+    function resetToolSearch() {
+      document.getElementById('tool-search-input').value = '';
+      activeCategory = 'all';
+      document.querySelectorAll('.category-pill').forEach((p, idx) => {
+        p.classList.toggle('active', idx === 0);
+      });
+      applyToolFilters();
+    }
+
+    function applyToolFilters() {
+      const query = (document.getElementById('tool-search-input').value || '').trim().toLowerCase();
+      const cards = document.querySelectorAll('.tool-card');
+      let visibleCount = 0;
+
+      cards.forEach(card => {
+        const cardSearch = card.dataset.search || '';
+        const cardCategory = card.dataset.category || '';
+        const isPop = card.dataset.popular === '1';
+
+        // Check category
+        let matchesCat = true;
+        if (activeCategory === 'popular') {
+          matchesCat = isPop;
+        } else if (activeCategory !== 'all') {
+          matchesCat = (cardCategory === activeCategory);
+        }
+
+        // Check search query
+        const matchesQuery = !query || cardSearch.includes(query);
+
+        if (matchesCat && matchesQuery) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      const noRes = document.getElementById('no-search-results');
+      if (noRes) {
+        noRes.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+    }
+
+    // FAQ Accordion Toggle
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const wasActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+      if (!wasActive) {
+        item.classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

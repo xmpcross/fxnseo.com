@@ -14,7 +14,7 @@
             <label class="form-label">{{ __('Enter a website URL') }}</label>
             <div class="col">
                 <div class="input-group input-group-flat">
-                    <input type="text" id="input" class="form-control" wire:model.defer="link" placeholder="https://..." required />
+                    <input type="text" id="input" class="form-control" wire:model.defer="link" placeholder="{{ __('https://...') }}" required />
                     <span class="input-group-text">
                         <div id="paste" class="cursor-pointer" title="{{ __('Paste') }}" data-bs-original-title="{{ __('Paste') }}" data-bs-toggle="tooltip" wire:ignore>
                           <i class="far fa-clipboard fa-fw"></i>
@@ -43,7 +43,7 @@
                 @if ( $resolution == 'custom')
                     <div class="form-group my-3">
                         <label class="form-label">{{ __('Enter Custom Resolution:') }}</label>
-                        <input type="text" class="form-control" wire:model.defer="custom_resolution" placeholder="900x900" />
+                        <input type="text" class="form-control" wire:model.defer="custom_resolution" placeholder="{{ __('900x900') }}" />
                     </div>
                 @endif
 

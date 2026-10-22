@@ -67,31 +67,6 @@
 				</div>
 				<!-- End:Insert Body -->
 
-				<!-- Begin:Insert Footer -->
-				<div class="col-12">
-					<div class="card">
-						<div class="card-body">
-
-							<div class="form-group">
-								
-								<div class="d-flex">
-									<label for="insert_footer" class="form-label">{{ __('Insert Footer') }} </label>
-
-									<div class="form-check form-switch ps-3">
-										<input class="form-check-input ms-auto mb-2" type="checkbox" wire:model.defer="footer_status" checked>
-									</div>
-								</div>
-
-								<div class="col">
-									<textarea class="form-control" id="insert_footer" wire:model.defer="insert_footer" rows="8"></textarea>
-								</div>
-							</div>
-							<small class="form-hint">{{ __('Add custom scripts you might want to be loaded in the footer of your website. You need to have') }} <code class="fw-bold">{{ __('SCRIPT') }}</code> {{ __('or') }} <code class="fw-bold">{{ __('STYLE') }}</code> {{ __('tag around scripts.') }}</small>
-
-						</div>
-					</div>
-				</div>
-				<!-- End:Insert Footer -->
 			</div>
 		</div>
 

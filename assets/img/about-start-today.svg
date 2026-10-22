@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Start using fxnSEOTools today">
+  <defs>
+    <clipPath id="c4"><rect x="0" y="0" width="400" height="300" rx="16"/></clipPath>
+    <radialGradient id="v4" cx="50%" cy="48%" r="72%"><stop offset="55%" stop-color="#040c13" stop-opacity="0"/><stop offset="100%" stop-color="#040c13" stop-opacity="0.22"/></radialGradient>
+  </defs>
+  <rect x="0" y="0" width="400" height="300" rx="16" fill="none"/>
+  <g clip-path="url(#c4)">
+    <circle cx="200" cy="150" r="120" fill="#e3ecff"/>
+    <!-- flame -->
+    <path d="M200 214 C186 202 186 186 200 176 C214 186 214 202 200 214 Z" fill="#5b8bff"/>
+    <!-- fins -->
+    <path d="M172 176 L172 210 L188 194 Z" fill="#2b5df5"/>
+    <path d="M228 176 L228 210 L212 194 Z" fill="#2b5df5"/>
+    <!-- rocket body -->
+    <path d="M200 84 C222 96 236 132 236 168 L236 194 L164 194 L164 168 C164 132 178 96 200 84 Z" fill="#0046be"/>
+    <!-- window -->
+    <circle cx="200" cy="146" r="17" fill="#cfe0ff"/>
+    <circle cx="200" cy="146" r="9" fill="#5b8bff"/>
+  </g>
+</svg>
