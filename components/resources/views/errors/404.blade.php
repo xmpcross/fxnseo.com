@@ -52,7 +52,7 @@
             padding: 80px 20px;
             text-align: center;
             background: #f8fafc;
-            font-family: 'Outfit', sans-serif;
+            font-family: var(--site-font-family);
           }
           .error-404-card {
             max-width: 680px;
@@ -143,7 +143,8 @@
             color: #0f172a !important;
           }
         </style>
-    </head>
+      <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+</head>
     <body class="antialiased {{ Cookie::get('theme_mode') }}">
 
       <div class="page">

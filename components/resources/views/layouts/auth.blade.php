@@ -28,8 +28,7 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
-        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/inter-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ $header->favicon }}">
@@ -292,7 +291,7 @@
                               <button id="acceptCookies" target="_blank" class="btn btn-sm bg-white mb-0 text-capitalize"> {{ __('Accept all cookies') }} </button>
                           </div>
                         @endif
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">x</button>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">{{ __('x') }}</button>
                       </div>
 
                   <script>

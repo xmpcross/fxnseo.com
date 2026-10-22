@@ -102,7 +102,7 @@
             </div>
             <div class="channel-info">
               <span class="channel-label">{{ __('Official Platform') }}</span>
-              <a href="https://fxnseo.com" class="channel-link">fxnseo.com</a>
+              <a href="https://fxnseo.com" class="channel-link">{{ __('fxnseo.com') }}</a>
             </div>
           </div>
 
@@ -126,7 +126,7 @@
               <div class="help-box-desc">{{ __('Browse common workflows and tool guides in our FAQ library.') }}</div>
             </div>
           </div>
-          <a href="{{ url('/faqs') }}" class="help-box-link">
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}" class="help-box-link">
             <span>{{ __('Visit Knowledge Hub') }}</span>
             <i class="fas fa-arrow-right ms-1"></i>
           </a>

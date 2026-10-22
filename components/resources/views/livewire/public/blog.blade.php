@@ -1,7 +1,7 @@
 <div class="journal">
   <section class="journal-intro">
     <div class="journal-shell">
-      <nav class="journal-breadcrumb" aria-label="{{ __('Breadcrumb') }}"><a href="{{ url('/') }}">{{ __('Home') }}</a><span aria-hidden="true">/</span><span>{{ __('The journal') }}</span></nav>
+      <nav class="journal-breadcrumb" aria-label="{{ __('Breadcrumb') }}"><a href="{{ route('home') }}">{{ __('Home') }}</a><span aria-hidden="true">/</span><span>{{ __('The journal') }}</span></nav>
       <div class="journal-intro-row">
         <div><h1>{{ __('Less guesswork.') }}<br><em>{{ __('Better search.') }}</em></h1></div>
         <div class="journal-intro-note"><p>{{ __('Practical ideas for the people doing the work. Explore clear guides to technical SEO, better backlinks, and videos worth finding.') }}</p><a href="#journal-library">{{ __('Find your next read') }}</a></div>
@@ -16,8 +16,8 @@
     @endphp
     <section class="journal-feature-section journal-shell" aria-label="{{ __('Featured article') }}">
       <article class="journal-feature">
-        <a class="journal-feature-image" href="{{ url('/blog/'.$featuredPost->slug) }}" aria-label="{{ $featuredPost->title }}"><img src="{{ $featuredPost->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $featuredPost->title }}" width="1200" height="675" fetchpriority="high"><span class="journal-feature-stamp">{{ __('Editor’s pick') }}</span></a>
-        <div class="journal-feature-copy"><div class="journal-meta"><span>{{ __($featureTopic) }}</span><span aria-hidden="true">·</span><span>{{ $featureMinutes }} {{ __('min read') }}</span></div><h2><a href="{{ url('/blog/'.$featuredPost->slug) }}">{{ $featuredPost->title }}</a></h2><p>{{ \Illuminate\Support\Str::limit(strip_tags($featuredPost->short_description ?: $featuredPost->subtitle), 190) }}</p><a class="journal-feature-link" href="{{ url('/blog/'.$featuredPost->slug) }}">{{ __('Read the story') }}</a></div>
+        <a class="journal-feature-image" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$featuredPost->slug) }}" aria-label="{{ $featuredPost->title }}"><img class="post-featured-image" src="{{ $featuredPost->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $featuredPost->title }}" width="1200" height="675" fetchpriority="high"><span class="journal-feature-stamp">{{ __('Editor’s pick') }}</span></a>
+        <div class="journal-feature-copy"><div class="journal-meta"><span>{{ __($featureTopic) }}</span><span aria-hidden="true">·</span><span>{{ $featureMinutes }} {{ __('min read') }}</span></div><h2><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$featuredPost->slug) }}">{{ $featuredPost->title }}</a></h2><p>{{ \Illuminate\Support\Str::limit(strip_tags($featuredPost->short_description ?: $featuredPost->subtitle), 190) }}</p><a class="journal-feature-link" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$featuredPost->slug) }}">{{ __('Read the story') }}</a></div>
       </article>
     </section>
   @endif
@@ -40,11 +40,11 @@
           $postTopic = \App\Http\Livewire\Public\Blog::topicFor($post->slug);
         @endphp
         <article class="journal-card" wire:key="journal-post-{{ $post->id }}">
-          <a class="journal-card-image" href="{{ url('/blog/'.$post->slug) }}" aria-label="{{ $post->title }}"><img src="{{ $post->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $post->title }}" loading="lazy" decoding="async" width="1200" height="675"></a>
+          <a class="journal-card-image" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$post->slug) }}" aria-label="{{ $post->title }}"><img class="post-featured-image" src="{{ $post->featured_image ?: asset('assets/img/no-thumb.svg') }}" alt="{{ $post->title }}" loading="lazy" decoding="async" width="1200" height="675"></a>
           <div class="journal-meta"><span>{{ __($postTopic) }}</span><span aria-hidden="true">·</span><span>{{ $minutes }} {{ __('min read') }}</span></div>
-          <h3><a href="{{ url('/blog/'.$post->slug) }}">{{ $post->title }}</a></h3>
+          <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$post->slug) }}">{{ $post->title }}</a></h3>
           <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->short_description ?: $post->subtitle), 135) }}</p>
-          <div class="journal-card-bottom"><time datetime="{{ $post->created_at->toDateString() }}">{{ $post->created_at->format('M j, Y') }}</time><a href="{{ url('/blog/'.$post->slug) }}" aria-label="{{ __('Read') }}: {{ $post->title }}">{{ __('Read article') }}</a></div>
+          <div class="journal-card-bottom"><time datetime="{{ $post->created_at->toDateString() }}">{{ $post->created_at->format('M j, Y') }}</time><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$post->slug) }}" aria-label="{{ __('Read') }}: {{ $post->title }}">{{ __('Read article') }}</a></div>
         </article>
       @empty
         <div class="journal-empty"><span aria-hidden="true">⌕</span><h3>{{ __('A fresh search might help.') }}</h3><p>{{ __('Try a broader phrase or explore all our articles.') }}</p><button type="button" wire:click="clearFilters">{{ __('Show all articles') }}</button></div>

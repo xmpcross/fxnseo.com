@@ -9,12 +9,11 @@
   <link rel="icon" href="{{ asset('assets/img/favicon.svg') }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-local.css') }}">
   <style>
     /* CSS Variables for Light Mode (Default) */
     :root, html.light {
-      --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-family: var(--site-font-family);
       --bg: #f8fafc;
       --bg-surface: #ffffff;
       --bg-card: #ffffff;
@@ -44,7 +43,7 @@
 
     /* Dark Mode Overrides (nxtsmarthome.com.au extracted color scheme) */
     html.dark {
-      --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-family: var(--site-font-family);
       --bg: #151616;
       --bg-surface: #222324;
       --bg-card: rgba(34, 35, 36, 0.85);
@@ -1220,6 +1219,10 @@
       .cta-card { padding: 40px 24px; }
     }
   </style>
+  <link rel="stylesheet" href="{{ asset('assets/css/site-typography.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-typography.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-faq.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-faq.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-audience.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-audience.css') ?: '1' }}">
 </head>
 <body>
 
@@ -1574,147 +1577,88 @@
   </section>
 
   <!-- Features Section -->
-  <section class="section-features" id="features">
+  <section class="section-features" id="features" aria-labelledby="features-title">
     <div class="wrap">
-      <div style="text-align: center; max-width: 700px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Why FXN SEO Tools</span>
-        <h2 class="section-title">Built for Creators, Webmasters & SEO Teams</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
-          Everything you need to diagnose search performance without paying expensive monthly subscription fees.
-        </p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon-badge">📊</div>
-          <h3>Official Moz DA / PA Metrics</h3>
-          <p>Access direct Domain Authority and Page Authority data powered by Mozscape™ API to judge link quality and competitor strength.</p>
+      <div class="features-intro">
+        <div class="section-head">
+          <span class="section-eyebrow">Find your next move</span>
+          <h2 class="section-title" id="features-title">Built for Creators, Webmasters & SEO Teams</h2>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">📹</div>
-          <h3>Full YouTube Video Suite</h3>
-          <p>Extract high-ranking tags, titles, descriptions, calculate video revenue, and audit channel statistics via Google YouTube v3 API.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">⚡</div>
-          <h3>Technical Web Audits</h3>
-          <p>Inspect server HTTP status codes, trace redirect hops, generate robots.txt and XML sitemaps, and diagnose DNS resolution in seconds.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">✍️</div>
-          <h3>Content & Keyword Optimization</h3>
-          <p>Analyze keyword density, audit meta titles and descriptions for maximum SERP click-through rates, and rewrite text for optimal flow.</p>
+        <div class="features-intro-copy">
+          <p>From your next video to your next site audit, turn search data into a clear plan of action.</p>
+          <a href="#tools" class="features-explore">Explore all tools <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M10 8L16 12L10 16Z"/></svg></span><span class="audience-label">For creators</span></div>
+          <h3>Make your next upload count.</h3>
+          <p>Shape stronger video titles and descriptions with a focused YouTube toolkit.</p>
+          <ul><li>Discover tags and content ideas</li><li>Review channel and video statistics</li><li>Refine titles, descriptions and keywords</li></ul>
+          <a href="{{ url('/youtube-tag-extractor') }}" class="audience-tool-link">Explore video tags <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M3 9H21M8 14L6 16L8 18M16 14L18 16L16 18M13 13L11 19"/></svg></span><span class="audience-label">For webmasters</span></div>
+          <h3>Keep your website in good shape.</h3>
+          <p>Check the technical details that help search engines reach and understand your pages.</p>
+          <ul><li>Check HTTP responses and redirects</li><li>Build robots.txt files and XML sitemaps</li><li>Inspect DNS records and meta tags</li></ul>
+          <a href="{{ url('/http-status-code-checker') }}" class="audience-tool-link">Check your site status <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20H21M6 16V12M12 16V8M18 16V4M4 9L10 4L14 6L20 2"/></svg></span><span class="audience-label">For SEO teams</span></div>
+          <h3>Give your next audit more clarity.</h3>
+          <p>Bring authority metrics, backlink checks and on-page insights into your review process.</p>
+          <ul><li>Compare Moz Domain and Page Authority</li><li>Review backlink health and opportunities</li><li>Analyze keywords and on-page content</li></ul>
+          <a href="{{ url('/da-pa-checker') }}" class="audience-tool-link">Check domain authority <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <div class="features-bottom-note"><span class="features-note-dot" aria-hidden="true"></span>Free tools. No installation. A clearer place to start.</div>
     </div>
   </section>
 
-  <!-- 3-Step Process -->
-  <section class="section-process" id="how-it-works">
-    <div class="wrap">
-      <div style="text-align: center; max-width: 650px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Streamlined Workflow</span>
-        <h2 class="section-title">Three Steps to Concrete Results</h2>
-      </div>
-
-      <div class="process-grid">
-        <div class="process-card">
-          <span class="process-number">01</span>
-          <span class="process-step-pill">Step 1</span>
-          <h3>Select Your Tool</h3>
-          <p>Choose from 60 purpose-built tools across backlinks, technical SEO, YouTube optimization, or content rewriting.</p>
-        </div>
-
-        <div class="process-card">
-          <span class="process-number">02</span>
-          <span class="process-step-pill">Step 2</span>
-          <h3>Input Your URL or Keyword</h3>
-          <p>Paste your domain, video URL, or target text into the tool. No complex forms or account verification steps required.</p>
-        </div>
-
-        <div class="process-card">
-          <span class="process-number">03</span>
-          <span class="process-step-pill">Step 3</span>
-          <h3>Take Immediate Action</h3>
-          <p>Receive clear, instant metrics and downloadable recommendations to execute your SEO strategy with confidence.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
+<!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
   <section class="section-faq" id="faqs">
     <div class="wrap">
-      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
-        <span class="section-kicker" style="justify-content: center;">✦ Frequently Asked Questions</span>
+      <div class="section-head">
+        <span class="faq-eyebrow">Answers at a glance</span>
         <h2 class="section-title">Common Questions About Our SEO Suite</h2>
-        <p class="section-subtitle" style="margin: 0 auto;">
+        <p class="section-subtitle">
           Learn more about how our tools work, data sources, accuracy, and user privacy commitments.
         </p>
       </div>
 
       <div class="faq-container">
-        <div class="faq-item active">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>What is FXN SEO and how do the free tools work?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.
-          </div>
-        </div>
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>What is FXN SEO and how do the free tools work?</span></summary>
+          <div class="faq-answer">FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Are the Moz Domain Authority and Page Authority metrics official?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.
-          </div>
-        </div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Are the Moz Domain Authority and Page Authority metrics official?</span></summary>
+          <div class="faq-answer">Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Do you store my input data, video URLs, or target domains?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.
-          </div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Do you store my input data, video URLs, or target domains?</span></summary>
+          <div class="faq-answer">No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.</div>
+        </details>
         </div>
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Why is keyword density important for on-page SEO?</span></summary>
+          <div class="faq-answer">Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Why is keyword density important for on-page SEO?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.
-          </div>
-        </div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>How often should webmasters monitor backlinks and technical health?</span></summary>
+          <div class="faq-answer">Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.</div>
+        </details>
 
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>How often should webmasters monitor backlinks and technical health?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <button class="faq-question" type="button" onclick="toggleFaq(this)">
-            <span>Can I use these tools on mobile devices and tablets?</span>
-            <span class="faq-icon-arrow">+</span>
-          </button>
-          <div class="faq-answer">
-            Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.
-          </div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>Can I use these tools on mobile devices and tablets?</span></summary>
+          <div class="faq-answer">Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.</div>
+        </details>
         </div>
       </div>
     </div>
@@ -1735,7 +1679,7 @@
         @forelse($resources as $post)
           <a href="{{ url('/blog/' . $post['slug']) }}" class="guide-card">
             <div class="guide-image-wrap">
-              <img src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
+              <img class="post-featured-image" src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
             </div>
             <div class="guide-body">
               <div class="guide-meta">{{ $post['published_at'] ?? 'Guide' }}</div>

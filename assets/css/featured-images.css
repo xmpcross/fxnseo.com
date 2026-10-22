@@ -1,0 +1,5 @@
+/* Equivalent to a 22% black overlay, applied only to the image pixels.
+   Captions, badges, links and hover transforms remain independently styled. */
+html body img.post-featured-image {
+  filter: brightness(0.78) !important;
+}

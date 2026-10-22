@@ -1,8 +1,10 @@
 @php
     $alternates = [];
     $isModelPage = isset($page) && $page instanceof \App\Models\Admin\Page;
-    if (request()->routeIs('home')) {
-        $alternates['en'] = url('/');
+    if (request()->routeIs('home', 'blog', 'tools')) {
+        foreach (localization()->getSupportedLocales() as $code => $language) {
+            $alternates[$code] = localization()->getLocalizedURL($code, url()->current(), [], false);
+        }
     } elseif (!request()->routeIs('login', 'admin.login', 'register', 'password.*', 'verify.email', 'verification.verify', 'user.profile', 'blog')
         && $isModelPage && $page->type !== 'home') {
         foreach ($page->translations as $translation) {

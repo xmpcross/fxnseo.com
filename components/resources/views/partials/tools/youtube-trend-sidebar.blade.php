@@ -14,7 +14,7 @@
     <div class="yt-sidebar-card-body">
         <div class="yt-status-row">
             <span class="yt-status-label">{{ __('Engine:') }}</span>
-            <span class="yt-status-value">YouTube Data v3</span>
+            <span class="yt-status-value">{{ __('YouTube Data v3') }}</span>
         </div>
         <div class="yt-status-row">
             <span class="yt-status-label">{{ __('Dataset:') }}</span>
@@ -22,11 +22,11 @@
         </div>
         <div class="yt-status-row">
             <span class="yt-status-label">{{ __('Refresh Rate:') }}</span>
-            <span class="yt-status-value text-emerald">Real-time live feeds</span>
+            <span class="yt-status-value text-emerald">{{ __('Real-time live feeds') }}</span>
         </div>
         <div class="yt-status-row">
             <span class="yt-status-label">{{ __('Cost:') }}</span>
-            <span class="yt-status-value text-emerald">100% Free · No Sign-Up</span>
+            <span class="yt-status-value text-emerald">{{ __('100% Free · No Sign-Up') }}</span>
         </div>
     </div>
 </div>
@@ -162,16 +162,16 @@
     <div class="yt-sidebar-card-body">
         <p class="small text-muted mb-2">{{ __('Trending patterns vary significantly across key geographical markets:') }}</p>
         <div class="yt-market-chips">
-            <span class="yt-market-badge">🇺🇸 United States</span>
-            <span class="yt-market-badge">🇬🇧 United Kingdom</span>
-            <span class="yt-market-badge">🇨🇦 Canada</span>
-            <span class="yt-market-badge">🇦🇺 Australia</span>
-            <span class="yt-market-badge">🇮🇳 India</span>
-            <span class="yt-market-badge">🇩🇪 Germany</span>
-            <span class="yt-market-badge">🇯🇵 Japan</span>
-            <span class="yt-market-badge">🇧🇷 Brazil</span>
-            <span class="yt-market-badge">🇫🇷 France</span>
-            <span class="yt-market-badge">🇲🇽 Mexico</span>
+            <span class="yt-market-badge">{{ __('🇺🇸 United States') }}</span>
+            <span class="yt-market-badge">{{ __('🇬🇧 United Kingdom') }}</span>
+            <span class="yt-market-badge">{{ __('🇨🇦 Canada') }}</span>
+            <span class="yt-market-badge">{{ __('🇦🇺 Australia') }}</span>
+            <span class="yt-market-badge">{{ __('🇮🇳 India') }}</span>
+            <span class="yt-market-badge">{{ __('🇩🇪 Germany') }}</span>
+            <span class="yt-market-badge">{{ __('🇯🇵 Japan') }}</span>
+            <span class="yt-market-badge">{{ __('🇧🇷 Brazil') }}</span>
+            <span class="yt-market-badge">{{ __('🇫🇷 France') }}</span>
+            <span class="yt-market-badge">{{ __('🇲🇽 Mexico') }}</span>
         </div>
     </div>
 </div>

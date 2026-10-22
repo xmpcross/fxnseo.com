@@ -50,7 +50,7 @@
                         <label class="form-label col-form-label">{{ __('Sitemap') }}</label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input type="text" wire:model.defer="sitemap" class="form-control mb-2" placeholder="https://www.example.com/sitemap.xml">
+                        <input type="text" wire:model.defer="sitemap" class="form-control mb-2" placeholder="{{ __('https://www.example.com/sitemap.xml') }}">
                         <p class="small">{{ __('Leave blank if you don\'t have.') }}</p>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                         <p class="small mb-2">{{ __('The path is relative to the root and must contain a trailing slash "/".') }}</p>
                         <div class="col mb-3">
                             <div class="input-group input-group-flat">
-                                <input type="text" class="form-control" wire:model.defer="folders.0" placeholder="/cgi-bin/">
+                                <input type="text" class="form-control" wire:model.defer="folders.0" placeholder="{{ __('/cgi-bin/') }}">
                                 @error('folders.0') <span class="error">{{ $message }}</span> @enderror
                                 <span class="input-group-text">
                                     <button class="btn btn-sm btn-icon-only bg-success text-white rounded mb-0" wire:click.prevent="onAddFolder()" title="{{ __('Add new') }}">
@@ -244,7 +244,7 @@
                         @foreach($inputs as $key => $value)
                             <div class="col mb-3">
                                 <div class="input-group input-group-flat">
-                                    <input type="text" class="form-control" wire:model.defer="folders.{{ $value }}" placeholder="/cgi-bin/">
+                                    <input type="text" class="form-control" wire:model.defer="folders.{{ $value }}" placeholder="{{ __('/cgi-bin/') }}">
                                     @error( 'folders.' . $value ) <span class="error">{{ $message }}</span> @enderror
                                     <span class="input-group-text">
                                         <button class="btn btn-sm btn-icon-only bg-danger text-white rounded mb-0" wire:click.prevent="onDeleteFolder({{ $key }})" title="{{ __('Delete') }}">

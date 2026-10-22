@@ -38,8 +38,8 @@ html#html-root {
   --rd-radius: 6px;
   --rd-radius-lg: 16px;
 
-  --rd-font-display: 'Urbanist', 'Inter', system-ui, sans-serif;
-  --rd-font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --rd-font-display: var(--site-font-family);
+  --rd-font-body: var(--site-font-family);
 
   /* Legacy token bridges so untouched pages follow the new palette */
   --bg: var(--rd-bg);
@@ -427,7 +427,7 @@ body .tool-card .card-bottom { display: none; }
 }
 
 /* ---------- Corrections over legacy rules ---------- */
-/* Earlier sheets force Outfit with !important; body copy is Inter now */
+/* Keep controls and navigation aligned with the shared Outfit body family. */
 html#html-root body,
 html#html-root body input,
 html#html-root body textarea,

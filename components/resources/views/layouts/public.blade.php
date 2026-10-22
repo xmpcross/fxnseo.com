@@ -28,8 +28,7 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
-        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/inter-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="{{ (Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light') === 'theme-dark') ? 'dark' : 'light' }}">
@@ -110,6 +109,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/page-templates.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/page-templates.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
 </head>
     <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} {{ Route::is('home') ? 'route-home' : '' }} {{ Route::is('tools') ? 'route-tools' : '' }} {{ (isset($page) && isset($page->type)) ? 'page-type-'.$page->type : '' }} {{ (isset($page) && isset($page->slug)) ? 'page-slug-'.$page->slug : '' }}">
 
@@ -148,14 +148,14 @@
                           <header class="post-editorial-hero">
                             <div class="post-editorial-shell">
                               <nav class="post-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a><span aria-hidden="true">›</span>
-                                <a href="{{ url('/blog') }}">{{ $__postCategoryName }}</a><span aria-hidden="true">›</span>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a><span aria-hidden="true">›</span>
+                                <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ $__postCategoryName }}</a><span aria-hidden="true">›</span>
                                 <span>{{ __($pageTrans->title) }}</span>
                               </nav>
 
                               <div class="post-editorial-grid">
                                 <div class="post-editorial-copy">
-                                  <a class="post-editorial-category" href="{{ url('/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i>{{ $__postCategoryName }}</a>
+                                  <a class="post-editorial-category" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i>{{ $__postCategoryName }}</a>
                                   <h1 class="hero-title">{{ __($pageTrans->title) }}</h1>
                                   @if (!empty($__postSummary))
                                     <p class="post-editorial-summary"><i class="fas fa-magic" aria-hidden="true"></i>{{ __($__postSummary) }}</p>
@@ -178,14 +178,14 @@
                                 </div>
 
                                 <figure class="post-editorial-image">
-                                  <img src="{{ !empty($page->featured_image) ? $page->featured_image : asset('assets/img/no-thumb.svg') }}" alt="{{ __($pageTrans->title) }}" width="900" height="510">
+                                  <img class="post-featured-image" src="{{ !empty($page->featured_image) ? $page->featured_image : asset('assets/img/no-thumb.svg') }}" alt="{{ __($pageTrans->title) }}" width="900" height="510">
                                 </figure>
                               </div>
 
                               <div class="post-editorial-share" aria-label="{{ __('Share article') }}">
                                 <span>{{ __('Share') }}</span>
                                 <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer nofollow" aria-label="{{ __('Share on Facebook') }}"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-                                <a href="https://twitter.com/intent/tweet?text={{ urlencode($pageTrans->title) }}&url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer nofollow" aria-label="{{ __('Share on X') }}"><b aria-hidden="true">X</b></a>
+                                <a href="https://twitter.com/intent/tweet?text={{ urlencode($pageTrans->title) }}&url={{ urlencode(url()->current()) }}" target="_blank" rel="noopener noreferrer nofollow" aria-label="{{ __('Share on X') }}"><b aria-hidden="true">{{ __('X') }}</b></a>
                                 <button type="button" aria-label="{{ __('Copy article link') }}" onclick="navigator.clipboard.writeText('{{ url()->current() }}');this.classList.add('is-copied');setTimeout(() => this.classList.remove('is-copied'), 1200);"><i class="fas fa-link" aria-hidden="true"></i></button>
                               </div>
                             </div>
@@ -193,14 +193,14 @@
                       @elseif (in_array($page->slug ?? '', ['backlink-monitoring-guide', 'link-opportunity-guide', 'seo-audit-guide']))
                           @php
                             $__pillarConfig = [
-                              'backlink-monitoring-guide' => ['label' => __('Pillar guide · Backlink SEO'), 'anchor' => '#what-is-backlink-monitoring', 'primary' => __('Read the guide'), 'tool_url' => url('/backlink-checker'), 'tool_label' => __('Check backlinks'), 'proof' => [__('7 practical chapters'), __('Actionable workflow'), __('Free checker included')]],
-                              'link-opportunity-guide' => ['label' => __('Pillar guide · Link building'), 'anchor' => '#what-is-link-prospecting', 'primary' => __('Find opportunities'), 'tool_url' => url('/backlink-checker'), 'tool_label' => __('Research backlinks'), 'proof' => [__('7 practical chapters'), __('Prospecting framework'), __('Qualification checklist')]],
+                              'backlink-monitoring-guide' => ['label' => __('Pillar guide · Backlink SEO'), 'anchor' => '#what-is-backlink-monitoring', 'primary' => __('Read the guide'), 'tool_url' => localization()->getLocalizedURL(app()->getLocale(), '/backlink-checker'), 'tool_label' => __('Check backlinks'), 'proof' => [__('7 practical chapters'), __('Actionable workflow'), __('Free checker included')]],
+                              'link-opportunity-guide' => ['label' => __('Pillar guide · Link building'), 'anchor' => '#what-is-link-prospecting', 'primary' => __('Find opportunities'), 'tool_url' => localization()->getLocalizedURL(app()->getLocale(), '/backlink-checker'), 'tool_label' => __('Research backlinks'), 'proof' => [__('7 practical chapters'), __('Prospecting framework'), __('Qualification checklist')]],
                               'seo-audit-guide' => ['label' => __('Pillar guide · SEO operations'), 'anchor' => '#what-is-an-seo-audit', 'primary' => __('Build your audit'), 'tool_url' => route('tools'), 'tool_label' => __('Explore SEO tools'), 'proof' => [__('7 practical chapters'), __('Reporting workflow'), __('Client-ready framework')]],
                             ][$page->slug];
                           @endphp
                           <section class="pillar-hero">
                             <div class="pillar-hero-shell">
-                              <nav aria-label="{{ __('Breadcrumb') }}"><a href="{{ url('/') }}">{{ __('Home') }}</a><span>›</span><span>{{ __($pageTrans->title) }}</span></nav>
+                              <nav aria-label="{{ __('Breadcrumb') }}"><a href="{{ route('home') }}">{{ __('Home') }}</a><span>›</span><span>{{ __($pageTrans->title) }}</span></nav>
                               <span class="pillar-hero-kicker">{{ $__pillarConfig['label'] }}</span>
                               <h1 class="hero-title">{{ __($pageTrans->title) }}</h1>
                               <p>{{ __($pageTrans->subtitle) }}</p>
@@ -215,13 +215,13 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
 
-                              <h1 class="tool-editorial-title hero-title">{{ __('About') }} <span class="gradient-text">fxnSEOTools</span></h1>
+                              <h1 class="tool-editorial-title hero-title">{{ __('About') }} <span class="gradient-text">{{ __('fxnSEOTools') }}</span></h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('We build fast, browser-first tools that help creators, marketers, developers, and businesses make smarter search decisions without subscriptions or paywalls.')) }}</p>
 
                             </div>
@@ -230,7 +230,7 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
@@ -243,13 +243,13 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
 
 
-                              <h1 class="tool-editorial-title hero-title">{{ __('Get in Touch with') }} <span class="gradient-text">fxnSEO</span></h1>
+                              <h1 class="tool-editorial-title hero-title">{{ __('Get in Touch with') }} <span class="gradient-text">{{ __('fxnSEO') }}</span></h1>
                               <p class="tool-editorial-lead">{{ __($pageTrans->subtitle ?: __('Have questions, tool feedback, or bug reports? Reach out anytime — we are here to help.')) }}</p>
 
                             </div>
@@ -311,7 +311,7 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <a href="{{ route('tools') }}">{{ __('SEO Tools') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
@@ -333,7 +333,7 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span>{{ __('Trust & Legal') }}</span>
                                 <span class="sep" aria-hidden="true">›</span>
@@ -350,7 +350,7 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
@@ -365,7 +365,7 @@
                           <section class="tool-editorial-hero">
                             <div class="tool-editorial-shell">
                               <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-                                <a href="{{ url('/') }}">{{ __('Home') }}</a>
+                                <a href="{{ route('home') }}">{{ __('Home') }}</a>
                                 <span class="sep" aria-hidden="true">›</span>
                                 <span class="active">{{ __($pageTrans->title) }}</span>
                               </nav>
@@ -463,7 +463,7 @@
                                   if (!empty($related_posts)) {
                                     $html .= '<section class="post-related-showcase" aria-labelledby="postRelatedTitle"><h2 id="postRelatedTitle">'.e(__('Related Posts')).'</h2><div class="post-related-showcase-list">';
                                     foreach ($related_posts as $relatedPost) {
-                                      $url = url('/blog/'.$relatedPost['slug']);
+                                      $url = localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$relatedPost['slug']);
                                       $image = !empty($relatedPost['featured_image']) ? $relatedPost['featured_image'] : asset('assets/img/no-thumb.svg');
                                       $excerpt = \Illuminate\Support\Str::limit(strip_tags($relatedPost['short_description'] ?? ''), 145);
                                       $date = !empty($relatedPost['published_at']) ? \Illuminate\Support\Carbon::parse($relatedPost['published_at']) : null;
@@ -558,7 +558,7 @@
 
                               $__renderedDescription = preg_replace(
                                 '#<p>(.*?)(<a\s+href=[\"\x27][^\"\x27]*fxnseo\.com[\"\x27][^>]*>.*?</a>)(.*?)</p>#is',
-                                '<p>$1fxnseo.com$3</p><div class="start-today-actions"><a href="'.url('/#tools').'" class="btn-emerald-home">'.__('Explore 60+ Free Tools').' <span class="btn-arrow ms-1">→</span></a></div>',
+                                '<p>$1fxnseo.com$3</p><div class="start-today-actions"><a href="'.localization()->getLocalizedURL(app()->getLocale(), '/#tools').'" class="btn-emerald-home">'.__('Explore 60+ Free Tools').' <span class="btn-arrow ms-1">→</span></a></div>',
                                 $__renderedDescription
                               );
                             }
@@ -670,11 +670,11 @@
                                                     <div class="post-read-also-list">
                                                       @foreach ($read_also_posts as $readAlsoPost)
                                                         <article class="post-read-also-item">
-                                                          <a class="post-read-also-thumb" href="{{ url('/blog/'.$readAlsoPost['slug']) }}" tabindex="-1" aria-hidden="true">
-                                                            <img src="{{ !empty($readAlsoPost['featured_image']) ? $readAlsoPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="64" height="64" loading="lazy">
+                                                          <a class="post-read-also-thumb" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$readAlsoPost['slug']) }}" tabindex="-1" aria-hidden="true">
+                                                            <img class="post-featured-image" src="{{ !empty($readAlsoPost['featured_image']) ? $readAlsoPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="64" height="64" loading="lazy">
                                                           </a>
                                                           <div class="post-read-also-copy">
-                                                            <h3><a href="{{ url('/blog/'.$readAlsoPost['slug']) }}">{{ $readAlsoPost['title'] }}</a></h3>
+                                                            <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$readAlsoPost['slug']) }}">{{ $readAlsoPost['title'] }}</a></h3>
                                                             <div class="post-read-also-meta">
                                                               @if (!empty($readAlsoPost['published_at']))
                                                                 <time datetime="{{ \Illuminate\Support\Carbon::parse($readAlsoPost['published_at'])->toDateString() }}">{{ \Illuminate\Support\Carbon::parse($readAlsoPost['published_at'])->format('F j, Y') }}</time>
@@ -708,10 +708,10 @@
                                                         <div class="post-next-up-grid">
                                                           @foreach ($next_up_posts as $nextUpPost)
                                                             <article>
-                                                              <a class="post-next-up-thumb" href="{{ url('/blog/'.$nextUpPost['slug']) }}" tabindex="-1" aria-hidden="true">
-                                                                <img src="{{ !empty($nextUpPost['featured_image']) ? $nextUpPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="48" height="48" loading="lazy">
+                                                              <a class="post-next-up-thumb" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$nextUpPost['slug']) }}" tabindex="-1" aria-hidden="true">
+                                                                <img class="post-featured-image" src="{{ !empty($nextUpPost['featured_image']) ? $nextUpPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="48" height="48" loading="lazy">
                                                               </a>
-                                                              <h3><a href="{{ url('/blog/'.$nextUpPost['slug']) }}">{{ $nextUpPost['title'] }}</a></h3>
+                                                              <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$nextUpPost['slug']) }}">{{ $nextUpPost['title'] }}</a></h3>
                                                             </article>
                                                           @endforeach
                                                         </div>
@@ -719,7 +719,7 @@
                                                     @endif
 
                                                     <div class="post-after-meta">
-                                                      <a href="{{ url('/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i> {{ $__postCategoryName }}</a>
+                                                      <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i> {{ $__postCategoryName }}</a>
                                                       <div>
                                                         <span><i class="far fa-eye" aria-hidden="true"></i> 0</span>
                                                         <span><i class="far fa-comment" aria-hidden="true"></i> 0</span>
@@ -743,10 +743,10 @@
                                                       <nav class="post-adjacent" aria-label="{{ __('Previous and next articles') }}">
                                                         @if (!empty($previous_post))
                                                           <article class="post-adjacent-prev">
-                                                            <a class="post-adjacent-thumb" href="{{ url('/blog/'.$previous_post['slug']) }}" tabindex="-1" aria-hidden="true"><img src="{{ !empty($previous_post['featured_image']) ? $previous_post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="60" height="60" loading="lazy"></a>
+                                                            <a class="post-adjacent-thumb" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$previous_post['slug']) }}" tabindex="-1" aria-hidden="true"><img class="post-featured-image" src="{{ !empty($previous_post['featured_image']) ? $previous_post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="60" height="60" loading="lazy"></a>
                                                             <div class="post-adjacent-copy">
                                                               <span>{{ __('Prev Post') }}</span>
-                                                              <h3><a href="{{ url('/blog/'.$previous_post['slug']) }}">{{ $previous_post['title'] }}</a></h3>
+                                                              <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$previous_post['slug']) }}">{{ $previous_post['title'] }}</a></h3>
                                                             </div>
                                                           </article>
                                                         @endif
@@ -754,9 +754,9 @@
                                                           <article class="post-adjacent-next">
                                                             <div class="post-adjacent-copy">
                                                               <span>{{ __('Next Post') }}</span>
-                                                              <h3><a href="{{ url('/blog/'.$next_post['slug']) }}">{{ $next_post['title'] }}</a></h3>
+                                                              <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$next_post['slug']) }}">{{ $next_post['title'] }}</a></h3>
                                                             </div>
-                                                            <a class="post-adjacent-thumb" href="{{ url('/blog/'.$next_post['slug']) }}" tabindex="-1" aria-hidden="true"><img src="{{ !empty($next_post['featured_image']) ? $next_post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="60" height="60" loading="lazy"></a>
+                                                            <a class="post-adjacent-thumb" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$next_post['slug']) }}" tabindex="-1" aria-hidden="true"><img class="post-featured-image" src="{{ !empty($next_post['featured_image']) ? $next_post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="60" height="60" loading="lazy"></a>
                                                           </article>
                                                         @endif
                                                       </nav>
@@ -795,14 +795,14 @@
                                                         @foreach ($spotlight_posts as $spotlightPost)
                                                           <article class="post-spotlight-item">
                                                             <div class="post-spotlight-copy">
-                                                              <a class="post-spotlight-category" href="{{ url('/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i>{{ $spotlightPost['category'] }}</a>
-                                                              <h3><a href="{{ url('/blog/'.$spotlightPost['slug']) }}">{{ $spotlightPost['title'] }}</a></h3>
+                                                              <a class="post-spotlight-category" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}"><i class="far fa-folder-open" aria-hidden="true"></i>{{ $spotlightPost['category'] }}</a>
+                                                              <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$spotlightPost['slug']) }}">{{ $spotlightPost['title'] }}</a></h3>
                                                               @if (!empty($spotlightPost['published_at']))
                                                                 <time datetime="{{ \Illuminate\Support\Carbon::parse($spotlightPost['published_at'])->toDateString() }}">{{ \Illuminate\Support\Carbon::parse($spotlightPost['published_at'])->format('F j, Y') }}</time>
                                                               @endif
                                                             </div>
-                                                            <a class="post-spotlight-thumb" href="{{ url('/blog/'.$spotlightPost['slug']) }}" tabindex="-1" aria-hidden="true">
-                                                              <img src="{{ !empty($spotlightPost['featured_image']) ? $spotlightPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="84" height="84" loading="lazy">
+                                                            <a class="post-spotlight-thumb" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$spotlightPost['slug']) }}" tabindex="-1" aria-hidden="true">
+                                                              <img class="post-featured-image" src="{{ !empty($spotlightPost['featured_image']) ? $spotlightPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="84" height="84" loading="lazy">
                                                             </a>
                                                           </article>
                                                         @endforeach
@@ -982,17 +982,17 @@
                                     <section class="pillar-related" aria-labelledby="pillarRelatedTitle">
                                       <div class="pillar-related-head">
                                         <div><h2 id="pillarRelatedTitle">{{ __('Related guides and articles') }}</h2></div>
-                                        <a href="{{ url('/blog') }}">{{ __('View all articles') }}</a>
+                                        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ __('View all articles') }}</a>
                                       </div>
                                       <div class="pillar-related-grid">
                                         @foreach ($related_pillar_posts as $relatedPillarPost)
                                           <article>
-                                            <a class="pillar-related-image" href="{{ url('/blog/'.$relatedPillarPost['slug']) }}">
-                                              <img src="{{ !empty($relatedPillarPost['featured_image']) ? $relatedPillarPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $relatedPillarPost['title'] }}" width="640" height="400" loading="lazy">
+                                            <a class="pillar-related-image" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$relatedPillarPost['slug']) }}">
+                                              <img class="post-featured-image" src="{{ !empty($relatedPillarPost['featured_image']) ? $relatedPillarPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $relatedPillarPost['title'] }}" width="640" height="400" loading="lazy">
                                             </a>
                                             <div class="pillar-related-copy">
                                               <span>{{ $relatedPillarPost['category'] }}</span>
-                                              <h3><a href="{{ url('/blog/'.$relatedPillarPost['slug']) }}">{{ $relatedPillarPost['title'] }}</a></h3>
+                                              <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$relatedPillarPost['slug']) }}">{{ $relatedPillarPost['title'] }}</a></h3>
                                               @if (!empty($relatedPillarPost['short_description']))<p>{{ \Illuminate\Support\Str::limit(strip_tags($relatedPillarPost['short_description']), 105) }}</p>@endif
                                               @if (!empty($relatedPillarPost['published_at']))<time datetime="{{ \Illuminate\Support\Carbon::parse($relatedPillarPost['published_at'])->toDateString() }}">{{ \Illuminate\Support\Carbon::parse($relatedPillarPost['published_at'])->format('F j, Y') }}</time>@endif
                                             </div>
@@ -1057,7 +1057,7 @@
                                         <p>{{ __('Browse the complete tool collection if you know the task you want to complete. If you have found an issue, need clarification, or want to suggest a tool, send our team a message.') }}</p>
                                         <div>
                                           <a href="{{ route('tools') }}">{{ __('Explore SEO Tools') }} <span>→</span></a>
-                                          <a href="{{ url('/contact') }}">{{ __('Contact Us') }}</a>
+                                          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact Us') }}</a>
                                         </div>
                                       </div>
                                     </section>
@@ -1160,17 +1160,17 @@
                     @foreach (array_slice($spotlight_posts, 0, 4) as $recommendedPost)
                       <article class="post-recommended-card">
                         <div class="post-recommended-media">
-                          <a href="{{ url('/blog/'.$recommendedPost['slug']) }}" tabindex="-1" aria-hidden="true">
-                            <img src="{{ !empty($recommendedPost['featured_image']) ? $recommendedPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="640" height="420" loading="lazy">
+                          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$recommendedPost['slug']) }}" tabindex="-1" aria-hidden="true">
+                            <img class="post-featured-image" src="{{ !empty($recommendedPost['featured_image']) ? $recommendedPost['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="" width="640" height="420" loading="lazy">
                           </a>
-                          <a class="post-recommended-category" href="{{ url('/blog') }}">{{ $recommendedPost['category'] }}</a>
+                          <a class="post-recommended-category" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ $recommendedPost['category'] }}</a>
                           <span class="post-recommended-corner" aria-hidden="true">
-                            <a class="post-recommended-arrow" href="{{ url('/blog/'.$recommendedPost['slug']) }}" aria-label="{{ __('Read') }} {{ $recommendedPost['title'] }}" tabindex="-1">→</a>
+                            <a class="post-recommended-arrow" href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$recommendedPost['slug']) }}" aria-label="{{ __('Read') }} {{ $recommendedPost['title'] }}" tabindex="-1">→</a>
                             <i class="post-recommended-curve-one"></i>
                             <i class="post-recommended-curve-two"></i>
                           </span>
                         </div>
-                        <h3><a href="{{ url('/blog/'.$recommendedPost['slug']) }}">{{ $recommendedPost['title'] }}</a></h3>
+                        <h3><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/'.$recommendedPost['slug']) }}">{{ $recommendedPost['title'] }}</a></h3>
                       </article>
                     @endforeach
                   </div>
@@ -1307,7 +1307,7 @@
                               <button id="acceptCookies" target="_blank" class="btn btn-sm bg-white mb-0 text-capitalize"> {{ __('Accept all cookies') }} </button>
                           </div>
                         @endif
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">x</button>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">{{ __('x') }}</button>
                       </div>
 
                   <script>
@@ -1317,7 +1317,7 @@
                             jQuery("#acceptCookies").click(function(){
                                 jQuery.ajax({
                                     type : 'get',
-                                    url : '{{ url('/') }}/cookies/accept',
+                                    url : '{{ route('home') }}/cookies/accept',
                                     success: function(e) {
                                         jQuery('.cookies-wrapper').remove();
                                     }
@@ -1338,7 +1338,7 @@
                         jQuery(".btn-toggle-mode").click(function(){
                             jQuery.ajax({
                                 type : 'get',
-                                url : '{{ url('/') }}/theme/mode',
+                                url : '{{ route('home') }}/theme/mode',
                                 success: function(e) {
                                     window.location.reload();
                                 }

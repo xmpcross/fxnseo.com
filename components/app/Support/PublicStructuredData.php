@@ -75,6 +75,7 @@ class PublicStructuredData
             $schemas[] = Schema::article()
                 ->setProperty('@id', $currentUrl . '#article')
                 ->mainEntityOfPage($currentUrl)
+                ->inLanguage(app()->getLocale())
                 ->headline($title)
                 ->description($description)
                 ->url($currentUrl)

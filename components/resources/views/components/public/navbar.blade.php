@@ -1,9 +1,10 @@
 @php
+  $navLanguages = \App\Models\Admin\Languages::where('status', true)->get();
   $navToolCount = \App\Models\Admin\Page::where('type', 'tool')->where('tool_status', true)->count();
 @endphp
   <header class="nav-header site-home-header">
     <div class="wrap nav-inner">
-      <a href="{{ url('/') }}" class="brand-logo" aria-label="fxnSEO">
+      <a href="{{ route('home') }}" class="brand-logo" aria-label="fxnSEO">
         <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
         <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
       </a>
@@ -19,65 +20,85 @@
       @endphp
 
       <nav class="nav-menu">
-        <a href="{{ route('tools') }}" class="nav-link">Tools <span class="nav-badge">{{ $navToolCount }}</span></a>
+        <a href="{{ route('tools') }}" class="nav-link">{{ __('Tools') }} <span class="nav-badge">{{ $navToolCount }}</span></a>
 
         <div class="nav-item-dropdown">
-          <a href="{{ url('/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
-            <span>Guides</span>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="nav-link" aria-haspopup="true" aria-expanded="false">
+            <span>{{ __('Guides') }}</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 2px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </a>
           <div class="nav-dropdown-menu" role="menu">
-            <a href="{{ url('/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-monitoring-guide') }}" class="nav-dropdown-item" role="menuitem">
               <span class="dropdown-icon">🔗</span>
               <div>
-                <div class="nav-drop-title">Backlink Monitoring Guide</div>
-                <div class="nav-drop-sub">Detect lost links and audit link profiles</div>
+                <div class="nav-drop-title">{{ __('Backlink Monitoring Guide') }}</div>
+                <div class="nav-drop-sub">{{ __('Detect lost links and audit link profiles') }}</div>
               </div>
             </a>
-            <a href="{{ url('/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/link-opportunity-guide') }}" class="nav-dropdown-item" role="menuitem">
               <span class="dropdown-icon">🎯</span>
               <div>
-                <div class="nav-drop-title">Link Building Guide</div>
-                <div class="nav-drop-sub">Prospecting & high-impact outreach</div>
+                <div class="nav-drop-title">{{ __('Link Building Guide') }}</div>
+                <div class="nav-drop-sub">{{ __('Prospecting & high-impact outreach') }}</div>
               </div>
             </a>
-            <a href="{{ url('/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
+            <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/seo-audit-guide') }}" class="nav-dropdown-item" role="menuitem">
               <span class="dropdown-icon">📈</span>
               <div>
-                <div class="nav-drop-title">SEO Audit & Reporting Hub</div>
-                <div class="nav-drop-sub">Technical health check & diagnostic workflows</div>
+                <div class="nav-drop-title">{{ __('SEO Audit & Reporting Hub') }}</div>
+                <div class="nav-drop-sub">{{ __('Technical health check & diagnostic workflows') }}</div>
               </div>
             </a>
             <div class="nav-dropdown-divider"></div>
-            <a href="{{ url('/blog') }}" class="nav-dropdown-item" role="menuitem">
+            <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="nav-dropdown-item" role="menuitem">
               <span class="dropdown-icon">📰</span>
               <div>
-                <div class="nav-drop-title">All SEO Guides & Tutorials</div>
-                <div class="nav-drop-sub">Explore the full knowledge repository</div>
+                <div class="nav-drop-title">{{ __('All SEO Guides & Tutorials') }}</div>
+                <div class="nav-drop-sub">{{ __('Explore the full knowledge repository') }}</div>
               </div>
             </a>
           </div>
         </div>
 
-        <a href="{{ url('/blog') }}" class="nav-link">Blog</a>
-        <a href="{{ url('/faqs') }}" class="nav-link">FAQ</a>
-        <a href="{{ url('/contact') }}" class="nav-link">Contact</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="nav-link">{{ __('Blog') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}" class="nav-link">{{ __('FAQ') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}" class="nav-link">{{ __('Contact') }}</a>
 
         @foreach($autoNavPages as $autoPage)
           @php
             $autoPageTrans = $autoPage->translate(app()->getLocale());
             $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
           @endphp
-          <a href="{{ url('/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/' . $autoPage->slug) }}" class="nav-link">{{ $autoPageTitle }}</a>
         @endforeach
       </nav>
 
       <div class="nav-actions">
-        <button class="theme-toggle-btn" type="button" onclick="toggleSiteTheme()" title="Toggle Light / Dark mode" aria-label="Toggle Theme">
+        <details class="nav-language-switcher">
+          <summary aria-label="{{ __('Language') }}">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12H21M12 3C16 7 16 17 12 21C8 17 8 7 12 3Z"/></svg>
+            <span>{{ strtoupper(app()->getLocale()) }}</span>
+          </summary>
+          <nav class="nav-language-menu" aria-label="{{ __('Language') }}">
+            @foreach($navLanguages as $navLanguage)
+              <a href="{{ localization()->getLocalizedURL($navLanguage->code, url()->current(), [], false) }}" lang="{{ $navLanguage->code }}" hreflang="{{ $navLanguage->code }}" @if(app()->getLocale() === $navLanguage->code) aria-current="page" @endif>
+                <span>{{ ['en' => 'English', 'de' => 'Deutsch', 'es' => 'Español', 'fr' => 'Français', 'it' => 'Italiano'][$navLanguage->code] ?? $navLanguage->name }}</span>
+                <span class="nav-language-code">{{ strtoupper($navLanguage->code) }}</span>
+              </a>
+            @endforeach
+          </nav>
+        </details>
+        @guest
+          <a href="{{ route('login') }}" class="btn btn-ghost nav-login">{{ __('Login') }}</a>
+        @else
+          <a href="{{ auth()->user()->is_admin ? route('admin.dashboard.index') : route('user.profile') }}" class="btn btn-ghost nav-login d-none-mobile">{{ auth()->user()->is_admin ? __('Dashboard') : __('My account') }}</a>
+          <a href="{{ route('user.logout') }}" class="btn btn-ghost nav-login">{{ __('Logout') }}</a>
+        @endguest
+        <button class="theme-toggle-btn" type="button" onclick="toggleSiteTheme()" title="{{ __('Toggle Light / Dark mode') }}" aria-label="{{ __('Toggle Theme') }}">
           <span id="theme-icon">🌙</span>
         </button>
-        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">All {{ $navToolCount }} tools</a>
-        <button class="mobile-toggle-btn" type="button" onclick="toggleMobileNavDrawer()" aria-controls="homeMobileDrawer" aria-expanded="false" aria-label="Toggle Navigation Menu">
+        <a href="{{ route('tools') }}" class="btn btn-primary d-none-mobile">{{ __('All') }} {{ $navToolCount }} {{ __('tools') }}</a>
+        <button class="mobile-toggle-btn" type="button" onclick="toggleMobileNavDrawer()" aria-controls="homeMobileDrawer" aria-expanded="false" aria-label="{{ __('Toggle Navigation Menu') }}">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         </button>
       </div>
@@ -87,21 +108,24 @@
     <div id="homeMobileDrawer" class="home-mobile-drawer" style="display: none;">
       <div class="wrap py-3" style="display: flex; flex-direction: column; gap: 4px;">
         <a href="{{ route('tools') }}" class="mobile-nav-link">
-          <span>Tools</span>
+          <span>{{ __('Tools') }}</span>
           <span class="nav-badge">{{ $navToolCount }}</span>
         </a>
-        <a href="{{ url('/blog') }}" class="mobile-nav-link">Guides & Tutorials</a>
-        <a href="{{ url('/blog') }}" class="mobile-nav-link">Blog</a>
-        <a href="{{ url('/faqs') }}" class="mobile-nav-link">FAQs</a>
-        <a href="{{ url('/contact') }}" class="mobile-nav-link">Contact</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="mobile-nav-link">{{ __('Guides & Tutorials') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="mobile-nav-link">{{ __('Blog') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}" class="mobile-nav-link">{{ __('FAQs') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}" class="mobile-nav-link">{{ __('Contact') }}</a>
+        @auth
+          <a href="{{ auth()->user()->is_admin ? route('admin.dashboard.index') : route('user.profile') }}" class="mobile-nav-link">{{ auth()->user()->is_admin ? __('Dashboard') : __('My account') }}</a>
+        @endauth
         @foreach($autoNavPages as $autoPage)
           @php
             $autoPageTrans = $autoPage->translate(app()->getLocale());
             $autoPageTitle = $autoPageTrans->title ?? $autoPageTrans->page_title ?? ucwords(str_replace('-', ' ', $autoPage->slug));
           @endphp
-          <a href="{{ url('/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/' . $autoPage->slug) }}" class="mobile-nav-link">{{ $autoPageTitle }}</a>
         @endforeach
-        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">All {{ $navToolCount }} tools</a>
+        <a href="{{ route('tools') }}" class="btn btn-primary" style="margin-top: 10px; width: 100%;">{{ __('All') }} {{ $navToolCount }} {{ __('tools') }}</a>
       </div>
     </div>
   </header>

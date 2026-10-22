@@ -14,7 +14,7 @@
             <label class="form-label">{{ __('Enter YouTube Video URL') }}</label>
             <div class="col">
                 <div class="input-group input-group-flat">
-                    <input type="text" id="input" class="form-control" wire:model.defer="link" placeholder="https://..." required />
+                    <input type="text" id="input" class="form-control" wire:model.defer="link" placeholder="{{ __('https://...') }}" required />
                     <span class="input-group-text">
                         <div id="paste" class="cursor-pointer" title="{{ __('Paste') }}" data-bs-original-title="{{ __('Paste') }}" data-bs-toggle="tooltip" wire:ignore>
                           <i class="far fa-clipboard fa-fw"></i>

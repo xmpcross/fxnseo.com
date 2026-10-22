@@ -4,7 +4,7 @@
     <div class="footer-columns">
       <!-- Brand Info -->
       <div class="footer-col-brand">
-        <a href="{{ url('/') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
+        <a href="{{ route('home') }}" class="brand-logo" aria-label="{{ config('app.name') }}">
           <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-light" height="38" width="auto">
           <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="{{ config('app.name') }}" class="logo-dark" height="38" width="auto">
         </a>
@@ -20,14 +20,14 @@
       <div>
         <h4 class="footer-col-title">{{ __('Popular Tools') }}</h4>
         <ul class="footer-col-links">
-          <li><a href="{{ url('/domain-authority-checker') }}">{{ __('Domain Authority') }}</a></li>
-          <li><a href="{{ url('/page-authority-checker') }}">{{ __('Page Authority') }}</a></li>
-          <li><a href="{{ url('/da-pa-checker') }}">{{ __('DA PA Checker') }}</a></li>
-          <li><a href="{{ url('/backlink-checker') }}">{{ __('Backlink Checker') }}</a></li>
-          <li><a href="{{ url('/meta-tags-analyzer') }}">{{ __('Meta Tags Analyzer') }}</a></li>
-          <li><a href="{{ url('/keyword-density-checker') }}">{{ __('Keyword Density') }}</a></li>
-          <li><a href="{{ url('/google-index-checker') }}">{{ __('Google Index Checker') }}</a></li>
-          <li><a href="{{ url('/robots-txt-generator') }}">{{ __('Robots.txt Generator') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/domain-authority-checker') }}">{{ __('Domain Authority') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/page-authority-checker') }}">{{ __('Page Authority') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/da-pa-checker') }}">{{ __('DA PA Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-checker') }}">{{ __('Backlink Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/meta-tags-analyzer') }}">{{ __('Meta Tags Analyzer') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/keyword-density-checker') }}">{{ __('Keyword Density') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/google-index-checker') }}">{{ __('Google Index Checker') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/robots-txt-generator') }}">{{ __('Robots.txt Generator') }}</a></li>
         </ul>
       </div>
 
@@ -35,13 +35,13 @@
       <div>
         <h4 class="footer-col-title">{{ __('YouTube Suite') }}</h4>
         <ul class="footer-col-links">
-          <li><a href="{{ url('/youtube-title-extractor') }}">{{ __('Title Extractor') }}</a></li>
-          <li><a href="{{ url('/youtube-tag-extractor') }}">{{ __('Tag Extractor') }}</a></li>
-          <li><a href="{{ url('/youtube-hashtag-extractor') }}">{{ __('Hashtag Extractor') }}</a></li>
-          <li><a href="{{ url('/youtube-channel-statistics') }}">{{ __('Channel Statistics') }}</a></li>
-          <li><a href="{{ url('/youtube-video-statistics') }}">{{ __('Video Statistics') }}</a></li>
-          <li><a href="{{ url('/youtube-money-calculator') }}">{{ __('Money Calculator') }}</a></li>
-          <li><a href="{{ url('/youtube-trend') }}">{{ __('Trending Videos') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-title-extractor') }}">{{ __('Title Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-tag-extractor') }}">{{ __('Tag Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-hashtag-extractor') }}">{{ __('Hashtag Extractor') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-channel-statistics') }}">{{ __('Channel Statistics') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-video-statistics') }}">{{ __('Video Statistics') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-money-calculator') }}">{{ __('Money Calculator') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-trend') }}">{{ __('Trending Videos') }}</a></li>
         </ul>
       </div>
 
@@ -49,12 +49,12 @@
       <div>
         <h4 class="footer-col-title">{{ __('Knowledge Hub') }}</h4>
         <ul class="footer-col-links">
-          <li><a href="{{ url('/blog') }}">{{ __('SEO Blog') }}</a></li>
-          <li><a href="{{ url('/backlink-monitoring-guide') }}">{{ __('Backlink Guide') }}</a></li>
-          <li><a href="{{ url('/link-opportunity-guide') }}">{{ __('Link Building Guide') }}</a></li>
-          <li><a href="{{ url('/seo-audit-guide') }}">{{ __('SEO Audit Hub') }}</a></li>
-          <li><a href="{{ url('/faqs') }}">{{ __('Common FAQs') }}</a></li>
-          <li><a href="{{ url('/report') }}">{{ __('Report Broken Tool') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ __('SEO Blog') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-monitoring-guide') }}">{{ __('Backlink Guide') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/link-opportunity-guide') }}">{{ __('Link Building Guide') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/seo-audit-guide') }}">{{ __('SEO Audit Hub') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}">{{ __('Common FAQs') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report Broken Tool') }}</a></li>
         </ul>
       </div>
 
@@ -62,12 +62,12 @@
       <div>
         <h4 class="footer-col-title">{{ __('Trust & Legal') }}</h4>
         <ul class="footer-col-links">
-          <li><a href="{{ url('/about-us') }}">{{ __('About Us') }}</a></li>
-          <li><a href="{{ url('/contact') }}">{{ __('Contact Support') }}</a></li>
-          <li><a href="{{ url('/privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
-          <li><a href="{{ url('/terms-conditions') }}">{{ __('Terms of Service') }}</a></li>
-          <li><a href="{{ url('/cookie-information') }}">{{ __('Cookie Information') }}</a></li>
-          <li><a href="{{ url('/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/about-us') }}">{{ __('About Us') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact Support') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms of Service') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookie Information') }}</a></li>
+          <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a></li>
         </ul>
       </div>
     </div>
@@ -88,11 +88,11 @@
         © {{ date('Y') }} {{ config('app.name') }}. {{ __('All rights reserved.') }}
       </div>
       <div class="footer-bottom-links">
-        <a href="{{ url('/privacy-policy') }}">{{ __('Privacy') }}</a>
-        <a href="{{ url('/terms-conditions') }}">{{ __('Terms') }}</a>
-        <a href="{{ url('/cookie-information') }}">{{ __('Cookies') }}</a>
-        <a href="{{ url('/contact') }}">{{ __('Contact') }}</a>
-        <a href="{{ url('/report') }}">{{ __('Report') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookies') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact') }}</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report') }}</a>
       </div>
     </div>
   </div>

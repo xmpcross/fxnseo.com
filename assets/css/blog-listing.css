@@ -1,5 +1,5 @@
 /* FXN SEO journal: an editorial reading room, scoped to the listing page. */
-.page-blog-listing .journal{--j-ink:#161b2a;--j-muted:#646875;--j-paper:#f8faf7;--j-surface:#fff;--j-line:#dedfe3;--j-accent:#112568;--j-soft:#efeff2;--j-feature:#eaf1e6;background:var(--j-paper);color:var(--j-ink);padding-bottom:76px;font-family:'Outfit',sans-serif}
+.page-blog-listing .journal{--j-ink:#161b2a;--j-muted:#646875;--j-paper:#f8faf7;--j-surface:#fff;--j-line:#dedfe3;--j-accent:#112568;--j-soft:#efeff2;--j-feature:#eaf1e6;background:var(--j-paper);color:var(--j-ink);padding-bottom:76px;font-family:var(--site-font-family)}
 html.dark .page-blog-listing .journal,.page-blog-listing.theme-dark .journal{--j-ink:#f0f0f3;--j-muted:#a7abb8;--j-paper:#16171a;--j-surface:#1c1e23;--j-line:#353841;--j-accent:#8799d6;--j-soft:#282b34;--j-feature:#252833}
 .journal .journal-shell{width:min(1200px,calc(100% - 64px));margin-inline:auto}
 .journal a{color:inherit;text-decoration:none}

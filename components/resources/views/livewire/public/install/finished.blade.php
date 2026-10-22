@@ -5,7 +5,7 @@
     <p>{{ __('Please come back and') }}<a class="text-primary" href="https://codecanyon.net/item/sumoseotools-online-seo-tools-script/reviews/37326812"> {{ __('leave a 5-star rating') }} </a>{{ __('if you are happy with this script.') }}</p>
     <div class="row">
         <div class="col-md-12">
-          <a href="{{ url('/') }}" class="btn bg-gradient-primary my-3">{{ __('View your website!') }}</a>
+          <a href="{{ route('home') }}" class="btn bg-gradient-primary my-3">{{ __('View your website!') }}</a>
       </div>
     </div>
     <small class="form-hint">{{ __('For security reasons, the system will remove the install link automatically.') }}</small>

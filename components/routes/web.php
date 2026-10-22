@@ -206,7 +206,7 @@ Route::get('/homepage-preview', function () {
                 'icon_image'  => $p->icon_image,
                 'popular'     => (bool) $p->popular,
                 'new'         => (bool) $p->new,
-                'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : url('/' . $p->slug),
+                'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : localization()->getLocalizedURL($locale, '/' . $p->slug),
             ];
         })->values();
 
@@ -313,10 +313,6 @@ Route::localizedGroup(function () {
 	//Home
 	Route::get('/', function () {
 		$locale = app()->getLocale();
-        if ($locale !== 'en') {
-            $query = request()->getQueryString();
-            return redirect()->to(url('/') . ($query ? '?' . $query : ''), 301);
-        }
         $homePage = \App\Models\Admin\Page::with('translations')->where('type', 'home')->first();
 		$resources = \App\Models\Admin\Page::with('translations')->where('type', 'post')
 			->where('post_status', true)
@@ -348,7 +344,7 @@ Route::localizedGroup(function () {
 					'icon_image'  => $p->icon_image,
 					'popular'     => (bool) $p->popular,
 					'new'         => (bool) $p->new,
-					'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : url('/' . $p->slug),
+					'link'        => !empty($p->custom_tool_link) ? $p->custom_tool_link : localization()->getLocalizedURL($locale, '/' . $p->slug),
 				];
 			})->values();
 
@@ -371,7 +367,7 @@ Route::localizedGroup(function () {
 
 		return view('livewire.public.home-live', [
             'page' => $homePage,
-            'pageTrans' => $homePage ? $homePage->translate('en') : null,
+            'pageTrans' => $homePage ? ($homePage->translate($locale) ?: $homePage->translate('en')) : null,
 			'resources'    => $resources,
 			'categories'   => $categories,
 			'allTools'     => $allTools,

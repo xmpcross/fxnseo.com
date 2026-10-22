@@ -18,7 +18,7 @@
                         <label class="form-label col-form-label">{{ __('Channel Name') }}</label>
                     </div>
                     <div class="col-12 col-md-9">
-                        <input type="text" class="form-control" placeholder="seo" wire:model.defer="query" required>
+                        <input type="text" class="form-control" placeholder="{{ __('seo') }}" wire:model.defer="query" required>
                     </div>
                 </div>
             </div>

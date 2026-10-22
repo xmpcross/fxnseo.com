@@ -11,16 +11,16 @@
         <!-- Quick Region Presets -->
         <div class="yt-region-shortcuts">
             <span class="yt-region-label"><i class="fas fa-bolt text-warning"></i> {{ __('Quick Markets:') }}</span>
-            <button type="button" class="yt-region-pill @if(($country ?? 'US') == 'US') active @endif" wire:click="$set('country', 'US')">🇺🇸 US</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'GB') active @endif" wire:click="$set('country', 'GB')">🇬🇧 UK</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'CA') active @endif" wire:click="$set('country', 'CA')">🇨🇦 Canada</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'AU') active @endif" wire:click="$set('country', 'AU')">🇦🇺 Australia</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'DE') active @endif" wire:click="$set('country', 'DE')">🇩🇪 Germany</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'IN') active @endif" wire:click="$set('country', 'IN')">🇮🇳 India</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'JP') active @endif" wire:click="$set('country', 'JP')">🇯🇵 Japan</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'BR') active @endif" wire:click="$set('country', 'BR')">🇧🇷 Brazil</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'FR') active @endif" wire:click="$set('country', 'FR')">🇫🇷 France</button>
-            <button type="button" class="yt-region-pill @if(($country ?? '') == 'MX') active @endif" wire:click="$set('country', 'MX')">🇲🇽 Mexico</button>
+            <button type="button" class="yt-region-pill @if(($country ?? 'US') == 'US') active @endif" wire:click="$set('country', 'US')">{{ __('🇺🇸 US') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'GB') active @endif" wire:click="$set('country', 'GB')">{{ __('🇬🇧 UK') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'CA') active @endif" wire:click="$set('country', 'CA')">{{ __('🇨🇦 Canada') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'AU') active @endif" wire:click="$set('country', 'AU')">{{ __('🇦🇺 Australia') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'DE') active @endif" wire:click="$set('country', 'DE')">{{ __('🇩🇪 Germany') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'IN') active @endif" wire:click="$set('country', 'IN')">{{ __('🇮🇳 India') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'JP') active @endif" wire:click="$set('country', 'JP')">{{ __('🇯🇵 Japan') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'BR') active @endif" wire:click="$set('country', 'BR')">{{ __('🇧🇷 Brazil') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'FR') active @endif" wire:click="$set('country', 'FR')">{{ __('🇫🇷 France') }}</button>
+            <button type="button" class="yt-region-pill @if(($country ?? '') == 'MX') active @endif" wire:click="$set('country', 'MX')">{{ __('🇲🇽 Mexico') }}</button>
         </div>
 
         <!-- Form Inputs Grid -->

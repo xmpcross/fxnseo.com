@@ -22,8 +22,8 @@
         : 'index, follow, max-snippet:-1, max-video-preview:-1, max-image-preview:large';
 
     if (Route::is('tools')) {
-        $__metaTitle = 'Free SEO Tools: 60+ Browser-Based Utilities - ' . config('app.name');
-        $__metaDescription = 'Explore free SEO tools for backlinks, keywords, rank tracking, metadata, website analysis, content and YouTube optimization.';
+        $__metaTitle = __('Free SEO Tools: 60+ Browser-Based Utilities') . ' - ' . config('app.name');
+        $__metaDescription = __('Explore free SEO tools for backlinks, keywords, rank tracking, metadata, website analysis, content and YouTube optimization.');
         $__metaCanonical = route('tools');
         $__metaType = 'website';
     }

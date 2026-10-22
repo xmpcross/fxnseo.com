@@ -2,7 +2,7 @@
   <div class="cookie-consent-icon" aria-hidden="true"><i class="fas fa-cookie-bite"></i></div>
   <div class="cookie-consent-copy">
     <h2 id="cookieConsentTitle">{{ __('Your privacy, your choice') }}</h2>
-    <p id="cookieConsentText">{{ __('We use necessary cookies to keep fxnSEO working. With your permission, optional cookies may help us understand usage and improve the site.') }} <a href="{{ url('/cookie-information') }}">{{ __('Cookie Info') }}</a></p>
+    <p id="cookieConsentText">{{ __('We use necessary cookies to keep fxnSEO working. With your permission, optional cookies may help us understand usage and improve the site.') }} <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookie Info') }}</a></p>
   </div>
   <div class="cookie-consent-actions">
     <button class="cookie-consent-secondary" id="rejectCookies" type="button">{{ __('Necessary only') }}</button>
@@ -15,7 +15,7 @@
     const banner = document.getElementById('cookieConsent');
     if (!banner) return;
     function saveChoice(choice) {
-      fetch('{{ url('/cookies') }}/' + choice, {
+      fetch('{{ localization()->getLocalizedURL(app()->getLocale(), '/cookies') }}/' + choice, {
         method: 'POST',
         credentials: 'same-origin',
         headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }

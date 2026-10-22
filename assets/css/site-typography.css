@@ -1,32 +1,34 @@
-/* Shared body and heading typography, including the standalone homepage. */
+/* One shared text family for public pages, articles, tools and administration. */
 @font-face {
-  font-family: 'Urbanist';
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 100 900;
   font-display: swap;
-  src: url('../fonts/google/urbanist-variable.woff2') format('woff2');
+  src: url('../fonts/google/inter-variable.woff2') format('woff2');
 }
-
-/* Consistent body and paragraph typography in every section and page. */
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/google/inter-variable-italic.woff2') format('woff2');
+}
+:root {
+  --site-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-family: var(--site-font-family);
+  --bs-font-sans-serif: var(--site-font-family);
+}
 html body,
-html body p {
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif !important;
+html#html-root body {
+  font-family: var(--site-font-family) !important;
+  font-weight: 400;
+}
+/* Inherit the default while retaining each component's size and emphasis. */
+html body :is(p, h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6,
+  button, input, textarea, select, optgroup, option, label, summary, table) {
+  font-family: inherit !important;
+}
+html body p,
+html#html-root body p {
   font-weight: 400 !important;
-}
-
-/* Shared heading and title family, including text nested inside headings. */
-html body :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6,
-  .page-title, .post-title, .entry-title, .blog-entry-title, .blog-editorial-title,
-  .blog-spotlight-title, .hero-title, .tool-editorial-title, .channels-title,
-  .contact-card-title, .contact-card-subtitle, .footer-col-title, .help-box-title,
-  .legal-toc-title, .mobile-nav-section-title, .nav-drop-title, .post-next-up-heading,
-  .tool-related-title, .tools-card-heading, .tools-cat-title, .yt-card-title,
-  .yt-empty-title, .yt-sidebar-card-title) {
-  font-family: 'Urbanist', sans-serif !important;
-}
-
-html body :is(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6,
-  .page-title, .post-title, .entry-title, .hero-title, .tool-editorial-title,
-  .blog-editorial-title) :is(span, a, em, strong, b, small) {
-  font-family: 'Urbanist', sans-serif !important;
 }

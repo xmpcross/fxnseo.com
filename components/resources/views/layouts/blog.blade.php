@@ -28,8 +28,7 @@
 
           gtag('config', 'G-JGE2B6YCEW');
         </script>
-        <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
-        <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+        <link rel="preload" href="{{ asset('assets/fonts/google/inter-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="color-scheme" content="{{ (Cookie::get('theme_mode', $general->default_theme_mode ?? 'theme-light') === 'theme-dark') ? 'dark' : 'light' }}">
@@ -91,6 +90,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/journal-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/journal-redesign.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/blog-listing.css') }}?v={{ filemtime(dirname(base_path()).'/assets/css/blog-listing.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
 </head>
     <body class="antialiased {{ Cookie::get('theme_mode', $general->default_theme_mode) }} page-blog-listing">
 
@@ -252,7 +252,7 @@
                               <button id="acceptCookies" target="_blank" class="btn btn-sm bg-white mb-0 text-capitalize"> {{ __('Accept all cookies') }} </button>
                           </div>
                         @endif
-                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">x</button>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="alert" aria-label="Close">{{ __('x') }}</button>
                       </div>
 
                   <script>

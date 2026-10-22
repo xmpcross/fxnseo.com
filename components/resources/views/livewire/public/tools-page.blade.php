@@ -16,7 +16,7 @@
   <section class="tool-editorial-hero tools-editorial-hero">
     <div class="tool-editorial-shell">
       <nav class="tool-editorial-breadcrumb" aria-label="{{ __('Breadcrumb') }}">
-        <a href="{{ url('/') }}">{{ __('Home') }}</a>
+        <a href="{{ route('home') }}">{{ __('Home') }}</a>
         <span class="sep" aria-hidden="true">›</span>
         <span class="active">{{ __('Free SEO Tools Directory') }}</span>
       </nav>
@@ -36,7 +36,7 @@
       </label>
       <nav class="tools-category-nav" aria-label="{{ __('Tool categories') }}">
         @foreach($categories as $category)
-          <a href="#{{ $category['anchor'] }}">{{ $category['title'] }}</a>
+          <a href="#{{ $category['anchor'] }}">{{ __($category['title']) }}</a>
         @endforeach
       </nav>
     </div>
@@ -48,10 +48,10 @@
       <section class="tools-category" id="{{ $category['anchor'] }}" data-tools-category>
         <div class="tools-category-head">
           <div class="tools-cat-title-wrap">
-            <h2 class="tools-cat-title">{{ $category['title'] }}</h2>
+            <h2 class="tools-cat-title">{{ __($category['title']) }}</h2>
           </div>
           @if(!empty($category['description']))
-            <p class="tools-cat-desc">{{ $category['description'] }}</p>
+            <p class="tools-cat-desc">{{ __($category['description']) }}</p>
           @endif
           <span class="tools-cat-badge" data-visible-count>{{ $category['pages']->count() }} {{ __('tools') }}</span>
         </div>
@@ -59,7 +59,7 @@
         <div class="tools-grid">
           @foreach($category['pages'] as $tool)
             @php $description = $tool['short_description'] ?? $tool['subtitle'] ?? __('Free online diagnostic tool.'); @endphp
-            <a class="tools-card" data-tool-card data-search="{{ strtolower($tool['title'].' '.$description.' '.$category['title']) }}" href="{{ empty($tool['custom_tool_link']) ? url('/'.$tool['slug']) : $tool['custom_tool_link'] }}" target="{{ $tool['target'] ?? '_self' }}">
+            <a class="tools-card" data-tool-card data-search="{{ strtolower($tool['title'].' '.$description.' '.$category['title']) }}" href="{{ empty($tool['custom_tool_link']) ? localization()->getLocalizedURL(app()->getLocale(), '/'.$tool['slug']) : $tool['custom_tool_link'] }}" target="{{ $tool['target'] ?? '_self' }}">
               <span class="tools-card-icon">
                 @if(!empty($tool['icon_image']))
                   <img src="{{ $tool['icon_image'] }}" alt="" loading="lazy">

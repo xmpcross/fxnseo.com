@@ -224,7 +224,7 @@ body.page-slug-seo-audit-guide .pillar-body {
 .page-blog-listing .blog-entry-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px 18px 0 0 !important; transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1); }
 .page-blog-listing .blog-entry-card:hover img { transform: scale(1.05); }
 .page-blog-listing .blog-entry-card .card-body { display: flex; flex-direction: column; padding: 1.4rem 1.4rem 1.3rem; background: #ffffff; }
-.page-blog-listing .blog-entry-title { font-family: 'Outfit', sans-serif !important; font-size: 1.15rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.65rem; color: #0f172a; }
+.page-blog-listing .blog-entry-title { font-family: var(--site-font-family) !important; font-size: 1.15rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.65rem; color: #0f172a; }
 .page-blog-listing .blog-entry-title a { color: #0f172a; text-decoration: none; transition: color 0.15s; }
 .page-blog-listing .blog-entry-title a:hover { color: #2447e0; }
 .page-blog-listing .blog-entry-summary { font-size: 0.88rem; color: #64748b; line-height: 1.55; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -457,7 +457,7 @@ body.theme-dark.page-slug-contact,
 .page-slug-contact .page-content {
   background: var(--content-soft);
   color: var(--content-ink);
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--site-font-family);
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
@@ -493,7 +493,7 @@ html.dark .page-content {
 /* Typography tokens matching home page */
 .page-slug-about-us h1, .page-slug-about-us h2, .page-slug-about-us h3,
 .page-slug-contact h1, .page-slug-contact h2, .page-slug-contact h3 {
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--site-font-family);
   letter-spacing: -0.03em;
 }
 
@@ -776,7 +776,7 @@ body.theme-dark .page-slug-about-us .about-section:has(.why-choose-wrap) h2::bef
   font-size: 13px;
 }
 .page-slug-about-us .about-section:has(.why-choose-wrap) li strong {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--site-font-family);
   color: var(--content-ink);
   font-size: 15.5px;
   font-weight: 700;
@@ -832,7 +832,7 @@ body.theme-dark .page-slug-about-us .about-section:has(#whoAccordion) h2::before
   box-shadow: 0 2px 6px rgba(15, 23, 42, 0.03);
 }
 .page-slug-about-us #whoAccordion .accordion-button {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--site-font-family);
   font-weight: 700;
   font-size: 16px;
   color: var(--content-ink);
@@ -959,7 +959,7 @@ body.theme-dark .page-slug-contact .contact-kicker,
 
 /* Form Controls */
 .page-slug-contact .form-label {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--site-font-family);
   font-size: 13.5px;
   font-weight: 700;
   color: var(--content-ink);
@@ -1036,7 +1036,7 @@ body.theme-dark .page-slug-contact .form-control:focus,
   padding: 14px 30px;
   background: linear-gradient(135deg, #6c86f5 0%, #2447e0 100%);
   color: #ffffff;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--site-font-family);
   font-weight: 800;
   font-size: 15px;
   border-radius: 12px;
@@ -1305,7 +1305,7 @@ body.page-slug-faqs .faq-search-box {
   background: #f8faff;
 }
 body.page-slug-faqs .faq-search-box i { color: #7b8baa; }
-body.page-slug-faqs .faq-search-box input { height: 48px; padding: 0 12px; border: 0; outline: 0; color: #0e1b3d; background: transparent; font: 14px "Inter", sans-serif; }
+body.page-slug-faqs .faq-search-box input { height: 48px; padding: 0 12px; border: 0; outline: 0; color: #0e1b3d; background: transparent; font: 14px var(--site-font-family); }
 body.page-slug-faqs .faq-search-box button { padding: 6px 9px; border: 0; border-radius: 6px; color: #2447e0; background: #edf2ff; font-size: 12px; font-weight: 700; }
 body.page-slug-faqs #faq-search-status { grid-column: 2; min-height: 18px; margin: -10px 0 0; color: #656975; font-size: 12px; }
 
@@ -1579,7 +1579,7 @@ body.page-slug-faqs .faq-view-more {
   border: 0;
   color: #2447e0;
   background: transparent;
-  font: 700 14px "Inter", sans-serif;
+  font: 700 14px var(--site-font-family);
   text-decoration: underline;
   text-underline-offset: 4px;
   cursor: pointer;

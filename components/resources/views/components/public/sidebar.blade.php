@@ -25,15 +25,15 @@
             </div>
             <div class="yt-status-row">
                 <span class="yt-status-label">{{ __('Speed / Latency:') }}</span>
-                <span class="yt-status-value text-emerald">&lt; 0.25s Instant</span>
+                <span class="yt-status-value text-emerald">{{ __('< 0.25s Instant') }}</span>
             </div>
             <div class="yt-status-row">
                 <span class="yt-status-label">{{ __('Privacy:') }}</span>
-                <span class="yt-status-value text-emerald">Browser First · No Logs</span>
+                <span class="yt-status-value text-emerald">{{ __('Browser First · No Logs') }}</span>
             </div>
             <div class="yt-status-row">
                 <span class="yt-status-label">{{ __('Cost:') }}</span>
-                <span class="yt-status-value text-emerald">100% Free · No Sign-Up</span>
+                <span class="yt-status-value text-emerald">{{ __('100% Free · No Sign-Up') }}</span>
             </div>
         </div>
     </div>
@@ -116,7 +116,7 @@
                 @foreach ($recentPosts as $key => $value)
                     <a href="{{ route('home') . '/blog/' . $value['slug'] }}" class="yt-suite-item" title="{{ $value['title'] }}" target="{{ $value['target'] }}">
                         @if ( $general->featured_images_in_sidebar_status && !empty($value['featured_image']) )
-                            <img class="rounded-2 {{ ($general->lazy_loading) ? 'lazyload' : '' }}" style="width: 44px; height: 44px; object-fit: cover; flex-shrink: 0;" data-src="{{ $value['featured_image'] }}" @if (!$general->lazy_loading) src="{{ $value['featured_image'] }}" @endif alt="{{ $value['title'] }}">
+                            <img class="post-featured-image rounded-2 {{ ($general->lazy_loading) ? 'lazyload' : '' }}" style="width: 44px; height: 44px; object-fit: cover; flex-shrink: 0;" data-src="{{ $value['featured_image'] }}" @if (!$general->lazy_loading) src="{{ $value['featured_image'] }}" @endif alt="{{ $value['title'] }}">
                         @else
                             <div class="yt-suite-icon" style="background: #f1f5f9; color: #64748b;">
                                 <i class="far fa-file-alt"></i>

@@ -1,0 +1,44 @@
+/* Audience-focused homepage toolkit section. */
+html#html-root body #features {
+  --aud-ink: var(--rd-ink, var(--text));
+  --aud-muted: var(--rd-muted, var(--text-muted));
+  --aud-line: var(--rd-line, var(--border));
+  --aud-brand: var(--rd-brand, var(--emerald));
+  padding: clamp(48px, 7vw, 88px) 0;
+  background: var(--rd-bg, var(--bg));
+  border-top: 1px solid var(--aud-line);
+}
+html#html-root body #features > .wrap { display: block; }
+html#html-root body #features .features-intro { display: grid; grid-template-columns: 1.2fr 1fr; align-items: end; gap: 32px 80px; margin-bottom: 36px; }
+html#html-root body #features .section-head { margin: 0; }
+html#html-root body #features .section-eyebrow { display: block; margin: 0 0 14px; color: var(--aud-brand); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+html#html-root body #features .section-title { max-width: 24ch; margin: 0; font-size: clamp(2rem, 3.3vw, 3rem); line-height: 1.1; letter-spacing: -.035em; }
+html#html-root body #features .features-intro-copy p { margin: 0; color: var(--aud-muted); font-size: 1.0625rem; line-height: 1.7; max-width: 43ch; }
+html#html-root body #features .features-explore { display: inline-flex; align-items: center; gap: 18px; margin: 18px 0 0; padding-bottom: 5px; border-bottom: 1px solid currentColor; color: var(--aud-brand); font-weight: 500; text-decoration: none; }
+html#html-root body #features .audience-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+html#html-root body #features .audience-card { display: flex; flex-direction: column; min-width: 0; padding: clamp(24px, 3vw, 36px); background: var(--rd-surface, var(--bg-card)); border: 1px solid var(--aud-line); border-radius: 18px; }
+html#html-root body #features .audience-card:first-child { background: #10245b; border-color: #10245b; --aud-ink: #f4f7ff; --aud-muted: #c2cde8; --aud-line: #364a7a; --aud-brand: #c0ceff; }
+html#html-root body #features .audience-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 32px; }
+html#html-root body #features .audience-icon { display: grid; place-items: center; width: 48px; height: 48px; color: var(--aud-brand); border: 1px solid var(--aud-line); border-radius: 14px; }
+html#html-root body #features .audience-icon svg { width: 25px; height: 25px; }
+html#html-root body #features .audience-label { color: var(--aud-brand); font-size: .8125rem; font-weight: 500; }
+html#html-root body #features .audience-card h3 { margin: 0 0 16px; color: var(--aud-ink); font: 700 clamp(1.5rem, 2vw, 1.875rem)/1.15 var(--site-font-family); letter-spacing: -.025em; }
+html#html-root body #features .audience-card p { margin: 0 0 24px; color: var(--aud-muted); font-size: 1rem; line-height: 1.7; }
+html#html-root body #features .audience-card ul { display: grid; gap: 12px; list-style: none; padding: 22px 0 28px; margin: auto 0 0; border-top: 1px solid var(--aud-line); }
+html#html-root body #features .audience-card li { position: relative; padding-left: 22px; color: var(--aud-muted); font-size: .9375rem; line-height: 1.55; }
+html#html-root body #features .audience-card li::before { content: '✓'; position: absolute; left: 0; color: var(--aud-brand); }
+html#html-root body #features .audience-tool-link { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-top: 20px; border-top: 1px solid var(--aud-line); color: var(--aud-brand); font-size: .9375rem; font-weight: 500; text-decoration: none; }
+html#html-root body #features a:hover { text-decoration: underline; text-underline-offset: 5px; }
+html#html-root body #features a:focus-visible { outline: 2px solid var(--aud-brand); outline-offset: 5px; border-radius: 2px; }
+html#html-root body #features .features-bottom-note { display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 28px; color: var(--aud-muted); font-size: .875rem; }
+html#html-root body #features .features-note-dot { flex: 0 0 6px; height: 6px; border-radius: 50%; background: var(--aud-brand); }
+@media (max-width: 1000px) {
+  html#html-root body #features .features-intro { gap: 28px; grid-template-columns: 1fr; }
+  html#html-root body #features .features-intro-copy p { max-width: 60ch; }
+  html#html-root body #features .audience-grid { grid-template-columns: 1fr; }
+  html#html-root body #features .audience-card-top { margin-bottom: 24px; }
+  html#html-root body #features .audience-card ul { margin-top: 0; }
+}
+@media (max-width: 480px) {
+  html#html-root body #features .features-bottom-note { align-items: baseline; text-align: center; line-height: 1.6; }
+}

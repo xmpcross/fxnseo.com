@@ -22,21 +22,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   @php
-    \Artesaos\SEOTools\Facades\SEOMeta::setTitle('Free SEO Tools for Backlinks, Websites & YouTube | FXN SEO');
-    \Artesaos\SEOTools\Facades\SEOMeta::setDescription('Check backlinks, inspect website metadata, trace redirects and research YouTube videos with free SEO tools and practical guides from FXN SEO.');
-    \Artesaos\SEOTools\Facades\SEOMeta::setCanonical(url('/'));
+    \Artesaos\SEOTools\Facades\SEOMeta::setTitle(__('Free SEO Tools for Backlinks, Websites & YouTube | FXN SEO'));
+    \Artesaos\SEOTools\Facades\SEOMeta::setDescription(__('Check backlinks, inspect website metadata, trace redirects and research YouTube videos with free SEO tools and practical guides from FXN SEO.'));
+    \Artesaos\SEOTools\Facades\SEOMeta::setCanonical(route('home'));
   @endphp
   @include('partials.meta-manager')
   @include('partials.seo-structured-data')
   @include('partials.hreflang')
-  <link rel="preload" href="{{ asset('assets/fonts/google/outfit-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="{{ asset('assets/fonts/google/urbanist-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ asset('assets/fonts/google/inter-variable.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="{{ asset('assets/img/favicon.svg') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/google-fonts-local.css') }}">
   <style>
     /* CSS Variables for Light Mode (Default) */
     :root, html.light {
-      --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-family: var(--site-font-family);
       --bg: #f8fafc;
       --bg-surface: #ffffff;
       --bg-card: #ffffff;
@@ -66,7 +65,7 @@
 
     /* Dark Mode Overrides (nxtsmarthome.com.au extracted color scheme) */
     html.dark {
-      --font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      --font-family: var(--site-font-family);
       --bg: #151616;
       --bg-surface: #222324;
       --bg-card: rgba(34, 35, 36, 0.85);
@@ -1064,6 +1063,9 @@
   <link rel="stylesheet" href="{{ asset('assets/css/site-header.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-header.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/site-redesign.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/site-redesign.css') ?: '1' }}">
   <link rel="stylesheet" href="{{ asset('assets/css/home-sections.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-sections.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-faq.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-faq.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/featured-images.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/featured-images.css') ?: '1' }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/home-audience.css') }}?v={{ @filemtime(dirname(base_path()).'/assets/css/home-audience.css') ?: '1' }}">
 </head>
 <body class="{{ $__isThemeDark ? 'theme-dark dark' : 'theme-light light' }}">
 
@@ -1081,19 +1083,19 @@
   <section class="hero-section">
     <div class="wrap hero-content">
       <div class="hero-copy">
-        <h1 class="hero-title">Check a domain.<br>See the numbers.</h1>
+        <h1 class="hero-title">{{ __('Check a domain.') }}<br>{{ __('See the numbers.') }}</h1>
 
         <p class="hero-desc">
-          Free SEO and YouTube tools that run in your browser. Look up Domain Authority, list backlinks, audit meta tags or pull data from a video, with no account and no card.
+          {{ __('Free SEO and YouTube tools that run in your browser. Look up Domain Authority, list backlinks, audit meta tags or pull data from a video, with no account and no card.') }}
         </p>
 
         <!-- Quick-run launcher -->
         <div class="hero-launcher">
-          <div class="launcher-tabs" role="group" aria-label="Choose a tool">
-            <button class="launcher-tab active" type="button" aria-pressed="true" onclick="switchLauncherTab(this, 'domain-authority-checker', 'Enter domain e.g. fxnseo.com or wikipedia.org', 'domain')">Domain Authority</button>
-            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'backlink-checker', 'Enter domain to check live backlinks e.g. github.com', 'domain')">Backlink Checker</button>
-            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'meta-tags-analyzer', 'Enter website URL to audit meta tags', 'link')">Meta Tags Analyzer</button>
-            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'youtube-title-extractor', 'Paste YouTube video URL e.g. https://www.youtube.com/watch?v=...', 'link')">YouTube Extractor</button>
+          <div class="launcher-tabs" role="group" aria-label="{{ __('Choose a tool') }}">
+            <button class="launcher-tab active" type="button" aria-pressed="true" onclick="switchLauncherTab(this, 'domain-authority-checker', 'Enter domain e.g. fxnseo.com or wikipedia.org', 'domain')">{{ __('Domain Authority') }}</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'backlink-checker', 'Enter domain to check live backlinks e.g. github.com', 'domain')">{{ __('Backlink Checker') }}</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'meta-tags-analyzer', 'Enter website URL to audit meta tags', 'link')">{{ __('Meta Tags Analyzer') }}</button>
+            <button class="launcher-tab" type="button" aria-pressed="false" onclick="switchLauncherTab(this, 'youtube-title-extractor', 'Paste YouTube video URL e.g. https://www.youtube.com/watch?v=...', 'link')">{{ __('YouTube Extractor') }}</button>
           </div>
 
           <form class="launcher-form" id="launcher-form" onsubmit="return handleLauncherSubmit(event)">
@@ -1101,24 +1103,24 @@
               type="text"
               id="launcher-input"
               class="launcher-input"
-              placeholder="Enter domain e.g. fxnseo.com or wikipedia.org"
-              aria-label="Domain or URL to check"
+              placeholder="{{ __('Enter domain e.g. fxnseo.com or wikipedia.org') }}"
+              aria-label="{{ __('Domain or URL to check') }}"
               required
             >
-            <button type="submit" class="btn btn-primary">Run check</button>
+            <button type="submit" class="btn btn-primary">{{ __('Run check') }}</button>
           </form>
         </div>
       </div>
 
       <figure class="hero-readout">
-        <figcaption><strong>Example result</strong> for a Domain Authority check</figcaption>
+        <figcaption><strong>{{ __('Example result') }}</strong> {{ __('for a Domain Authority check') }}</figcaption>
         <dl class="readout-grid">
-          <div class="is-key"><dt>Domain Authority</dt><dd>54<small>/100</small></dd></div>
-          <div><dt>Page Authority</dt><dd>47<small>/100</small></dd></div>
-          <div><dt>Linking domains</dt><dd>1,204</dd></div>
-          <div><dt>Spam score</dt><dd>2<small>%</small></dd></div>
+          <div class="is-key"><dt>{{ __('Domain Authority') }}</dt><dd>54<small>/100</small></dd></div>
+          <div><dt>{{ __('Page Authority') }}</dt><dd>47<small>/100</small></dd></div>
+          <div><dt>{{ __('Linking domains') }}</dt><dd>1,204</dd></div>
+          <div><dt>{{ __('Spam score') }}</dt><dd>2<small>%</small></dd></div>
         </dl>
-        <p>Metrics come from the Moz API. Treat them as a way to compare sites, not a ranking guarantee.</p>
+        <p>{{ __('Metrics come from the Moz API. Treat them as a way to compare sites, not a ranking guarantee.') }}</p>
       </figure>
     </div>
   </section>
@@ -1128,30 +1130,30 @@
     <div class="wrap">
       <div class="section-head-bar">
         <div>
-          <h2 class="section-title">All 60 free tools</h2>
+          <h2 class="section-title">{{ __('All 60 free tools') }}</h2>
         </div>
         <p class="section-subtitle">
-          Domain authority, backlinks, metadata, redirects and YouTube research. Pick a tool and run it in your browser.
+          {{ __('Domain authority, backlinks, metadata, redirects and YouTube research. Pick a tool and run it in your browser.') }}
         </p>
       </div>
 
       <!-- Filter Pills & Search -->
       <div class="filter-bar">
         <div class="category-pills" id="category-pills">
-          <button class="category-pill active" onclick="filterCategory('all', this)">All tools ({{ count($allTools) }})</button>
-          <button class="category-pill" onclick="filterCategory('popular', this)">Most popular</button>
-          <button class="category-pill" onclick="filterCategory('youtube', this)">YouTube (18)</button>
-          <button class="category-pill" onclick="filterCategory('backlink', this)">Backlinks & authority</button>
-          <button class="category-pill" onclick="filterCategory('content', this)">Content & text</button>
-          <button class="category-pill" onclick="filterCategory('technical', this)">Technical & DNS</button>
+          <button class="category-pill active" onclick="filterCategory('all', this)">{{ __('All tools (') }}{{ count($allTools) }})</button>
+          <button class="category-pill" onclick="filterCategory('popular', this)">{{ __('Most popular') }}</button>
+          <button class="category-pill" onclick="filterCategory('youtube', this)">{{ __('YouTube (18)') }}</button>
+          <button class="category-pill" onclick="filterCategory('backlink', this)">{{ __('Backlinks & authority') }}</button>
+          <button class="category-pill" onclick="filterCategory('content', this)">{{ __('Content & text') }}</button>
+          <button class="category-pill" onclick="filterCategory('technical', this)">{{ __('Technical & DNS') }}</button>
         </div>
 
         <div class="search-input-box">
-          <label for="tool-search-input" class="tools-sr-only">Search tools</label>
-          <input 
-            type="text" 
-            id="tool-search-input" 
-            placeholder="Search tools: Moz, YouTube, DNS" 
+          <label for="tool-search-input" class="tools-sr-only">{{ __('Search tools') }}</label>
+          <input
+            type="text"
+            id="tool-search-input"
+            placeholder="{{ __('Search tools: Moz, YouTube, DNS') }}"
             oninput="handleToolSearch(this.value)"
           >
         </div>
@@ -1166,7 +1168,7 @@
             $isMoz = str_contains($slug, 'authority') || str_contains($slug, 'moz') || str_contains($slug, 'backlink');
             $isContent = str_contains($slug, 'rewriter') || str_contains($slug, 'keyword') || str_contains($slug, 'word') || str_contains($slug, 'text') || str_contains($slug, 'plagiarism');
             $isTech = str_contains($slug, 'dns') || str_contains($slug, 'whois') || str_contains($slug, 'robots') || str_contains($slug, 'sitemap') || str_contains($slug, 'redirect') || str_contains($slug, 'ping') || str_contains($slug, 'speed') || str_contains($slug, 'server');
-            
+
             $catTag = 'tools';
             if ($isYt) $catTag = 'youtube';
             elseif ($isMoz) $catTag = 'backlink';
@@ -1174,9 +1176,9 @@
             elseif ($isTech) $catTag = 'technical';
           @endphp
 
-          <a 
-            href="{{ $tool['link'] }}" 
-            class="tool-card" 
+          <a
+            href="{{ $tool['link'] }}"
+            class="tool-card"
             data-slug="{{ $tool['slug'] }}"
             data-category="{{ $catTag }}"
             data-popular="{{ !empty($tool['popular']) ? '1' : '0' }}"
@@ -1192,13 +1194,13 @@
               </div>
 
               @if(!empty($tool['popular']))
-                <span class="card-tag tag-pop">Popular</span>
+                <span class="card-tag tag-pop">{{ __('Popular') }}</span>
               @elseif($isYt)
-                <span class="card-tag tag-yt">YouTube API</span>
+                <span class="card-tag tag-yt">{{ __('YouTube API') }}</span>
               @elseif($isMoz)
-                <span class="card-tag tag-moz">Moz Engine</span>
+                <span class="card-tag tag-moz">{{ __('Moz Engine') }}</span>
               @else
-                <span class="card-tag">Fast Check</span>
+                <span class="card-tag">{{ __('Fast Check') }}</span>
               @endif
             </div>
 
@@ -1206,7 +1208,7 @@
             <p class="tool-desc">{{ \Illuminate\Support\Str::limit($tool['description'] ?: 'Perform instant, reliable SEO data lookups with real-time accuracy.', 110) }}</p>
 
             <div class="card-bottom">
-              <span>Launch Tool</span>
+              <span>{{ __('Launch Tool') }}</span>
               <span class="card-arrow">→</span>
             </div>
           </a>
@@ -1214,9 +1216,9 @@
       </div>
 
       <div id="no-search-results" style="display: none; text-align: center; padding: 60px 20px;">
-        <h3 style="font-size: 22px; color: var(--text); margin-bottom: 8px;">No matching tools found</h3>
-        <p style="color: var(--text-muted); margin-bottom: 20px;">Try searching for "backlink", "youtube", "keyword", or "authority".</p>
-        <button class="btn btn-ghost" onclick="resetToolSearch()">Clear Search Filter</button>
+        <h3 style="font-size: 22px; color: var(--text); margin-bottom: 8px;">{{ __('No matching tools found') }}</h3>
+        <p style="color: var(--text-muted); margin-bottom: 20px;">{{ __('Try searching for "backlink", "youtube", "keyword", or "authority".') }}</p>
+        <button class="btn btn-ghost" onclick="resetToolSearch()">{{ __('Clear Search Filter') }}</button>
       </div>
     </div>
   </section>
@@ -1225,62 +1227,63 @@
   <section class="section-editorial" id="editorial-insights">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="section-title">The Four Pillars of Search Visibility</h2>
+        <span class="section-eyebrow">{{ __('A stronger search foundation') }}</span>
+        <h2 class="section-title">{{ __('The Four Pillars of Search Visibility') }}</h2>
         <p class="section-subtitle">
-          High organic rankings require a balance of technical accessibility, editorial content relevance, domain authority, and multimedia discoverability.
+          {{ __('High organic rankings require a balance of technical accessibility, editorial content relevance, domain authority, and multimedia discoverability.') }}
         </p>
       </div>
 
       <div class="editorial-grid">
         <div class="editorial-block">
-          <span class="editorial-icon">🌐</span>
-          <h3>1. Domain Authority & Backlink Health</h3>
+          <span class="pillar-number" aria-hidden="true">01</span>
+          <h3>{{ __('Domain Authority & Backlink Health') }}</h3>
           <p>
-            Search algorithms rely on inbound hyperlink citations to gauge trustworthiness. Moz's 100-point Domain Authority (DA) and Page Authority (PA) metrics predict ranking capability based on root domain diversity and link equity.
+            {{ __('Search algorithms rely on inbound hyperlink citations to gauge trustworthiness. Moz\'s 100-point Domain Authority (DA) and Page Authority (PA) metrics predict ranking capability based on root domain diversity and link equity.') }}
           </p>
           <ul class="editorial-points">
-            <li>Assess competitor link velocity and anchor text variation.</li>
-            <li>Detect broken or lost referral pathways before ranking drop-offs.</li>
-            <li>Prioritize relevant editorial links over bulk automated placements.</li>
+            <li>{{ __('Assess competitor link velocity and anchor text variation.') }}</li>
+            <li>{{ __('Detect broken or lost referral pathways before ranking drop-offs.') }}</li>
+            <li>{{ __('Prioritize relevant editorial links over bulk automated placements.') }}</li>
           </ul>
         </div>
 
         <div class="editorial-block">
-          <span class="editorial-icon">⚙️</span>
-          <h3>2. Technical Crawlability & Indexation</h3>
+          <span class="pillar-number" aria-hidden="true">02</span>
+          <h3>{{ __('Technical Crawlability & Indexation') }}</h3>
           <p>
-            Before a page can rank, search engine crawlers (like Googlebot) must find, render, and index it efficiently. Technical hygiene prevents wasted crawl budget and eliminates indexation barriers.
+            {{ __('Before a page can rank, search engine crawlers (like Googlebot) must find, render, and index it efficiently. Technical hygiene prevents wasted crawl budget and eliminates indexation barriers.') }}
           </p>
           <ul class="editorial-points">
-            <li>Generate explicit crawler permissions with validated robots.txt syntax.</li>
-            <li>Structure clean XML sitemaps to communicate page hierarchy and updates.</li>
-            <li>Diagnose redirect loops, canonical anomalies, and server latency.</li>
+            <li>{{ __('Generate explicit crawler permissions with validated robots.txt syntax.') }}</li>
+            <li>{{ __('Structure clean XML sitemaps to communicate page hierarchy and updates.') }}</li>
+            <li>{{ __('Diagnose redirect loops, canonical anomalies, and server latency.') }}</li>
           </ul>
         </div>
 
         <div class="editorial-block">
-          <span class="editorial-icon">✍️</span>
-          <h3>3. On-Page Relevance & Entity Optimization</h3>
+          <span class="pillar-number" aria-hidden="true">03</span>
+          <h3>{{ __('On-Page Relevance & Entity Optimization') }}</h3>
           <p>
-            Modern semantic algorithms (like Google BERT and MUM) look for comprehensive answers to search intent rather than repeated keywords. Natural keyword density and high-converting meta tags drive click-throughs.
+            {{ __('Modern semantic algorithms (like Google BERT and MUM) look for comprehensive answers to search intent rather than repeated keywords. Natural keyword density and high-converting meta tags drive click-throughs.') }}
           </p>
           <ul class="editorial-points">
-            <li>Use relevant terms naturally and answer the reader’s question without repeating keywords unnecessarily.</li>
-            <li>Write click-worthy meta titles (under 60 chars) and meta descriptions.</li>
-            <li>Refresh outdated passages to maintain topical authority and freshness.</li>
+            <li>{{ __('Use relevant terms naturally and answer the reader’s question without repeating keywords unnecessarily.') }}</li>
+            <li>{{ __('Write click-worthy meta titles (under 60 chars) and meta descriptions.') }}</li>
+            <li>{{ __('Refresh outdated passages to maintain topical authority and freshness.') }}</li>
           </ul>
         </div>
 
         <div class="editorial-block">
-          <span class="editorial-icon">📹</span>
-          <h3>4. Video SEO & YouTube Algorithm Signals</h3>
+          <span class="pillar-number" aria-hidden="true">04</span>
+          <h3>{{ __('Video SEO & YouTube Algorithm Signals') }}</h3>
           <p>
-            YouTube is the world's second-largest search engine. Video discoverability relies on high-CTR thumbnails, matching search tags, informative descriptions, and audience retention metrics.
+            {{ __('YouTube is the world\'s second-largest search engine. Video discoverability relies on high-CTR thumbnails, matching search tags, informative descriptions, and audience retention metrics.') }}
           </p>
           <ul class="editorial-points">
-            <li>Extract trending hashtags and high-ranking competitor video tags.</li>
-            <li>Analyze channel subscriber velocity, view velocity, and engagement ratios.</li>
-            <li>Structure timestamped video descriptions for enhanced Google rich snippets.</li>
+            <li>{{ __('Extract trending hashtags and high-ranking competitor video tags.') }}</li>
+            <li>{{ __('Analyze channel subscriber velocity, view velocity, and engagement ratios.') }}</li>
+            <li>{{ __('Structure timestamped video descriptions for enhanced Google rich snippets.') }}</li>
           </ul>
         </div>
       </div>
@@ -1288,115 +1291,89 @@
   </section>
 
   <!-- Features Section -->
-  <section class="section-features" id="features">
+  <section class="section-features" id="features" aria-labelledby="features-title">
     <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title">Built for Creators, Webmasters & SEO Teams</h2>
-        <p class="section-subtitle">
-          Everything you need to diagnose search performance without paying expensive monthly subscription fees.
-        </p>
-      </div>
-
-      <div class="features-grid">
-        <div class="feature-card">
-          <div class="feature-icon-badge">📊</div>
-          <h3>Official Moz DA / PA Metrics</h3>
-          <p>Access direct Domain Authority and Page Authority data powered by Mozscape™ API to judge link quality and competitor strength.</p>
+      <div class="features-intro">
+        <div class="section-head">
+          <span class="section-eyebrow">{{ __('Find your next move') }}</span>
+          <h2 class="section-title" id="features-title">{{ __('Built for Creators, Webmasters & SEO Teams') }}</h2>
         </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">📹</div>
-          <h3>Full YouTube Video Suite</h3>
-          <p>Extract high-ranking tags, titles, descriptions, calculate video revenue, and audit channel statistics via Google YouTube v3 API.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">⚡</div>
-          <h3>Technical Web Audits</h3>
-          <p>Inspect server HTTP status codes, trace redirect hops, generate robots.txt and XML sitemaps, and diagnose DNS resolution in seconds.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon-badge">✍️</div>
-          <h3>Content & Keyword Optimization</h3>
-          <p>Analyze keyword density, audit meta titles and descriptions for maximum SERP click-through rates, and rewrite text for optimal flow.</p>
+        <div class="features-intro-copy">
+          <p>{{ __('From your next video to your next site audit, turn search data into a clear plan of action.') }}</p>
+          <a href="#tools" class="features-explore">{{ __('Explore all tools') }} <span aria-hidden="true">↗</span></a>
         </div>
       </div>
+      <div class="audience-grid">
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M10 8L16 12L10 16Z"/></svg></span><span class="audience-label">{{ __('For creators') }}</span></div>
+          <h3>{{ __('Make your next upload count.') }}</h3>
+          <p>{{ __('Shape stronger video titles and descriptions with a focused YouTube toolkit.') }}</p>
+          <ul><li>{{ __('Discover tags and content ideas') }}</li><li>{{ __('Review channel and video statistics') }}</li><li>{{ __('Refine titles, descriptions and keywords') }}</li></ul>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-tag-extractor') }}" class="audience-tool-link">{{ __('Explore video tags') }} <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="4"/><path d="M3 9H21M8 14L6 16L8 18M16 14L18 16L16 18M13 13L11 19"/></svg></span><span class="audience-label">{{ __('For webmasters') }}</span></div>
+          <h3>{{ __('Keep your website in good shape.') }}</h3>
+          <p>{{ __('Check the technical details that help search engines reach and understand your pages.') }}</p>
+          <ul><li>{{ __('Check HTTP responses and redirects') }}</li><li>{{ __('Build robots.txt files and XML sitemaps') }}</li><li>{{ __('Inspect DNS records and meta tags') }}</li></ul>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/http-status-code-checker') }}" class="audience-tool-link">{{ __('Check your site status') }} <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="audience-card">
+          <div class="audience-card-top"><span class="audience-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20H21M6 16V12M12 16V8M18 16V4M4 9L10 4L14 6L20 2"/></svg></span><span class="audience-label">{{ __('For SEO teams') }}</span></div>
+          <h3>{{ __('Give your next audit more clarity.') }}</h3>
+          <p>{{ __('Bring authority metrics, backlink checks and on-page insights into your review process.') }}</p>
+          <ul><li>{{ __('Compare Moz Domain and Page Authority') }}</li><li>{{ __('Review backlink health and opportunities') }}</li><li>{{ __('Analyze keywords and on-page content') }}</li></ul>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/da-pa-checker') }}" class="audience-tool-link">{{ __('Check domain authority') }} <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <div class="features-bottom-note"><span class="features-note-dot" aria-hidden="true"></span>{{ __('Free tools. No installation. A clearer place to start.') }}</div>
     </div>
   </section>
 
-  <!-- 3-Step Process -->
-  <section class="section-process" id="how-it-works">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 class="section-title">Three Steps to Concrete Results</h2>
-      </div>
-
-      <div class="process-grid">
-        <div class="process-card">
-          <span class="process-number">01</span>
-          <span class="process-step-pill">Step 1</span>
-          <h3>Select Your Tool</h3>
-          <p>Choose from 60 purpose-built tools across backlinks, technical SEO, YouTube optimization, or content rewriting.</p>
-        </div>
-
-        <div class="process-card">
-          <span class="process-number">02</span>
-          <span class="process-step-pill">Step 2</span>
-          <h3>Input Your URL or Keyword</h3>
-          <p>Paste your domain, video URL, or target text into the tool. No complex forms or account verification steps required.</p>
-        </div>
-
-        <div class="process-card">
-          <span class="process-number">03</span>
-          <span class="process-step-pill">Step 3</span>
-          <h3>Take Immediate Action</h3>
-          <p>Receive clear, instant metrics and downloadable recommendations to execute your SEO strategy with confidence.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
+<!-- FAQ Section (Crucial for AdSense Editorial Depth) -->
   <section class="section-faq" id="faqs">
     <div class="wrap">
       <div class="section-head">
-        <h2 class="section-title">Common Questions About Our SEO Suite</h2>
+        <span class="faq-eyebrow">{{ __('Answers at a glance') }}</span>
+        <h2 class="section-title">{{ __('Common Questions About Our SEO Suite') }}</h2>
         <p class="section-subtitle">
-          Learn more about how our tools work, data sources, accuracy, and user privacy commitments.
+          {{ __('Learn more about how our tools work, data sources, accuracy, and user privacy commitments.') }}
         </p>
       </div>
 
       <div class="faq-container">
-        <details class="faq-item" name="home-faq" open>
-          <summary class="faq-question"><span>What is FXN SEO and how do the free tools work?</span></summary>
-          <div class="faq-answer">FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.</div>
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('What is FXN SEO and how do the free tools work?') }}</span></summary>
+          <div class="faq-answer">{{ __('FXN SEO is a comprehensive collection of 60+ webmaster and digital marketing utilities designed to assist website owners, developers, and creators. Our tools run high-speed diagnostic queries directly against authoritative APIs (such as Mozscape for authority metrics and Google YouTube Data API for video intelligence) as well as native server-side parsers for DNS, whois, and HTML validation. All tools are 100% free with no software installation or registration required.') }}</div>
         </details>
 
-        <details class="faq-item" name="home-faq">
-          <summary class="faq-question"><span>Are the Moz Domain Authority and Page Authority metrics official?</span></summary>
-          <div class="faq-answer">Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.</div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('Are the Moz Domain Authority and Page Authority metrics official?') }}</span></summary>
+          <div class="faq-answer">{{ __('Yes. Our Domain Authority (DA) and Page Authority (PA) checkers query the official Mozscape™ API in real time. Moz calculates these metrics using a logarithmic scale from 1 to 100 based on indexed root domains, inbound links, and historical quality signals, providing the exact same data seen in industry-standard enterprise audits.') }}</div>
         </details>
 
-        <details class="faq-item" name="home-faq">
-          <summary class="faq-question"><span>Do you store my input data, video URLs, or target domains?</span></summary>
-          <div class="faq-answer">No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.</div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('Do you store my input data, video URLs, or target domains?') }}</span></summary>
+          <div class="faq-answer">{{ __('No. We prioritize visitor privacy. All data submitted through our tools (including target URLs, keywords, and text submissions) is processed ephemerally in server memory solely to generate your results. We never sell, rent, or share user search queries or proprietary domain data with third-party brokers.') }}</div>
+        </details>
+        </div>
+        <div class="faq-column">
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('Why is keyword density important for on-page SEO?') }}</span></summary>
+          <div class="faq-answer">{{ __('Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.') }}</div>
         </details>
 
-        <details class="faq-item" name="home-faq">
-          <summary class="faq-question"><span>Why is keyword density important for on-page SEO?</span></summary>
-          <div class="faq-answer">Keyword density measures the percentage frequency of a specific word or phrase relative to the total word count of an article. Maintaining an optimal ratio (typically between 1% and 3%) helps search algorithms understand the topical focus of your page without triggering over-optimization penalties associated with unnatural keyword stuffing.</div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('How often should webmasters monitor backlinks and technical health?') }}</span></summary>
+          <div class="faq-answer">{{ __('Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.') }}</div>
         </details>
 
-        <details class="faq-item" name="home-faq">
-          <summary class="faq-question"><span>How often should webmasters monitor backlinks and technical health?</span></summary>
-          <div class="faq-answer">Active websites should conduct backlink audits monthly to detect lost citations, identify potential negative SEO, and spot new referring domains. Technical health checks (such as robots.txt validation, HTTP status redirect audits, and XML sitemap inspection) should be performed immediately after site updates, redesigns, or migration events.</div>
+          <details class="faq-item" name="home-faq">
+          <summary class="faq-question"><span>{{ __('Can I use these tools on mobile devices and tablets?') }}</span></summary>
+          <div class="faq-answer">{{ __('Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.') }}</div>
         </details>
-
-        <details class="faq-item" name="home-faq">
-          <summary class="faq-question"><span>Can I use these tools on mobile devices and tablets?</span></summary>
-          <div class="faq-answer">Yes. Every tool on FXN SEO is fully responsive and optimized for seamless operation across smartphones, tablets, laptops, and desktop computers without loss of functionality.</div>
-        </details>
+        </div>
       </div>
     </div>
   </section>
@@ -1406,26 +1383,26 @@
     <div class="wrap">
       <div class="section-head-bar">
         <div>
-          <h2 class="section-title">Fresh SEO & Backlink Insights</h2>
+          <h2 class="section-title">{{ __('Fresh SEO & Backlink Insights') }}</h2>
         </div>
-        <a href="{{ url('/blog') }}" class="btn btn-ghost">View all articles</a>
+        <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}" class="btn btn-ghost">{{ __('View all articles') }}</a>
       </div>
 
       <div class="guides-grid">
         @forelse($resources as $post)
-          <a href="{{ url('/blog/' . $post['slug']) }}" class="guide-card">
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog/' . $post['slug']) }}" class="guide-card">
             <div class="guide-image-wrap">
-              <img src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
+              <img class="post-featured-image" src="{{ !empty($post['featured_image']) ? $post['featured_image'] : asset('assets/img/no-thumb.svg') }}" alt="{{ $post['title'] }}" loading="lazy">
             </div>
             <div class="guide-body">
               <div class="guide-meta">{{ $post['published_at'] ?? 'Guide' }}</div>
               <h3 class="guide-title">{{ $post['title'] }}</h3>
               <p class="guide-excerpt">{{ \Illuminate\Support\Str::limit($post['excerpt'] ?: 'Discover essential strategies and actionable guidance for ranking higher in organic search.', 120) }}</p>
-              <span class="guide-link">Read guide</span>
+              <span class="guide-link">{{ __('Read guide') }}</span>
             </div>
           </a>
         @empty
-          <p style="color: var(--text-muted);">Articles are being loaded.</p>
+          <p style="color: var(--text-muted);">{{ __('Articles are being loaded.') }}</p>
         @endforelse
       </div>
     </div>
@@ -1436,11 +1413,11 @@
     <div class="wrap">
       <div class="cta-card">
         <div>
-          <h2>Ready to Audit & Grow Your Traffic?</h2>
-          <p>Join thousands of webmasters, digital marketers, and agencies making smarter SEO decisions every single day.</p>
+          <h2>{{ __('Ready to Audit & Grow Your Traffic?') }}</h2>
+          <p>{{ __('Join thousands of webmasters, digital marketers, and agencies making smarter SEO decisions every single day.') }}</p>
         </div>
         <a href="#tools" class="btn btn-primary">
-          Start checking, free
+          {{ __('Start checking, free') }}
         </a>
       </div>
     </div>
@@ -1452,70 +1429,70 @@
       <div class="footer-columns">
         <!-- Brand Info -->
         <div class="footer-col-brand">
-          <a href="{{ url('/') }}" class="brand-logo" aria-label="fxnSEO">
+          <a href="{{ route('home') }}" class="brand-logo" aria-label="fxnSEO">
             <img src="{{ asset('assets/img/logo-light.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-light.svg') ?: '1' }}" alt="fxnSEO" class="logo-light" height="38" width="auto">
             <img src="{{ asset('assets/img/logo-dark.svg') }}?v={{ @filemtime(dirname(base_path()).'/assets/img/logo-dark.svg') ?: '1' }}" alt="fxnSEO" class="logo-dark" height="38" width="auto">
           </a>
           <p>
-            FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.
+            {{ __('FXN SEO provides professional-grade, free diagnostic utilities for webmasters, creators, and agencies. Analyze domain authority, audit backlinks, inspect technical tags, and optimize content in real time.') }}
           </p>
           <div style="display: flex; gap: 10px; align-items: center; color: var(--emerald); font-weight: 700; font-size: 13px;">
-            <span>✓ Verified Moz Data</span> • <span>✓ YouTube v3 API</span>
+            <span>{{ __('✓ Verified Moz Data') }}</span> • <span>{{ __('✓ YouTube v3 API') }}</span>
           </div>
         </div>
 
         <!-- Col 1: SEO Tools -->
         <div>
-          <h4 class="footer-col-title">Popular Tools</h4>
+          <h4 class="footer-col-title">{{ __('Popular Tools') }}</h4>
           <ul class="footer-col-links">
-            <li><a href="{{ url('/domain-authority-checker') }}">Domain Authority</a></li>
-            <li><a href="{{ url('/page-authority-checker') }}">Page Authority</a></li>
-            <li><a href="{{ url('/da-pa-checker') }}">DA PA Checker</a></li>
-            <li><a href="{{ url('/backlink-checker') }}">Backlink Checker</a></li>
-            <li><a href="{{ url('/meta-tags-analyzer') }}">Meta Tags Analyzer</a></li>
-            <li><a href="{{ url('/keyword-density-checker') }}">Keyword Density</a></li>
-            <li><a href="{{ url('/google-index-checker') }}">Google Index Checker</a></li>
-            <li><a href="{{ url('/robots-txt-generator') }}">Robots.txt Generator</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/domain-authority-checker') }}">{{ __('Domain Authority') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/page-authority-checker') }}">{{ __('Page Authority') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/da-pa-checker') }}">{{ __('DA PA Checker') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-checker') }}">{{ __('Backlink Checker') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/meta-tags-analyzer') }}">{{ __('Meta Tags Analyzer') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/keyword-density-checker') }}">{{ __('Keyword Density') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/google-index-checker') }}">{{ __('Google Index Checker') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/robots-txt-generator') }}">{{ __('Robots.txt Generator') }}</a></li>
           </ul>
         </div>
 
         <!-- Col 2: YouTube Suite -->
         <div>
-          <h4 class="footer-col-title">YouTube Suite</h4>
+          <h4 class="footer-col-title">{{ __('YouTube Suite') }}</h4>
           <ul class="footer-col-links">
-            <li><a href="{{ url('/youtube-title-extractor') }}">Title Extractor</a></li>
-            <li><a href="{{ url('/youtube-tag-extractor') }}">Tag Extractor</a></li>
-            <li><a href="{{ url('/youtube-hashtag-extractor') }}">Hashtag Extractor</a></li>
-            <li><a href="{{ url('/youtube-channel-statistics') }}">Channel Statistics</a></li>
-            <li><a href="{{ url('/youtube-video-statistics') }}">Video Statistics</a></li>
-            <li><a href="{{ url('/youtube-money-calculator') }}">Money Calculator</a></li>
-            <li><a href="{{ url('/youtube-trend') }}">Trending Videos</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-title-extractor') }}">{{ __('Title Extractor') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-tag-extractor') }}">{{ __('Tag Extractor') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-hashtag-extractor') }}">{{ __('Hashtag Extractor') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-channel-statistics') }}">{{ __('Channel Statistics') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-video-statistics') }}">{{ __('Video Statistics') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-money-calculator') }}">{{ __('Money Calculator') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/youtube-trend') }}">{{ __('Trending Videos') }}</a></li>
           </ul>
         </div>
 
         <!-- Col 3: Knowledge Hub -->
         <div>
-          <h4 class="footer-col-title">Knowledge Hub</h4>
+          <h4 class="footer-col-title">{{ __('Knowledge Hub') }}</h4>
           <ul class="footer-col-links">
-            <li><a href="{{ url('/blog') }}">SEO Blog</a></li>
-            <li><a href="{{ url('/backlink-monitoring-guide') }}">Backlink Guide</a></li>
-            <li><a href="{{ url('/link-opportunity-guide') }}">Link Building Guide</a></li>
-            <li><a href="{{ url('/seo-audit-guide') }}">SEO Audit Hub</a></li>
-            <li><a href="{{ url('/faqs') }}">Common FAQs</a></li>
-            <li><a href="{{ url('/report') }}">Report Broken Tool</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/blog') }}">{{ __('SEO Blog') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/backlink-monitoring-guide') }}">{{ __('Backlink Guide') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/link-opportunity-guide') }}">{{ __('Link Building Guide') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/seo-audit-guide') }}">{{ __('SEO Audit Hub') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/faqs') }}">{{ __('Common FAQs') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report Broken Tool') }}</a></li>
           </ul>
         </div>
 
         <!-- Col 4: Trust & Compliance -->
         <div>
-          <h4 class="footer-col-title">Trust & Legal</h4>
+          <h4 class="footer-col-title">{{ __('Trust & Legal') }}</h4>
           <ul class="footer-col-links">
-            <li><a href="{{ url('/about-us') }}">About Us</a></li>
-            <li><a href="{{ url('/contact') }}">Contact Support</a></li>
-            <li><a href="{{ url('/privacy-policy') }}">Privacy Policy</a></li>
-            <li><a href="{{ url('/terms-conditions') }}">Terms of Service</a></li>
-            <li><a href="{{ url('/cookie-information') }}">Cookie Information</a></li>
-            <li><a href="{{ url('/affiliate-disclosure') }}">Affiliate Disclosure</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/about-us') }}">{{ __('About Us') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact Support') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy Policy') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms of Service') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookie Information') }}</a></li>
+            <li><a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/affiliate-disclosure') }}">{{ __('Affiliate Disclosure') }}</a></li>
           </ul>
         </div>
       </div>
@@ -1523,24 +1500,24 @@
       <!-- Compliance & AdSense Policy Notice -->
       <div class="footer-compliance-box">
         <p>
-          <strong>Publisher & Advertising Disclosure:</strong> FXN SEO is an independent digital marketing intelligence resource. This platform is supported by digital advertising, including Google AdSense and affiliate partnerships. In accordance with Google Publisher Policies and FTC guidelines, we may receive compensation when visitors interact with sponsored placements or acquire services through external links, at no additional cost to you.
+          <strong>{{ __('Publisher & Advertising Disclosure:') }}</strong> {{ __('FXN SEO is an independent digital marketing intelligence resource. This platform is supported by digital advertising, including Google AdSense and affiliate partnerships. In accordance with Google Publisher Policies and FTC guidelines, we may receive compensation when visitors interact with sponsored placements or acquire services through external links, at no additional cost to you.') }}
         </p>
         <p>
-          <strong>Data Privacy & GDPR Commitment:</strong> We do not log, retain, or commercialize individual website queries, target domains, or video URLs submitted to our tools. All third-party trademarks and brand logos (including Moz, YouTube, and Google) belong to their respective copyright holders.
+          <strong>{{ __('Data Privacy & GDPR Commitment:') }}</strong> {{ __('We do not log, retain, or commercialize individual website queries, target domains, or video URLs submitted to our tools. All third-party trademarks and brand logos (including Moz, YouTube, and Google) belong to their respective copyright holders.') }}
         </p>
       </div>
 
       <!-- Bottom Bar -->
       <div class="footer-bottom-bar">
         <div>
-          © {{ date('Y') }} FXN SEO. All rights reserved.
+          © {{ date('Y') }} {{ __('FXN SEO. All rights reserved.') }}
         </div>
         <div style="display: flex; gap: 20px;">
-          <a href="{{ url('/privacy-policy') }}">Privacy</a>
-          <a href="{{ url('/terms-conditions') }}">Terms</a>
-          <a href="{{ url('/cookie-information') }}">Cookies</a>
-          <a href="{{ url('/contact') }}">Contact</a>
-          <a href="{{ url('/report') }}">Report</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/privacy-policy') }}">{{ __('Privacy') }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/terms-conditions') }}">{{ __('Terms') }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/cookie-information') }}">{{ __('Cookies') }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/contact') }}">{{ __('Contact') }}</a>
+          <a href="{{ localization()->getLocalizedURL(app()->getLocale(), '/report') }}">{{ __('Report') }}</a>
         </div>
       </div>
     </div>
@@ -1570,7 +1547,7 @@
       e.preventDefault();
       const val = document.getElementById('launcher-input').value.trim();
       if (!val) return false;
-      const targetUrl = '{{ url('/') }}/' + currentLauncherSlug;
+      const targetUrl = '{{ route('home') }}/' + currentLauncherSlug;
       window.location.href = targetUrl;
       return false;
     }

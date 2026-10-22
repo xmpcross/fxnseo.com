@@ -25,7 +25,7 @@ body.page-type-contact,
 body.page-type-report,
 body.page-type-post,
 body.page-type-tool {
-  font-family: "Outfit", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: var(--site-font-family) !important;
   background-color: #f8fafc !important;
   color: var(--tool-slate-800) !important;
 }
@@ -2133,7 +2133,7 @@ body.page-type-tool .badge.bg-gradient-danger {
    ========================================================================== */
 body.page-blog-listing {
   background-color: #f8fafc !important;
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: var(--site-font-family) !important;
   color: var(--tool-slate-700) !important;
 }
 
@@ -2251,7 +2251,7 @@ body.page-blog-listing .page-content > .container {
 }
 
 .page-blog-listing .blog-entry-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 1.12rem !important;
   font-weight: 700 !important;
   line-height: 1.45 !important;
@@ -2369,7 +2369,7 @@ body.page-blog-listing .page-content > .container {
   border-top: 1px solid var(--tool-slate-200, #e2e8f0) !important;
   padding: 75px 0 45px !important;
   background: var(--tool-slate-100, #f1f5f9) !important;
-  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 14px !important;
   color: var(--tool-slate-600, #475569) !important;
   box-sizing: border-box !important;
@@ -2393,7 +2393,7 @@ body.page-blog-listing .page-content > .container {
   max-width: 320px !important;
   font-size: 14px !important;
   color: var(--tool-slate-600, #475569) !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
 }
 
 .site-footer .footer-trust-badges {
@@ -2403,11 +2403,11 @@ body.page-blog-listing .page-content > .container {
   color: var(--tool-emerald-600, #2447e0) !important;
   font-weight: 700 !important;
   font-size: 13px !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
 }
 
 .site-footer .footer-col-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 16px !important;
   font-weight: 700 !important;
   color: var(--tool-slate-900, #0f172a) !important;
@@ -2433,7 +2433,7 @@ body.page-blog-listing .page-content > .container {
 
 .site-footer .footer-col-links a {
   color: var(--tool-slate-600, #475569) !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 13.5px !important;
   font-weight: 500 !important;
   text-decoration: none !important;
@@ -2454,7 +2454,7 @@ body.page-blog-listing .page-content > .container {
   display: flex !important;
   flex-direction: column !important;
   gap: 14px !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 12.5px !important;
   color: var(--tool-slate-500, #64748b) !important;
   line-height: 1.65 !important;
@@ -2462,7 +2462,7 @@ body.page-blog-listing .page-content > .container {
 
 .site-footer .footer-compliance-box p {
   margin: 0 !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 12.5px !important;
   color: var(--tool-slate-500, #64748b) !important;
   line-height: 1.65 !important;
@@ -2480,7 +2480,7 @@ body.page-blog-listing .page-content > .container {
   border-top: 1px solid var(--tool-slate-200, #e2e8f0) !important;
   padding-top: 24px !important;
   margin-top: 20px !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 13px !important;
   color: var(--tool-slate-500, #64748b) !important;
   flex-wrap: wrap !important;
@@ -2495,7 +2495,7 @@ body.page-blog-listing .page-content > .container {
 
 .site-footer .footer-bottom-links a {
   color: var(--tool-slate-500, #64748b) !important;
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: 13px !important;
   font-weight: 500 !important;
   text-decoration: none !important;
@@ -2576,7 +2576,7 @@ body.page-blog-listing .page-content > .container {
 }
 
 .blog-editorial-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
   font-weight: 800 !important;
   letter-spacing: -0.03em;
@@ -2673,7 +2673,7 @@ body.page-blog-listing .page-content > .container {
 }
 
 .blog-spotlight-title {
-  font-family: 'Outfit', sans-serif !important;
+  font-family: var(--site-font-family) !important;
   font-size: clamp(1.35rem, 2.2vw, 1.85rem) !important;
   font-weight: 800;
   line-height: 1.25;
